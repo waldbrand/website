@@ -1,0 +1,61 @@
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '4.0.0' apply false
+}
+
+wrapper {
+    gradleVersion = '6.5.1'
+}
+
+allprojects {
+    group = pGroup
+    version = pVersion
+}
+
+subprojects {
+    task allDeps(type: DependencyReportTask) {}
+
+    repositories {
+        maven {
+            url maven_path_topobyte
+        }
+        maven {
+            url 'https://mvn.topobyte.de'
+        }
+        maven {
+            url 'https://mvn.slimjars.com'
+        }
+    }
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+project(':waldbrand-website-core') {
+    apply plugin: 'java-library'
+    apply plugin: 'eclipse-wtp'
+}
+
+project(':waldbrand-website-core-testing') {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+}
+
+project(':waldbrand-website-cli') {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+}
+
+project(':waldbrand-website-web') {
+    apply plugin: 'war'
+    apply plugin: 'eclipse-wtp'
+}
+
+subprojects {
+    apply plugin: 'io.franzbecker.gradle-lombok'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}

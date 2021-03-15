@@ -1,0 +1,5 @@
+include 'core', 'core-testing', 'cli', 'web'
+project(':core').name = 'waldbrand-website-core'
+project(':core-testing').name = 'waldbrand-website-core-testing'
+project(':cli').name = 'waldbrand-website-cli'
+project(':web').name = 'waldbrand-website-web'
