@@ -38,7 +38,7 @@ public class ContactGenerator extends SimpleBaseGenerator
 		P p = content.ac(HTML.p());
 		p.appendText("Falls du irgendein Feedback hast"
 				+ " melde dich bitte hier: ");
-		p.ac(HTML.a("mailto:waldbrandapp@gmail.com", "waldbrandapp@gmail.com"));
+		p.ac(HTML.a("mailto:team@waldbrand-app.de", "team@waldbrand-app.de"));
 
 		p = content.ac(HTML.p());
 		p.appendText("Danke! Sebastian und Mo");

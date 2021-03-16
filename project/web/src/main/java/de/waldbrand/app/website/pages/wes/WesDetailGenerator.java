@@ -69,8 +69,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		p.appendText(
 				"Angaben falsch, oder es fehlt was? Sag uns gerne bescheid: ");
 		p.ac(HTML.a(String.format(
-				"mailto:waldbrandapp@gmail.com?subject=Feedback: %s (id=%s)",
-				name, poi.getId()), "waldbrandapp@gmail.com"));
+				"mailto:team@waldbrand-app.de?subject=Feedback: %s (id=%s)",
+				name, poi.getId()), "team@waldbrand-app.de"));
 	}
 
 	private void data(Div container, Poi poi)
