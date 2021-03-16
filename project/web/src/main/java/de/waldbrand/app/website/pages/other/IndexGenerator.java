@@ -42,7 +42,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 		p.appendText(
 				"Im Rahmen des Prototype Fund entwickeln wir einen Baukasten zum"
 						+ " Erstellen von offline-fähigen Waldbrand-Apps zur"
-						+ " Unterstützung der Einsatzkräft bei Waldbränden! 🔥🚒🌊🧯");
+						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
 		card(deck, CacheBusting.resolve("images/feature-karte.png"),
