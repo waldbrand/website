@@ -49,6 +49,8 @@ public class DataLoader
 		for (Poi poi : pois) {
 			data.getIdToPoi().put(poi.getId(), poi);
 		}
+
+		db.closeConnection(false);
 	}
 
 }

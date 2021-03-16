@@ -20,12 +20,18 @@ package de.waldbrand.app.website;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import org.geotools.referencing.factory.DeferredAuthorityFactory;
+import org.geotools.util.WeakCollectionCleaner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,6 +103,33 @@ public class InitListener implements ServletContextListener
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		logger.info("context destroyed");
+
+		logger.info("shutting down GeoTools weak collection cleaner");
+		WeakCollectionCleaner.DEFAULT.exit();
+
+		logger.info("shutting down GeoTools authority factory");
+		DeferredAuthorityFactory.exit();
+
+		logger.info("deregistering JDBC drivers");
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+		Enumeration<Driver> drivers = DriverManager.getDrivers();
+		while (drivers.hasMoreElements()) {
+			Driver driver = drivers.nextElement();
+			if (driver.getClass().getClassLoader() == cl) {
+				try {
+					logger.info("deregistering JDBC driver {}", driver);
+					DriverManager.deregisterDriver(driver);
+				} catch (SQLException ex) {
+					logger.error("Error deregistering JDBC driver {}", driver,
+							ex);
+				}
+			} else {
+				logger.info(
+						"Not deregistering JDBC driver {} as it does not belong to this webapp's ClassLoader",
+						driver);
+			}
+		}
 
 		logger.info("shutting down Logback");
 		LoggerContext loggerContext = (LoggerContext) LoggerFactory
