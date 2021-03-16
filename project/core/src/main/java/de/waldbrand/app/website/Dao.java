@@ -90,10 +90,10 @@ public class Dao
 	{
 		int c = 1;
 		int id = results.getInt(c++);
-		long oart = results.getLong(c++);
+		int oart = results.getInt(c++);
 		String bemerkung = results.getString(c++);
-		long hochW = results.getLong(c++);
-		long rechtsW = results.getLong(c++);
+		int hochW = results.getInt(c++);
+		int rechtsW = results.getInt(c++);
 		return new Poi(id, oart, bemerkung, hochW, rechtsW);
 	}
 

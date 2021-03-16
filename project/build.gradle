@@ -24,6 +24,9 @@ subprojects {
         maven {
             url 'https://mvn.slimjars.com'
         }
+        maven {
+            url 'https://repo.osgeo.org/repository/release/'
+        }
     }
 }
 

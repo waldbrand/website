@@ -9,6 +9,8 @@ dependencies {
     api 'com.google.guava:guava:19.0'
     api 'org.slf4j:slf4j-api:1.7.30'
     api 'de.topobyte:luqe-jdbc:0.2.1'
+    api 'org.geotools:gt-main:22.4'
+    api 'org.geotools:gt-epsg-hsql:22.4'
 
     testRuntimeOnly 'org.xerial:sqlite-jdbc:3.27.2.1'
 }

@@ -46,6 +46,8 @@ dependencies {
     // we need this as compile due to shutdown code
     implementation 'ch.qos.logback:logback-classic:1.2.3'
 
+    runtimeOnly 'org.xerial:sqlite-jdbc:3.27.2.1'
+
     testImplementation 'junit:junit:4.12'
 }
 

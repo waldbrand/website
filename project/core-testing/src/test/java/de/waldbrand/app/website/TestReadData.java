@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.locationtech.jts.geom.Coordinate;
+
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.system.utils.SystemPaths;
 import de.waldbrand.app.website.model.Data;
@@ -40,6 +42,13 @@ public class TestReadData
 		Data data = dataLoader.getData();
 		List<Poi> pois = data.getPois();
 		System.out.println(pois.size());
+
+		for (int i = 0; i < 3; i++) {
+			Poi poi = pois.get(i);
+			Coordinate c = poi.getCoordinate();
+			System.out.println(String.format("%d: %d,%d, %f,%f", poi.getId(),
+					poi.getRechtsW(), poi.getHochW(), c.getX(), c.getY()));
+		}
 	}
 
 }

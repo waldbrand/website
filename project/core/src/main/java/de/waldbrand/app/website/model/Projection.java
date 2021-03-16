@@ -17,53 +17,33 @@
 
 package de.waldbrand.app.website.model;
 
+import org.geotools.geometry.jts.JTS;
+import org.geotools.referencing.CRS;
 import org.locationtech.jts.geom.Coordinate;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.NoSuchAuthorityCodeException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-import lombok.Getter;
-
-public class Poi
+public class Projection
 {
 
-	@Getter
-	private int id;
-	@Getter
-	private int oart;
-	@Getter
-	private String bemerkung;
-	@Getter
-	private int hochW;
-	@Getter
-	private int rechtsW;
+	private CoordinateReferenceSystem source;
+	private CoordinateReferenceSystem target;
+	private MathTransform transform;
 
-	public Poi(int id, int oart, String bemerkung, int hochW, int rechtsW)
+	public Projection() throws NoSuchAuthorityCodeException, FactoryException
 	{
-		this.id = id;
-		this.oart = oart;
-		this.bemerkung = bemerkung;
-		this.hochW = hochW;
-		this.rechtsW = rechtsW;
+		source = CRS.decode("EPSG:25833");
+		target = CRS.decode("EPSG:4326", true);
+		transform = CRS.findMathTransform(source, target, true);
 	}
 
-	private static Projection projection;
-	static {
-		try {
-			projection = new Projection();
-		} catch (FactoryException e) {
-			System.out.println("Error while initializing projection: " + e);
-			e.printStackTrace();
-		}
-	}
-
-	public Coordinate getCoordinate()
+	public Coordinate transform(int hochW, int rechtsW)
+			throws TransformException
 	{
-		try {
-			return projection.transform(hochW, rechtsW);
-		} catch (TransformException e) {
-			e.printStackTrace();
-			return new Coordinate();
-		}
+		return JTS.transform(new Coordinate(rechtsW, hochW), null, transform);
 	}
 
 }

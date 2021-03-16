@@ -33,6 +33,7 @@ import ch.qos.logback.classic.LoggerContext;
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.melon.commons.io.Resources;
 import de.waldbrand.app.website.config.MapPosition;
+import de.waldbrand.app.website.util.ConnectionUtil;
 
 @WebListener
 public class InitListener implements ServletContextListener
@@ -45,6 +46,9 @@ public class InitListener implements ServletContextListener
 	{
 		logger.info("context initialized");
 		long start = System.currentTimeMillis();
+
+		logger.info("initializing JDBC SQLite driver");
+		ConnectionUtil.initJdbc();
 
 		logger.info("setting up website factories");
 		Website.INSTANCE.setCacheBuster(filename -> {
