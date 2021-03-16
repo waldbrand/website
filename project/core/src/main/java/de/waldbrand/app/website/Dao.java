@@ -23,8 +23,6 @@ import java.util.List;
 import de.topobyte.jsqltables.dialect.Dialect;
 import de.topobyte.jsqltables.dialect.SqliteDialect;
 import de.topobyte.jsqltables.query.Select;
-import de.topobyte.jsqltables.query.order.OrderDirection;
-import de.topobyte.jsqltables.query.order.SingleOrder;
 import de.topobyte.jsqltables.query.select.NormalColumn;
 import de.topobyte.jsqltables.table.QueryBuilder;
 import de.topobyte.jsqltables.table.Table;
@@ -61,18 +59,16 @@ public class Dao
 
 		Table table = Tables.WES;
 		Select select = new Select(table);
-		select.addSelectColumn(
-				new NormalColumn(select.getMainTable(), WesTable.COLNAME_ID));
-		select.addSelectColumn(
-				new NormalColumn(select.getMainTable(), WesTable.COLNAME_OART));
-		select.addSelectColumn(new NormalColumn(select.getMainTable(),
-				WesTable.COLNAME_BEMERKUNG));
-		select.addSelectColumn(new NormalColumn(select.getMainTable(),
-				WesTable.COLNAME_HOCH_W));
-		select.addSelectColumn(new NormalColumn(select.getMainTable(),
-				WesTable.COLNAME_RECHTS_W));
-		select.order(new SingleOrder(select.getMainTable(), WesTable.COLNAME_ID,
-				OrderDirection.ASC));
+		column(select, WesTable.COLNAME_ID);
+		column(select, WesTable.COLNAME_FSTATUS);
+		column(select, WesTable.COLNAME_AKZ);
+		column(select, WesTable.COLNAME_BAUJAHR);
+		column(select, WesTable.COLNAME_FKT_FAEHIG);
+		column(select, WesTable.COLNAME_BEMERKUNG);
+		column(select, WesTable.COLNAME_OART);
+		column(select, WesTable.COLNAME_MENGE);
+		column(select, WesTable.COLNAME_HOCH_W);
+		column(select, WesTable.COLNAME_RECHTS_W);
 
 		try (IPreparedStatement stmt = connection
 				.prepareStatement(select.sql())) {
@@ -86,15 +82,27 @@ public class Dao
 		return list;
 	}
 
+	private void column(Select select, String colname)
+	{
+		select.addSelectColumn(
+				new NormalColumn(select.getMainTable(), colname));
+	}
+
 	private Poi entry(IResultSet results) throws QueryException
 	{
 		int c = 1;
 		int id = results.getInt(c++);
-		int oart = results.getInt(c++);
+		int fstatus = results.getInt(c++);
+		long akz = results.getLong(c++);
+		int baujahr = results.getInt(c++);
+		int fktFaehig = results.getInt(c++);
 		String bemerkung = results.getString(c++);
+		int oart = results.getInt(c++);
+		int menge = results.getInt(c++);
 		int hochW = results.getInt(c++);
 		int rechtsW = results.getInt(c++);
-		return new Poi(id, oart, bemerkung, hochW, rechtsW);
+		return new Poi(id, fstatus, akz, baujahr, fktFaehig, bemerkung, oart,
+				menge, hochW, rechtsW);
 	}
 
 }

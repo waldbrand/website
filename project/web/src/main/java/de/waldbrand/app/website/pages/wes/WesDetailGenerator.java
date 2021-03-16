@@ -81,6 +81,15 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		String name = NameUtil.getName(poi);
 
 		row(table, "Name", name);
+		row(table, "ID", poi.getId());
+		row(table, "oart", poi.getOart());
+		row(table, "fstatus", poi.getFstatus());
+		row(table, "fkt_faehig", poi.getFktFaehig());
+		row(table, "akz", poi.getAkz());
+		row(table, "Baujahr", poi.getBaujahr());
+		row(table, "Menge", poi.getMenge());
+		row(table, "Bemerkung",
+				poi.getBemerkung() != null ? poi.getBemerkung() : "-");
 	}
 
 	private void row(Table table, String val1, String val2)
@@ -88,6 +97,16 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		TableRow row = table.row();
 		row.cell(val1);
 		row.cell(val2);
+	}
+
+	private void row(Table table, String val1, int val2)
+	{
+		row(table, val1, Integer.toString(val2));
+	}
+
+	private void row(Table table, String val1, long val2)
+	{
+		row(table, val1, Long.toString(val2));
 	}
 
 	private void map(Div container, Poi poi)

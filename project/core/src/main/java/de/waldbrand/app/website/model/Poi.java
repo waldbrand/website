@@ -29,19 +29,35 @@ public class Poi
 	@Getter
 	private int id;
 	@Getter
-	private int oart;
+	private int fstatus;
+	@Getter
+	private long akz;
+	@Getter
+	private int baujahr;
+	@Getter
+	private int fktFaehig;
 	@Getter
 	private String bemerkung;
+	@Getter
+	private int oart;
+	@Getter
+	private int menge;
 	@Getter
 	private int hochW;
 	@Getter
 	private int rechtsW;
 
-	public Poi(int id, int oart, String bemerkung, int hochW, int rechtsW)
+	public Poi(int id, int fstatus, long akz, int baujahr, int fktFaehig,
+			String bemerkung, int oart, int menge, int hochW, int rechtsW)
 	{
 		this.id = id;
-		this.oart = oart;
+		this.fstatus = fstatus;
+		this.akz = akz;
+		this.baujahr = baujahr;
+		this.fktFaehig = fktFaehig;
 		this.bemerkung = bemerkung;
+		this.oart = oart;
+		this.menge = menge;
 		this.hochW = hochW;
 		this.rechtsW = rechtsW;
 	}
