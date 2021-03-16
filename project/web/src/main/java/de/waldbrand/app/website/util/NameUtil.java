@@ -38,7 +38,7 @@ public class NameUtil
 
 	private static Map<Integer, String> oartToName = new HashMap<>();
 
-	// Spezifiert in Kleiner Anfrage 6/9805, Seite 6
+	// Spezifiziert in Kleiner Anfrage 6/9805, Seite 6
 	static {
 		oartToName.put(400,
 				"Wasserentnahmestelle geplant (ohne Spezifikation)");
