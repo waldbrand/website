@@ -82,7 +82,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 
 		row(table, "Name", name);
 		row(table, "ID", poi.getId());
-		row(table, "oart", poi.getOart());
+		row(table, "oart", String.format("%s (%d)",
+				NameUtil.typeName(poi.getOart()), poi.getOart()));
 		row(table, "fstatus", poi.getFstatus());
 		row(table, "fkt_faehig", poi.getFktFaehig());
 		row(table, "akz", poi.getAkz());
