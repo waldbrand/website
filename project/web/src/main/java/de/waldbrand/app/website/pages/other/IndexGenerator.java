@@ -21,6 +21,7 @@ import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.A;
 import de.topobyte.jsoup.components.Div;
+import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
@@ -45,17 +46,24 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
-		card(deck, CacheBusting.resolve("images/feature-karte.png"),
-				"Wasserentnahmestellen", HTML.a("/wes", "Karte öffnen"),
+		String link = "/wes";
+		card(deck, CacheBusting.resolve("images/feature-karte.png"), link,
+				"Wasserentnahmestellen", HTML.a(link, "Karte öffnen"),
 				"Auf dieser Karte werden die Wasserentnahmestellen angezeigt");
 	}
 
-	private void card(Div deck, String image, String title, A link, String text)
+	private void card(Div deck, String image, String imageLink, String title,
+			A link, String text)
 	{
 		Div col = deck
 				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
 		Div card = col.ac(HTML.div("card mb-4"));
-		card.ac(HTML.img(image)).addClass("card-img-top");
+		Img img = HTML.img(image).addClass("card-img-top");
+		if (imageLink == null) {
+			card.ac(img);
+		} else {
+			card.ac(HTML.a(imageLink)).ac(img);
+		}
 		Div body = card.ac(HTML.div("card-body"));
 		body.ac(HTML.h5(title)).addClass("card-title");
 		P p = body.ac(HTML.p());
