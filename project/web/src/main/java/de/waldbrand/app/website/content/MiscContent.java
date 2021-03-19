@@ -52,17 +52,18 @@ public class MiscContent
 		Div row = content.ac(HTML.div("row"));
 		Div col = row.ac(HTML.div("col-12"));
 
-		col.ac(HTML.span()).at("Gefördert durch:");
+		col.ac(HTML.b()).at("FÖRDERER");
 		col.ac(HTML.br());
 
-		String style = "height: 9em; margin: 3em 1em";
+		String style1 = "height: 12em; margin: 1em 1em";
+		String style2 = "height: 9em; margin: 4em 1em 1em 1em";
 
-		col.ac(HTML.img(CacheBusting.resolve("images/bmbf.png"))).attr("style",
-				style);
+		col.ac(HTML.img(CacheBusting.resolve("images/bmbf.jpg"))).attr("style",
+				style1);
 		col.ac(HTML.img(CacheBusting.resolve("images/prototypefund.png")))
-				.attr("style", style);
+				.attr("style", style2);
 		col.ac(HTML.img(CacheBusting.resolve("images/okfn.png"))).attr("style",
-				style);
+				style2);
 	}
 
 }
