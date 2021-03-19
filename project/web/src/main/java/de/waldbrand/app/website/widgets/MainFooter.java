@@ -23,7 +23,6 @@ import static de.topobyte.jsoup.HTML.p;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.Container;
-import de.topobyte.jsoup.components.A;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.UnorderedList;
 import de.topobyte.jsoup.feather.Feather;
@@ -43,13 +42,11 @@ public class MainFooter extends Element<MainFooter>
 
 		UnorderedList links = div.ac(HTML.ul());
 
-		String imprintLink = resolver.getLink(PathHelper.imprint());
-		A linkAbout = a(imprintLink, "Impressum");
-		links.addItem(linkAbout);
+		links.addItem(a(resolver.getLink(PathHelper.imprint()), "Impressum"));
 
-		String privacyLink = resolver.getLink(PathHelper.privacy());
-		A linkPrivacy = a(privacyLink, "Datenschutz");
-		links.addItem(linkPrivacy);
+		links.addItem(a(resolver.getLink(PathHelper.privacy()), "Datenschutz"));
+
+		links.addItem(a("https://github.com/waldbrand", "GitHub"));
 
 		P p = div.ac(p().addClass("text-muted"));
 
