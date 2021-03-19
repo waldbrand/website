@@ -71,6 +71,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		p.ac(HTML.a(String.format(
 				"mailto:team@waldbrand-app.de?subject=Feedback: %s (id=%s)",
 				name, poi.getId()), "team@waldbrand-app.de"));
+
+		WesUtil.attribution(content);
 	}
 
 	private void data(Div container, Poi poi)

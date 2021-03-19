@@ -65,6 +65,8 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
+
+		WesUtil.attribution(content);
 	}
 
 }
