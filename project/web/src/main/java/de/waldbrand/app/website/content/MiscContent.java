@@ -23,7 +23,6 @@ import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.Alert;
 import de.topobyte.jsoup.bootstrap4.components.ContextualType;
 import de.topobyte.jsoup.components.Div;
-import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.nodes.Element;
 
 public class MiscContent
@@ -51,9 +50,19 @@ public class MiscContent
 	public static void rowSponsors(Element<?> content)
 	{
 		Div row = content.ac(HTML.div("row"));
+		Div col = row.ac(HTML.div("col-12"));
 
-		Img imgBmbf = HTML.img(CacheBusting.resolve("images/bmbf.jpg"));
-		row.ac(imgBmbf).attr("style", "height: 15em");
+		col.ac(HTML.span()).at("Gefördert durch:");
+		col.ac(HTML.br());
+
+		String style = "height: 9em; margin: 3em 1em";
+
+		col.ac(HTML.img(CacheBusting.resolve("images/bmbf.png"))).attr("style",
+				style);
+		col.ac(HTML.img(CacheBusting.resolve("images/prototypefund.png")))
+				.attr("style", style);
+		col.ac(HTML.img(CacheBusting.resolve("images/okfn.png"))).attr("style",
+				style);
 	}
 
 }
