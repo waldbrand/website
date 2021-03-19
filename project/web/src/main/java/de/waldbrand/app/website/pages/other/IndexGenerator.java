@@ -24,6 +24,7 @@ import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
 public class IndexGenerator extends SimpleBaseGenerator
@@ -50,6 +51,8 @@ public class IndexGenerator extends SimpleBaseGenerator
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), link,
 				"Wasserentnahmestellen", HTML.a(link, "Karte öffnen"),
 				"Auf dieser Karte werden die Wasserentnahmestellen angezeigt");
+
+		MiscContent.rowSponsors(content);
 	}
 
 	private void card(Div deck, String image, String imageLink, String title,
