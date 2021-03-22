@@ -64,6 +64,9 @@ public class AboutGenerator extends SimpleBaseGenerator
 		p.appendText(" vorbeischauen.");
 
 		MiscContent.rowSponsors(content);
+		p = content.ac(HTML.p());
+		p.at("Das Projekt wird vom 01.03.2021 bis zum 31.08.2021 unter dem Förerkennzeichen 01IS21S06"
+				+ " vom Bundesministerium für Bildung und Forschung (BMBF) über den PrototyeFund gefördert.");
 	}
 
 }
