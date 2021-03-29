@@ -19,20 +19,30 @@ package de.waldbrand.app.website.pages.wes;
 
 import java.io.IOException;
 
+import org.jsoup.nodes.DataNode;
+
 import de.topobyte.jsoup.HTML;
-import de.topobyte.jsoup.bootstrap4.Bootstrap;
-import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
+import de.topobyte.jsoup.components.P;
+import de.topobyte.jsoup.components.Script;
+import de.topobyte.melon.commons.io.Resources;
+import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.NameUtil;
 
-public class WesGenerator extends SimpleBaseGenerator
+public class WesMapOartGenerator extends SimpleBaseGenerator
 {
 
-	public WesGenerator(WebPath path)
+	private int oart;
+
+	public WesMapOartGenerator(WebPath path, int oart)
 	{
 		super(path);
+		this.oart = oart;
 	}
 
 	@Override
@@ -41,17 +51,34 @@ public class WesGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
+		String typeName = NameUtil.typeName(oart);
+		if (typeName == null) {
+			throw new PageNotFoundException();
+		}
+
 		content.ac(HTML.h2("Wasserentnahmestellen"));
+		P p = content.ac(HTML.p());
+		p.appendText(String.format("Filter: %s (%d)", typeName, oart));
 
-		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/map", "Alle anzeigen");
-		list.addA("/wes/map/filter-landkreis-select", "Landkreis-Filter");
-		list.addA("/wes/map/filter-oart-select", "Art-Filter");
+		MapUtil.addMap(content);
 
-		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
+		MapUtil.addMarkerDef(content, "red", "fa", "tint");
 
-		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/stats/oart", "Typen von Entnahmestellen");
+		Script script = content.ac(HTML.script());
+		StringBuilder code = new StringBuilder();
+
+		MapUtil.markerStart(code);
+		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+			if (poi.getOart() != oart) {
+				continue;
+			}
+			MapUtil.addMarker(code, poi, true);
+		}
+		script.ac(new DataNode(code.toString()));
+		MapUtil.markerEnd(content, code);
+
+		script = content.ac(HTML.script());
+		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
 		WesUtil.attribution(content);
 	}

@@ -33,6 +33,8 @@ import de.waldbrand.app.website.pages.wes.WesGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapLandkreisFilterGenerator;
+import de.waldbrand.app.website.pages.wes.WesMapOartFilterGenerator;
+import de.waldbrand.app.website.pages.wes.WesMapOartGenerator;
 import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
@@ -59,10 +61,20 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 				(path, output, request, data) -> {
 					return new WesMapLandkreisFilterGenerator(path);
 				});
+		map(new PathSpec("wes", "map", "filter-oart-select"),
+				(path, output, request, data) -> {
+					return new WesMapOartFilterGenerator(path);
+				});
 		map(new PathSpec("wes", "map", ":kreis:"),
 				(path, output, request, data) -> {
 					String kreis = output.getParameter("kreis");
 					return new WesMapKreisGenerator(path, kreis);
+				});
+		map(new PathSpec("wes", "map", "oart", ":oart:"),
+				(path, output, request, data) -> {
+					String sOart = output.getParameter("oart");
+					int oart = Integer.parseInt(sOart);
+					return new WesMapOartGenerator(path, oart);
 				});
 		map(new PathSpec("poi", ":id:"), (path, output, request, data) -> {
 			int id = Integer.parseInt(output.getParameter("id"));

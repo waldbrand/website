@@ -17,7 +17,10 @@
 
 package de.waldbrand.app.website.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.waldbrand.app.website.Config;
@@ -60,6 +63,13 @@ public class NameUtil
 	{
 		String name = oartToName.get(oart);
 		return name != null ? name : Integer.toString(oart);
+	}
+
+	public static List<Integer> getOarts()
+	{
+		List<Integer> values = new ArrayList<>(oartToName.keySet());
+		Collections.sort(values);
+		return values;
 	}
 
 }
