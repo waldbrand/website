@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import de.topobyte.simplemapfile.core.EntityFile;
 import lombok.Getter;
@@ -39,7 +40,7 @@ public class Data
 
 	@Getter
 	@Setter
-	private Map<String, EntityFile> idToEntity = new HashMap<>();
+	private Map<String, EntityFile> idToEntity = new TreeMap<>();
 
 	public static String KEY_INTERNAL_ID = "internal-id";
 

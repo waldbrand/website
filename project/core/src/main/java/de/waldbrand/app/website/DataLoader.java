@@ -24,13 +24,18 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import de.topobyte.jts.indexing.GeometryTesselationMap;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
 import de.topobyte.melon.resources.Resources;
@@ -63,6 +68,8 @@ public class DataLoader
 		db.closeConnection(false);
 
 		loadKreise();
+
+		process();
 	}
 
 	private void loadKreise() throws IOException
@@ -83,6 +90,25 @@ public class DataLoader
 					// continue
 				}
 			}
+		}
+	}
+
+	private void process()
+	{
+		GeometryTesselationMap<String> tesselation = new GeometryTesselationMap<>();
+		for (Entry<String, EntityFile> entry : data.getIdToEntity()
+				.entrySet()) {
+			tesselation.add(entry.getValue().getGeometry(), entry.getKey());
+		}
+		GeometryFactory gf = new GeometryFactory();
+		for (Poi poi : data.getPois()) {
+			Point point = gf.createPoint(poi.getCoordinate());
+			Set<String> kreise = tesselation.covering(point);
+			if (kreise.isEmpty()) {
+				continue;
+			}
+			String kreis = kreise.iterator().next();
+			poi.setKreis(kreis);
 		}
 	}
 

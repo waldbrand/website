@@ -18,24 +18,22 @@
 package de.waldbrand.app.website.pages.wes;
 
 import java.io.IOException;
-
-import org.jsoup.nodes.DataNode;
+import java.util.Map;
 
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.bootstrap4.Bootstrap;
+import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
-import de.topobyte.jsoup.components.P;
-import de.topobyte.jsoup.components.Script;
-import de.topobyte.melon.commons.io.Resources;
+import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesMapGenerator extends SimpleBaseGenerator
+public class WesGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapGenerator(WebPath path)
+	public WesGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -47,25 +45,21 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		MapUtil.head(head);
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
-		P p = content.ac(HTML.p());
-		p.appendText("Kein Filter – alle WES");
 
-		MapUtil.addMap(content);
+		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/wes/map", "Alle anzeigen");
 
-		MapUtil.addMarkerDef(content, "red", "fa", "tint");
+		content.ac(HTML.h3("Landkreis-Filter")).addClass("mt-3");
 
-		Script script = content.ac(HTML.script());
-		StringBuilder code = new StringBuilder();
+		list = content.ac(Bootstrap.listGroupDiv());
 
-		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			MapUtil.addMarker(code, poi, true);
+		Map<String, EntityFile> idToEntity = Website.INSTANCE.getData()
+				.getIdToEntity();
+		for (String key : idToEntity.keySet()) {
+			EntityFile entity = idToEntity.get(key);
+			String name = entity.getTags().get("name:de");
+			list.addA("/wes/map/" + key, name);
 		}
-		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
-
-		script = content.ac(HTML.script());
-		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
 		WesUtil.attribution(content);
 	}

@@ -32,12 +32,15 @@ import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesMapGenerator extends SimpleBaseGenerator
+public class WesMapKreisGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapGenerator(WebPath path)
+	private String kreis;
+
+	public WesMapKreisGenerator(WebPath path, String kreis)
 	{
 		super(path);
+		this.kreis = kreis;
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Kein Filter – alle WES");
+		p.appendText("Filter: " + kreis);
 
 		MapUtil.addMap(content);
 
@@ -59,6 +62,10 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		MapUtil.markerStart(code);
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+			String poiKreis = poi.getKreis();
+			if (poiKreis == null || !poiKreis.equals(kreis)) {
+				continue;
+			}
 			MapUtil.addMarker(code, poi, true);
 		}
 		script.ac(new DataNode(code.toString()));

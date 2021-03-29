@@ -22,6 +22,7 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Poi
 {
@@ -46,6 +47,9 @@ public class Poi
 	private int hochW;
 	@Getter
 	private int rechtsW;
+	@Getter
+	@Setter
+	private String kreis;
 
 	public Poi(int id, int fstatus, long akz, int baujahr, int fktFaehig,
 			String bemerkung, int oart, int menge, int hochW, int rechtsW)

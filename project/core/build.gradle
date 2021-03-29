@@ -7,6 +7,7 @@ dependencies {
     api 'de.topobyte:jsqltables:0.1.1'
     api 'de.topobyte:luqe-core:0.2.1'
     api 'de.topobyte:simple-mapfile-xml:0.1.0'
+    api 'de.topobyte:jts-indexing:0.3.2'
     api 'org.locationtech.jts:jts-core:1.16.1'
     api 'com.google.guava:guava:19.0'
     api 'org.slf4j:slf4j-api:1.7.30'
