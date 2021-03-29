@@ -32,6 +32,7 @@ import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
+import de.waldbrand.app.website.pages.wes.WesMapLandkreisFilterGenerator;
 import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
@@ -54,6 +55,10 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 		map(new PathSpec("wes", "map"), (path, output, request, data) -> {
 			return new WesMapGenerator(path);
 		});
+		map(new PathSpec("wes", "map", "filter-landkreis-select"),
+				(path, output, request, data) -> {
+					return new WesMapLandkreisFilterGenerator(path);
+				});
 		map(new PathSpec("wes", "map", ":kreis:"),
 				(path, output, request, data) -> {
 					String kreis = output.getParameter("kreis");

@@ -18,19 +18,23 @@
 package de.waldbrand.app.website.pages.wes;
 
 import java.io.IOException;
+import java.util.Map;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
+import de.topobyte.jsoup.components.P;
+import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesGenerator extends SimpleBaseGenerator
+public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
 {
 
-	public WesGenerator(WebPath path)
+	public WesMapLandkreisFilterGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -43,14 +47,18 @@ public class WesGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 
+		P p = content.ac(HTML.p());
+		p.appendText("Landkreis auswählen:");
+
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/map", "Alle anzeigen");
-		list.addA("/wes/map/filter-landkreis-select", "Landkreis-Filter");
 
-		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
-
-		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/stats/oart", "Typen von Entnahmestellen");
+		Map<String, EntityFile> idToEntity = Website.INSTANCE.getData()
+				.getIdToEntity();
+		for (String key : idToEntity.keySet()) {
+			EntityFile entity = idToEntity.get(key);
+			String name = entity.getTags().get("name:de");
+			list.addA("/wes/map/" + key, name);
+		}
 
 		WesUtil.attribution(content);
 	}
