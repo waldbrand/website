@@ -73,8 +73,12 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 		map(new PathSpec("wes", "map", "oart", ":oart:"),
 				(path, output, request, data) -> {
 					String sOart = output.getParameter("oart");
-					int oart = Integer.parseInt(sOart);
-					return new WesMapOartGenerator(path, oart);
+					try {
+						int oart = Integer.parseInt(sOart);
+						return new WesMapOartGenerator(path, oart);
+					} catch (NumberFormatException e) {
+						return null;
+					}
 				});
 		map(new PathSpec("poi", ":id:"), (path, output, request, data) -> {
 			int id = Integer.parseInt(output.getParameter("id"));
