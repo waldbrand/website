@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.topobyte.simplemapfile.core.EntityFile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,5 +36,20 @@ public class Data
 	@Getter
 	@Setter
 	private Map<Integer, Poi> idToPoi = new HashMap<>();
+
+	@Getter
+	@Setter
+	private Map<String, EntityFile> idToEntity = new HashMap<>();
+
+	public static String KEY_INTERNAL_ID = "internal-id";
+
+	public void addKreis(EntityFile entity)
+	{
+		String name = entity.getTags().get("name:de");
+		name = name.replaceAll("[()]+", "");
+		name = name.replaceAll("[ ]+", "-");
+		entity.addTag(KEY_INTERNAL_ID, name);
+		idToEntity.put(name, entity);
+	}
 
 }

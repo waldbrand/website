@@ -17,15 +17,25 @@
 
 package de.waldbrand.app.website;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.file.Path;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
+import de.topobyte.melon.resources.Resources;
+import de.topobyte.simplemapfile.core.EntityFile;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.waldbrand.app.website.model.Data;
 import de.waldbrand.app.website.model.Poi;
 import lombok.Getter;
@@ -51,6 +61,29 @@ public class DataLoader
 		}
 
 		db.closeConnection(false);
+
+		loadKreise();
+	}
+
+	private void loadKreise() throws IOException
+	{
+		try (InputStream inputList = Resources.stream("kreise/liste");
+				Reader reader = new InputStreamReader(inputList);
+				BufferedReader br = new BufferedReader(reader)) {
+			while (true) {
+				String filename = br.readLine();
+				if (filename == null) {
+					break;
+				}
+				try (InputStream input = Resources
+						.stream("kreise/" + filename)) {
+					EntityFile entity = SmxFileReader.read(input);
+					data.addKreis(entity);
+				} catch (SAXException | ParserConfigurationException e) {
+					// continue
+				}
+			}
+		}
 	}
 
 }
