@@ -18,22 +18,28 @@
 package de.waldbrand.app.website.pages.wes;
 
 import java.io.IOException;
-import java.util.Map;
+
+import com.google.common.collect.Multiset;
+import com.google.common.collect.Multiset.Entry;
+import com.google.common.collect.TreeMultiset;
 
 import de.topobyte.jsoup.HTML;
-import de.topobyte.jsoup.bootstrap4.Bootstrap;
-import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
-import de.topobyte.simplemapfile.core.EntityFile;
+import de.topobyte.jsoup.components.P;
+import de.topobyte.jsoup.components.Table;
+import de.topobyte.jsoup.components.TableHead;
+import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.NameUtil;
 
-public class WesGenerator extends SimpleBaseGenerator
+public class WesStatsGenerator extends SimpleBaseGenerator
 {
 
-	public WesGenerator(WebPath path)
+	public WesStatsGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -45,26 +51,28 @@ public class WesGenerator extends SimpleBaseGenerator
 		MapUtil.head(head);
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
+		P p = content.ac(HTML.p());
+		p.appendText("Sorten von Entnahmestellen");
 
-		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/map", "Alle anzeigen");
-
-		content.ac(HTML.h3("Landkreis-Filter")).addClass("mt-3");
-
-		list = content.ac(Bootstrap.listGroupDiv());
-
-		Map<String, EntityFile> idToEntity = Website.INSTANCE.getData()
-				.getIdToEntity();
-		for (String key : idToEntity.keySet()) {
-			EntityFile entity = idToEntity.get(key);
-			String name = entity.getTags().get("name:de");
-			list.addA("/wes/map/" + key, name);
+		Multiset<Integer> histogram = TreeMultiset.create();
+		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
+			histogram.add(poi.getOart());
 		}
 
-		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
+		Table table = content.ac(HTML.table());
+		table.addClass("table");
+		TableHead tableHead = table.head();
+		TableRow headRow = tableHead.row();
+		headRow.cell("Art");
+		headRow.cell("Anzahl");
 
-		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/stats/oart", "Typen von Entnahmestellen");
+		for (Entry<Integer> entry : histogram.entrySet()) {
+			TableRow row = table.row();
+			int oart = entry.getElement();
+			row.cell().at(
+					String.format("%s (%d)", NameUtil.typeName(oart), oart));
+			row.cell().at(String.format("%d", entry.getCount()));
+		}
 
 		WesUtil.attribution(content);
 	}

@@ -32,6 +32,7 @@ import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
+import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 {
@@ -62,6 +63,10 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 			int id = Integer.parseInt(output.getParameter("id"));
 			return new WesDetailGenerator(path, id);
 		});
+		map(new PathSpec("wes", "stats", "oart"),
+				(path, output, request, data) -> {
+					return new WesStatsGenerator(path);
+				});
 
 		map(new PathSpec("kontakt"), (path, output, request, data) -> {
 			return new ContactGenerator(path);
