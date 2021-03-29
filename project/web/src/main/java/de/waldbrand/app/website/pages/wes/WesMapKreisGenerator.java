@@ -26,6 +26,8 @@ import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
+import de.topobyte.simplemapfile.core.EntityFile;
+import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
@@ -35,12 +37,12 @@ import de.waldbrand.app.website.util.MapUtil;
 public class WesMapKreisGenerator extends SimpleBaseGenerator
 {
 
-	private String kreis;
+	private String kreisId;
 
 	public WesMapKreisGenerator(WebPath path, String kreis)
 	{
 		super(path);
-		this.kreis = kreis;
+		this.kreisId = kreis;
 	}
 
 	@Override
@@ -49,11 +51,18 @@ public class WesMapKreisGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
+		EntityFile kreis = Website.INSTANCE.getData().getIdToEntity()
+				.get(kreisId);
+		if (kreis == null) {
+			throw new PageNotFoundException();
+		}
+
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Filter: " + kreis);
+		p.appendText("Filter: " + kreisId);
 
-		MapUtil.addMap(content);
+		MapUtil.addMap(content,
+				kreis.getGeometry().getCentroid().getCoordinate(), 9);
 
 		MapUtil.addMarkerDef(content, "red", "fa", "tint");
 
@@ -63,7 +72,7 @@ public class WesMapKreisGenerator extends SimpleBaseGenerator
 		MapUtil.markerStart(code);
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
 			String poiKreis = poi.getKreis();
-			if (poiKreis == null || !poiKreis.equals(kreis)) {
+			if (poiKreis == null || !poiKreis.equals(kreisId)) {
 				continue;
 			}
 			MapUtil.addMarker(code, poi, true);

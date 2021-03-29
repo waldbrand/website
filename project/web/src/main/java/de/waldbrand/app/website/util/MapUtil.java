@@ -69,6 +69,12 @@ public class MapUtil
 				position.getZoom());
 	}
 
+	public static void addMap(Element<?> content, Coordinate coordinate,
+			int zoom)
+	{
+		addMap(content, coordinate.getY(), coordinate.getX(), zoom);
+	}
+
 	public static void addMap(Element<?> content, double lat, double lon,
 			int zoom)
 	{
