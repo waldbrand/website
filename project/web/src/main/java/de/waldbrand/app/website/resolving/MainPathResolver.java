@@ -65,7 +65,7 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 				(path, output, request, data) -> {
 					return new WesMapOartFilterGenerator(path);
 				});
-		map(new PathSpec("wes", "map", ":kreis:"),
+		map(new PathSpec("wes", "map", "landkreis", ":kreis:"),
 				(path, output, request, data) -> {
 					String kreis = output.getParameter("kreis");
 					return new WesMapKreisGenerator(path, kreis);

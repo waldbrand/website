@@ -57,7 +57,7 @@ public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
 		for (String key : idToEntity.keySet()) {
 			EntityFile entity = idToEntity.get(key);
 			String name = entity.getTags().get("name:de");
-			list.addA("/wes/map/" + key, name);
+			list.addA("/wes/map/landkreis/" + key, name);
 		}
 
 		WesUtil.attribution(content);
