@@ -52,6 +52,10 @@ public class WesGenerator extends SimpleBaseGenerator
 
 		list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/wes/stats/oart", "Typen von Entnahmestellen");
+		list.addA("/wes/stats/baujahr", "Baujahre");
+		list.addA("/wes/stats/fstatus", "Status");
+		list.addA("/wes/stats/fkt_faehig", "Funktionsfähigkeit");
+		list.addA("/wes/stats/menge", "Menge");
 
 		WesUtil.attribution(content);
 	}

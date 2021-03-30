@@ -23,6 +23,7 @@ import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
@@ -35,6 +36,7 @@ import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapLandkreisFilterGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapOartFilterGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapOartGenerator;
+import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
 import de.waldbrand.app.website.pages.wes.WesStatsOartGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
@@ -87,6 +89,29 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 		map(new PathSpec("wes", "stats", "oart"),
 				(path, output, request, data) -> {
 					return new WesStatsOartGenerator(path);
+				});
+		map(new PathSpec("wes", "stats", "baujahr"),
+				(path, output, request, data) -> {
+					return new WesStatsGenerator(path, "Baujahr",
+							"Baujahre der Wasserentnahmestellen",
+							Poi::getBaujahr);
+				});
+		map(new PathSpec("wes", "stats", "fstatus"),
+				(path, output, request, data) -> {
+					return new WesStatsGenerator(path, "Status",
+							"Status der Wasserentnahmestellen (was heißt das?)",
+							Poi::getFstatus);
+				});
+		map(new PathSpec("wes", "stats", "fkt_faehig"),
+				(path, output, request, data) -> {
+					return new WesStatsGenerator(path, "Funktionsfähigkeit",
+							"Funktionsfähigkeit der Wasserentnahmestellen (was heißt das?)",
+							Poi::getFktFaehig);
+				});
+		map(new PathSpec("wes", "stats", "menge"),
+				(path, output, request, data) -> {
+					return new WesStatsGenerator(path, "Menge",
+							"Menge (maximaler Durchfluss?)", Poi::getMenge);
 				});
 
 		map(new PathSpec("kontakt"), (path, output, request, data) -> {
