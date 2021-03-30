@@ -15,41 +15,35 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.maps;
 
 import java.io.IOException;
-import java.util.function.Function;
 
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Multiset.Entry;
-import com.google.common.collect.TreeMultiset;
+import org.jsoup.nodes.DataNode;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
-import de.topobyte.jsoup.components.Table;
-import de.topobyte.jsoup.components.TableHead;
-import de.topobyte.jsoup.components.TableRow;
+import de.topobyte.jsoup.components.Script;
+import de.topobyte.melon.commons.io.Resources;
+import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.NameUtil;
 
-public class WesStatsGenerator extends SimpleBaseGenerator
+public class WesMapOartGenerator extends SimpleBaseGenerator
 {
 
-	private String colTitle1;
-	private String description;
-	private Function<Poi, Integer> dataGetter;
+	private int oart;
 
-	public WesStatsGenerator(WebPath path, String colTitle1, String description,
-			Function<Poi, Integer> dataGetter)
+	public WesMapOartGenerator(WebPath path, int oart)
 	{
 		super(path);
-		this.colTitle1 = colTitle1;
-		this.description = description;
-		this.dataGetter = dataGetter;
+		this.oart = oart;
 	}
 
 	@Override
@@ -58,28 +52,34 @@ public class WesStatsGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
+		String typeName = NameUtil.typeName(oart);
+		if (typeName == null) {
+			throw new PageNotFoundException();
+		}
+
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText(description);
+		p.appendText(String.format("Filter: %s (%d)", typeName, oart));
 
-		Multiset<Integer> histogram = TreeMultiset.create();
-		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
-			histogram.add(dataGetter.apply(poi));
+		MapUtil.addMap(content);
+
+		MapUtil.addMarkerDef(content, "red", "fa", "tint");
+
+		Script script = content.ac(HTML.script());
+		StringBuilder code = new StringBuilder();
+
+		MapUtil.markerStart(code);
+		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+			if (poi.getOart() != oart) {
+				continue;
+			}
+			MapUtil.addMarker(code, poi, true);
 		}
+		script.ac(new DataNode(code.toString()));
+		MapUtil.markerEnd(content, code);
 
-		Table table = content.ac(HTML.table());
-		table.addClass("table");
-		TableHead tableHead = table.head();
-		TableRow headRow = tableHead.row();
-		headRow.cell(colTitle1);
-		headRow.cell("Anzahl");
-
-		for (Entry<Integer> entry : histogram.entrySet()) {
-			TableRow row = table.row();
-			int oart = entry.getElement();
-			row.cell().at(String.format("%d", oart));
-			row.cell().at(String.format("%d", entry.getCount()));
-		}
+		script = content.ac(HTML.script());
+		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
 		WesUtil.attribution(content);
 	}

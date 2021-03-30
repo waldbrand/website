@@ -31,13 +31,13 @@ import de.waldbrand.app.website.pages.other.IndexGenerator;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
 import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;
-import de.waldbrand.app.website.pages.wes.WesMapGenerator;
-import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
-import de.waldbrand.app.website.pages.wes.WesMapLandkreisFilterGenerator;
-import de.waldbrand.app.website.pages.wes.WesMapOartFilterGenerator;
-import de.waldbrand.app.website.pages.wes.WesMapOartGenerator;
-import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
-import de.waldbrand.app.website.pages.wes.WesStatsOartGenerator;
+import de.waldbrand.app.website.pages.wes.maps.WesMapGenerator;
+import de.waldbrand.app.website.pages.wes.maps.WesMapKreisGenerator;
+import de.waldbrand.app.website.pages.wes.maps.WesMapLandkreisFilterGenerator;
+import de.waldbrand.app.website.pages.wes.maps.WesMapOartFilterGenerator;
+import de.waldbrand.app.website.pages.wes.maps.WesMapOartGenerator;
+import de.waldbrand.app.website.pages.wes.stats.WesStatsGenerator;
+import de.waldbrand.app.website.pages.wes.stats.WesStatsOartGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 {

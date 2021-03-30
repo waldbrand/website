@@ -15,25 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.stats;
 
 import java.io.IOException;
-import java.util.List;
+
+import com.google.common.collect.Multiset;
+import com.google.common.collect.Multiset.Entry;
+import com.google.common.collect.TreeMultiset;
 
 import de.topobyte.jsoup.HTML;
-import de.topobyte.jsoup.bootstrap4.Bootstrap;
-import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
+import de.topobyte.jsoup.components.Table;
+import de.topobyte.jsoup.components.TableHead;
+import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.NameUtil;
 
-public class WesMapOartFilterGenerator extends SimpleBaseGenerator
+public class WesStatsOartGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapOartFilterGenerator(WebPath path)
+	public WesStatsOartGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -45,16 +52,27 @@ public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 		MapUtil.head(head);
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
-
 		P p = content.ac(HTML.p());
-		p.appendText("Art auswählen:");
+		p.appendText("Sorten von Entnahmestellen");
 
-		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
+		Multiset<Integer> histogram = TreeMultiset.create();
+		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
+			histogram.add(poi.getOart());
+		}
 
-		List<Integer> oarts = NameUtil.getOarts();
-		for (int oart : oarts) {
-			list.addA("/wes/map/oart/" + oart,
+		Table table = content.ac(HTML.table());
+		table.addClass("table");
+		TableHead tableHead = table.head();
+		TableRow headRow = tableHead.row();
+		headRow.cell("Art");
+		headRow.cell("Anzahl");
+
+		for (Entry<Integer> entry : histogram.entrySet()) {
+			TableRow row = table.row();
+			int oart = entry.getElement();
+			row.cell().at(
 					String.format("%s (%d)", NameUtil.typeName(oart), oart));
+			row.cell().at(String.format("%d", entry.getCount()));
 		}
 
 		WesUtil.attribution(content);

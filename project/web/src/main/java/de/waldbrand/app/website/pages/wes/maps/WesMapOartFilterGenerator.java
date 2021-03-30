@@ -15,27 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.maps;
 
 import java.io.IOException;
-
-import org.jsoup.nodes.DataNode;
+import java.util.List;
 
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.bootstrap4.Bootstrap;
+import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
-import de.topobyte.jsoup.components.Script;
-import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
-import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.NameUtil;
 
-public class WesMapGenerator extends SimpleBaseGenerator
+public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapGenerator(WebPath path)
+	public WesMapOartFilterGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -47,25 +46,17 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		MapUtil.head(head);
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
+
 		P p = content.ac(HTML.p());
-		p.appendText("Kein Filter – alle WES");
+		p.appendText("Art auswählen:");
 
-		MapUtil.addMap(content);
+		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 
-		MapUtil.addMarkerDef(content, "red", "fa", "tint");
-
-		Script script = content.ac(HTML.script());
-		StringBuilder code = new StringBuilder();
-
-		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			MapUtil.addMarker(code, poi, true);
+		List<Integer> oarts = NameUtil.getOarts();
+		for (int oart : oarts) {
+			list.addA("/wes/map/oart/" + oart,
+					String.format("%s (%d)", NameUtil.typeName(oart), oart));
 		}
-		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
-
-		script = content.ac(HTML.script());
-		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
 		WesUtil.attribution(content);
 	}

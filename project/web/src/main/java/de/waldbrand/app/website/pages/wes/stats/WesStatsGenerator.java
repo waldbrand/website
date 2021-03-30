@@ -15,9 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.stats;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multiset.Entry;
@@ -33,15 +34,23 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.NameUtil;
 
-public class WesStatsOartGenerator extends SimpleBaseGenerator
+public class WesStatsGenerator extends SimpleBaseGenerator
 {
 
-	public WesStatsOartGenerator(WebPath path)
+	private String colTitle1;
+	private String description;
+	private Function<Poi, Integer> dataGetter;
+
+	public WesStatsGenerator(WebPath path, String colTitle1, String description,
+			Function<Poi, Integer> dataGetter)
 	{
 		super(path);
+		this.colTitle1 = colTitle1;
+		this.description = description;
+		this.dataGetter = dataGetter;
 	}
 
 	@Override
@@ -52,25 +61,24 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Sorten von Entnahmestellen");
+		p.appendText(description);
 
 		Multiset<Integer> histogram = TreeMultiset.create();
 		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
-			histogram.add(poi.getOart());
+			histogram.add(dataGetter.apply(poi));
 		}
 
 		Table table = content.ac(HTML.table());
 		table.addClass("table");
 		TableHead tableHead = table.head();
 		TableRow headRow = tableHead.row();
-		headRow.cell("Art");
+		headRow.cell(colTitle1);
 		headRow.cell("Anzahl");
 
 		for (Entry<Integer> entry : histogram.entrySet()) {
 			TableRow row = table.row();
 			int oart = entry.getElement();
-			row.cell().at(
-					String.format("%s (%d)", NameUtil.typeName(oart), oart));
+			row.cell().at(String.format("%d", oart));
 			row.cell().at(String.format("%d", entry.getCount()));
 		}
 

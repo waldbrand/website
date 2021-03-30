@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.maps;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,6 +29,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
 public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator

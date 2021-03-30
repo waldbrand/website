@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.wes.maps;
 
 import java.io.IOException;
 
@@ -26,23 +26,19 @@ import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
-import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.wes.WesUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.NameUtil;
 
-public class WesMapOartGenerator extends SimpleBaseGenerator
+public class WesMapGenerator extends SimpleBaseGenerator
 {
 
-	private int oart;
-
-	public WesMapOartGenerator(WebPath path, int oart)
+	public WesMapGenerator(WebPath path)
 	{
 		super(path);
-		this.oart = oart;
 	}
 
 	@Override
@@ -51,14 +47,9 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		String typeName = NameUtil.typeName(oart);
-		if (typeName == null) {
-			throw new PageNotFoundException();
-		}
-
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText(String.format("Filter: %s (%d)", typeName, oart));
+		p.appendText("Kein Filter – alle WES");
 
 		MapUtil.addMap(content);
 
@@ -69,9 +60,6 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 
 		MapUtil.markerStart(code);
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			if (poi.getOart() != oart) {
-				continue;
-			}
 			MapUtil.addMarker(code, poi, true);
 		}
 		script.ac(new DataNode(code.toString()));
