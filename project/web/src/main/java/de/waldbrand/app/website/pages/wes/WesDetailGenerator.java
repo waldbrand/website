@@ -55,8 +55,20 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 			throw new PageNotFoundException();
 		}
 
+		// close button
+		Div divClose = content.ac(HTML.div()).attr("style",
+				"float:right; margin: 1em");
+
+		divClose.ac(HTML.a("javascript:window.history.back()", "X"))
+				.addClass("btn btn-secondary");
+
+		// headline
 		String name = NameUtil.getName(poi);
 		content.ac(HTML.h1(name));
+
+		// clear div to avoid close button to interfere with other column
+		// content
+		content.ac(HTML.div()).attr("style", "clear:both");
 
 		Div row = content.ac(Bootstrap.row());
 		Div col1 = row.ac(HTML.div("col-12 col-md-6"));
