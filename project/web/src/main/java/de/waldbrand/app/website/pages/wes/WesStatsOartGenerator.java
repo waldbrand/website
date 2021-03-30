@@ -36,10 +36,10 @@ import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.NameUtil;
 
-public class WesStatsGenerator extends SimpleBaseGenerator
+public class WesStatsOartGenerator extends SimpleBaseGenerator
 {
 
-	public WesStatsGenerator(WebPath path)
+	public WesStatsOartGenerator(WebPath path)
 	{
 		super(path);
 	}

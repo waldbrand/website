@@ -35,7 +35,7 @@ import de.waldbrand.app.website.pages.wes.WesMapKreisGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapLandkreisFilterGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapOartFilterGenerator;
 import de.waldbrand.app.website.pages.wes.WesMapOartGenerator;
-import de.waldbrand.app.website.pages.wes.WesStatsGenerator;
+import de.waldbrand.app.website.pages.wes.WesStatsOartGenerator;
 
 public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 {
@@ -86,7 +86,7 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 		});
 		map(new PathSpec("wes", "stats", "oart"),
 				(path, output, request, data) -> {
-					return new WesStatsGenerator(path);
+					return new WesStatsOartGenerator(path);
 				});
 
 		map(new PathSpec("kontakt"), (path, output, request, data) -> {
