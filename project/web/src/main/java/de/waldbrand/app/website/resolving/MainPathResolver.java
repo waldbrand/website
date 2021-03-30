@@ -29,6 +29,7 @@ import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
+import de.waldbrand.app.website.pages.wes.WesAddGenerator;
 import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;
 import de.waldbrand.app.website.pages.wes.maps.WesMapGenerator;
@@ -113,6 +114,10 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 					return new WesStatsGenerator(path, "Menge",
 							"Menge (maximaler Durchfluss?)", Poi::getMenge);
 				});
+
+		map(new PathSpec("wes", "eintragen"), (path, output, request, data) -> {
+			return new WesAddGenerator(path);
+		});
 
 		map(new PathSpec("kontakt"), (path, output, request, data) -> {
 			return new ContactGenerator(path);

@@ -150,6 +150,12 @@ public class MapUtil
 		script.ac(new DataNode(code.toString()));
 	}
 
+	public static void marker(StringBuilder code)
+	{
+		code.append("var marker = L.marker([52.5, 13.4], {icon: "
+				+ DEFAULT_MARKER_ID + "}).addTo(map);");
+	}
+
 	public static void addMarker(StringBuilder code, Poi poi, boolean withLink)
 	{
 		String name = NameUtil.getName(poi);

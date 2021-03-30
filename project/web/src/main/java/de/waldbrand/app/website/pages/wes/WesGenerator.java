@@ -57,6 +57,11 @@ public class WesGenerator extends SimpleBaseGenerator
 		list.addA("/wes/stats/fkt_faehig", "Funktionsfähigkeit");
 		list.addA("/wes/stats/menge", "Menge");
 
+		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
+
+		list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/wes/eintragen", "Wasserentnahmestelle eintragen");
+
 		WesUtil.attribution(content);
 	}
 
