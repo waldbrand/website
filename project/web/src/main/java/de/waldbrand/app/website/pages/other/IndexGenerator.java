@@ -49,8 +49,9 @@ public class IndexGenerator extends SimpleBaseGenerator
 		Div deck = content.ac(HTML.div("row"));
 		String link = "/wes";
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), link,
-				"Wasserentnahmestellen", HTML.a(link, "Karte öffnen"),
-				"Auf dieser Karte werden die Wasserentnahmestellen angezeigt");
+				"Wasserentnahmestellen",
+				HTML.a(link, "Zu den Wasserentnahmestellen"),
+				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen");
 
 		MiscContent.rowSponsors(content);
 	}
