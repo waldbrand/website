@@ -17,12 +17,13 @@
 
 package de.waldbrand.app.website;
 
-public class ListData
+public class TestExtractOsmData
 {
 
-	public void execute()
+	public static void main(String[] args)
 	{
-		System.out.println("No data yet");
+		ExtractOsmData task = new ExtractOsmData();
+		task.execute();
 	}
 
 }
