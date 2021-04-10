@@ -17,16 +17,42 @@
 
 package de.waldbrand.app.website.osm;
 
+import java.util.Arrays;
+import java.util.List;
+
+import de.topobyte.osm4j.core.model.iface.OsmTag;
+import de.topobyte.osm4j.core.model.impl.Tag;
+import lombok.Getter;
+
 public enum PoiType {
 
-	// Saugstelle
-	// emergency=suction_point
-	SUCTION_POINT,
-	// Hydrant
-	// fire_hydrant:type=pillar
-	HYDRANT_PILLAR,
-	// Ansaugrohr, drucklos
-	// fire_hydrant:type=pipe
-	HYDRANT_PIPE
+	SUCTION_POINT(
+			"Saugstelle",
+			"Saugstellen",
+			Arrays.asList(new Tag("emergency", "suction_point"))),
+	HYDRANT_PILLAR(
+			"Überflurhydrant",
+			"Überflurhydranten",
+			Arrays.asList(new Tag("emergency", "fire_hydrant"),
+					new Tag("fire_hydrant:type", "pillar"))),
+	HYDRANT_PIPE(
+			"Druckloser Anschluss",
+			"Drucklose Anschlüsse",
+			Arrays.asList(new Tag("emergency", "fire_hydrant"),
+					new Tag("fire_hydrant:type", "pipe")));
+
+	@Getter
+	private String name;
+	@Getter
+	private String multiple;
+	@Getter
+	private List<OsmTag> tags;
+
+	private PoiType(String name, String multiple, List<OsmTag> tags)
+	{
+		this.name = name;
+		this.multiple = multiple;
+		this.tags = tags;
+	}
 
 }

@@ -17,6 +17,10 @@
 
 package de.waldbrand.app.website.pages.osm;
 
+import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
+import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
+import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
+
 import java.io.IOException;
 
 import de.topobyte.jsoup.HTML;
@@ -45,9 +49,9 @@ public class WesGenerator extends SimpleBaseGenerator
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/osm/map/alles", "Alle");
-		list.addA("/osm/map/saugstellen", "Saugstellen");
-		list.addA("/osm/map/ueberflurhydranten", "Überflurhydranten");
-		list.addA("/osm/map/anschlussrohre", "Anschlussrohre");
+		list.addA("/osm/map/saugstellen", SUCTION_POINT.getMultiple());
+		list.addA("/osm/map/ueberflurhydranten", HYDRANT_PILLAR.getMultiple());
+		list.addA("/osm/map/anschlussrohre", HYDRANT_PIPE.getMultiple());
 
 		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 

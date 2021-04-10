@@ -53,7 +53,7 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
-		p.appendText("Typ: " + type);
+		p.appendText("Typ: " + type.getMultiple());
 
 		MapUtil.addMap(content);
 
@@ -65,8 +65,7 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		MapUtil.markerStart(code);
 		for (OsmNode node : Website.INSTANCE.getData().getTypeToNodes()
 				.get(type)) {
-			MapUtil.addMarker(code, node.getLatitude(), node.getLongitude(),
-					"node " + node.getId());
+			OsmMapUtil.marker(code, node, type, MapUtil.getDefaultMarkerId());
 		}
 		script.ac(new DataNode(code.toString()));
 		MapUtil.markerEnd(content, code);
