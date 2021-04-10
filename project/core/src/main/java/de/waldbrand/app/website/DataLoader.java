@@ -109,6 +109,7 @@ public class DataLoader
 					data.getTypeToNodes().put(type, nodes);
 				}
 				nodes.add(node);
+				data.getIdToNodes().put(node.getId(), node);
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.pages.osm.OsmDetailGenerator;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
@@ -50,6 +51,13 @@ public class WesOsmPathResolver
 		map(new PathSpec("osm", "map", "anschlussrohre"),
 				(path, output, request, data) -> {
 					return new WesMapGenerator(path, PoiType.HYDRANT_PIPE);
+				});
+
+		map(new PathSpec("osm", "node", ":id:"),
+				(path, output, request, data) -> {
+					String sId = output.getParameter("id");
+					long id = Long.parseLong(sId);
+					return new OsmDetailGenerator(path, id);
 				});
 	}
 

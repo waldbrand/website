@@ -3,7 +3,7 @@ package de.waldbrand.app.website.pages.osm.maps;
 import org.jsoup.nodes.Node;
 
 import de.topobyte.osm4j.core.model.iface.OsmNode;
-import de.waldbrand.app.website.OsmLinks;
+import de.waldbrand.app.website.osm.OsmLinks;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.util.MapUtil;
 

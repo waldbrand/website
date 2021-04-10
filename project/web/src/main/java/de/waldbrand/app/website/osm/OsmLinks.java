@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.osm;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.A;
@@ -26,7 +26,7 @@ public class OsmLinks
 
 	public static A link(OsmNode node, String name)
 	{
-		return HTML.a("/node/" + node.getId(), name);
+		return HTML.a("/osm/node/" + node.getId(), name);
 	}
 
 }

@@ -22,7 +22,7 @@ import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
 import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +39,10 @@ import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.osm4j.core.model.iface.OsmNode;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
+import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
 public class WesMapAllGenerator extends SimpleBaseGenerator
@@ -58,10 +59,7 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		List<String> names = new ArrayList<>();
-		for (PoiType type : PoiType.values()) {
-			names.add(type.getMultiple());
-		}
+		List<String> names = OsmTypes.names(Arrays.asList(PoiType.values()));
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
@@ -96,7 +94,7 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
-		WesAttributionUtil.attribution(content);
+		OsmAttributionUtil.attribution(content);
 	}
 
 	private String markerId(PoiType type)

@@ -45,6 +45,9 @@ public class Data
 	@Getter
 	private Map<PoiType, List<OsmNode>> typeToNodes = new HashMap<>();
 
+	@Getter
+	private Map<Long, OsmNode> idToNodes = new HashMap<>();
+
 	public static String KEY_INTERNAL_ID = "internal-id";
 
 	public void addKreis(EntityFile entity)
