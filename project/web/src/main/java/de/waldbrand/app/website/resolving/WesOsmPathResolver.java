@@ -20,7 +20,9 @@ package de.waldbrand.app.website.resolving;
 import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
+import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
+import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
 
 public class WesOsmPathResolver
 		extends PathSpecResolver<ContentGeneratable, Void>
@@ -30,6 +32,19 @@ public class WesOsmPathResolver
 		map(new PathSpec("osm"), (path, output, request, data) -> {
 			return new WesGenerator(path);
 		});
+
+		map(new PathSpec("osm", "map", "saugstellen"),
+				(path, output, request, data) -> {
+					return new WesMapGenerator(path, PoiType.SUCTION_POINT);
+				});
+		map(new PathSpec("osm", "map", "ueberflurhydranten"),
+				(path, output, request, data) -> {
+					return new WesMapGenerator(path, PoiType.HYDRANT_PILLAR);
+				});
+		map(new PathSpec("osm", "map", "anschlussrohre"),
+				(path, output, request, data) -> {
+					return new WesMapGenerator(path, PoiType.HYDRANT_PIPE);
+				});
 	}
 
 }
