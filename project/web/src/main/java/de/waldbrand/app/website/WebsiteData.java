@@ -34,7 +34,8 @@ public class WebsiteData
 		logger.info("loading data...");
 		try {
 			DataLoader dataLoader = new DataLoader();
-			dataLoader.loadData(Config.INSTANCE.getFileWesData());
+			dataLoader.loadData(Config.INSTANCE.getFileWesData(),
+					Config.INSTANCE.getFileOsmData());
 			Website.INSTANCE.setData(dataLoader.getData());
 		} catch (QueryException | IOException e) {
 			logger.error("Error while loading data", e);

@@ -23,7 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import de.topobyte.osm4j.core.model.iface.OsmNode;
 import de.topobyte.simplemapfile.core.EntityFile;
+import de.waldbrand.app.website.osm.PoiType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,12 +37,13 @@ public class Data
 	private List<Poi> pois = new ArrayList<>();
 
 	@Getter
-	@Setter
 	private Map<Integer, Poi> idToPoi = new HashMap<>();
 
 	@Getter
-	@Setter
 	private Map<String, EntityFile> idToEntity = new TreeMap<>();
+
+	@Getter
+	private Map<PoiType, List<OsmNode>> typeToNodes = new HashMap<>();
 
 	public static String KEY_INTERNAL_ID = "internal-id";
 

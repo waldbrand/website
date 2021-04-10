@@ -33,15 +33,17 @@ public class TestReadData
 
 	public static void main(String[] args) throws IOException, QueryException
 	{
-		Path file = SystemPaths.HOME.resolve(
+		Path fileWes = SystemPaths.HOME.resolve(
 				"github/waldbrand/wasserentnahmestellen/WES/daten/wes.gpkg");
+		Path fileOsm = SystemPaths.HOME
+				.resolve("github/waldbrand/osm-data/emergency.tbo");
 
 		DataLoader dataLoader = new DataLoader();
-		dataLoader.loadData(file);
+		dataLoader.loadData(fileWes, fileOsm);
 
 		Data data = dataLoader.getData();
 		List<Poi> pois = data.getPois();
-		System.out.println(pois.size());
+		System.out.println("WES count: " + pois.size());
 
 		for (int i = 0; i < 3; i++) {
 			Poi poi = pois.get(i);

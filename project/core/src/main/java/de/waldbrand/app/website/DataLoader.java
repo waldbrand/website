@@ -23,7 +23,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -39,10 +42,19 @@ import de.topobyte.jts.indexing.GeometryTesselationMap;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
 import de.topobyte.melon.resources.Resources;
+import de.topobyte.osm4j.core.access.OsmIteratorInput;
+import de.topobyte.osm4j.core.model.iface.EntityContainer;
+import de.topobyte.osm4j.core.model.iface.EntityType;
+import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.core.model.util.OsmModelUtil;
+import de.topobyte.osm4j.utils.FileFormat;
+import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.waldbrand.app.website.model.Data;
 import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.osm.OsmUtil;
+import de.waldbrand.app.website.osm.PoiType;
 import lombok.Getter;
 
 public class DataLoader
@@ -53,7 +65,17 @@ public class DataLoader
 	@Getter
 	private Data data = new Data();
 
-	public void loadData(Path file) throws IOException, QueryException
+	public void loadData(Path fileWes, Path fileOsm)
+			throws IOException, QueryException
+	{
+		loadWesData(fileWes);
+		loadOsmData(fileOsm);
+		loadKreise();
+
+		process();
+	}
+
+	private void loadWesData(Path file) throws QueryException
 	{
 		SqliteDatabase db = new SqliteDatabase(file);
 
@@ -66,10 +88,29 @@ public class DataLoader
 		}
 
 		db.closeConnection(false);
+	}
 
-		loadKreise();
+	private void loadOsmData(Path fileOsm) throws IOException
+	{
+		OsmFileInput osmFile = new OsmFileInput(fileOsm, FileFormat.TBO);
+		OsmIteratorInput iterator = osmFile.createIterator(true, false);
+		for (EntityContainer container : iterator.getIterator()) {
+			if (container.getType() != EntityType.Node) {
+				continue;
+			}
+			OsmNode node = (OsmNode) container.getEntity();
+			Map<String, String> tags = OsmModelUtil.getTagsAsMap(node);
 
-		process();
+			EnumSet<PoiType> types = OsmUtil.classify(tags);
+			for (PoiType type : types) {
+				List<OsmNode> nodes = data.getTypeToNodes().get(type);
+				if (nodes == null) {
+					nodes = new ArrayList<>();
+					data.getTypeToNodes().put(type, nodes);
+				}
+				nodes.add(node);
+			}
+		}
 	}
 
 	private void loadKreise() throws IOException

@@ -39,6 +39,9 @@ public class Config
 	private Path fileWesData;
 	@Getter
 	@Setter
+	private Path fileOsmData;
+	@Getter
+	@Setter
 	private String nullName = "Unbekannt";
 
 }

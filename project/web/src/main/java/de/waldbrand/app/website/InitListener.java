@@ -82,6 +82,9 @@ public class InitListener implements ServletContextListener
 		Path fileWesData = Paths.get(config.getProperty("wes.data"));
 		Config.INSTANCE.setFileWesData(fileWesData);
 
+		Path fileOsmData = Paths.get(config.getProperty("osm.data"));
+		Config.INSTANCE.setFileOsmData(fileOsmData);
+
 		WebsiteData.load();
 
 		logger.info("loading secure configuration...");
