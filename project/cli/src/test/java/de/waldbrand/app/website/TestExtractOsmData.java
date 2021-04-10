@@ -17,12 +17,19 @@
 
 package de.waldbrand.app.website;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import de.topobyte.system.utils.SystemPaths;
+
 public class TestExtractOsmData
 {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
-		ExtractOsmData task = new ExtractOsmData();
+		Path dir = SystemPaths.HOME.resolve("github/waldbrand/osm-data");
+
+		ExtractOsmData task = new ExtractOsmData(dir);
 		task.execute();
 	}
 
