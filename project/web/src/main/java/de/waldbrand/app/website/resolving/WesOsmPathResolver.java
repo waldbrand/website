@@ -52,6 +52,14 @@ public class WesOsmPathResolver
 				(path, output, request, data) -> {
 					return new WesMapGenerator(path, PoiType.HYDRANT_PIPE);
 				});
+		map(new PathSpec("osm", "map", "löschwasserteiche"),
+				(path, output, request, data) -> {
+					return new WesMapGenerator(path, PoiType.WATER_POND);
+				});
+		map(new PathSpec("osm", "map", "wassertanks"),
+				(path, output, request, data) -> {
+					return new WesMapGenerator(path, PoiType.WATER_TANK);
+				});
 
 		map(new PathSpec("osm", "node", ":id:"),
 				(path, output, request, data) -> {

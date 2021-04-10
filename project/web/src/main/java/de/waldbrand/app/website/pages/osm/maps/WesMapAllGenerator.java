@@ -36,11 +36,11 @@ import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
-import de.topobyte.osm4j.core.model.iface.OsmNode;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -83,9 +83,9 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 
 		for (PoiType type : PoiType.values()) {
 			MapUtil.markerStart(code);
-			for (OsmNode node : Website.INSTANCE.getData().getTypeToNodes()
+			for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
 					.get(type)) {
-				OsmMapUtil.marker(code, node, type, markerId(type));
+				OsmMapUtil.marker(code, poi, type, markerId(type));
 			}
 			script.ac(new DataNode(code.toString()));
 			MapUtil.markerEnd(content, code);

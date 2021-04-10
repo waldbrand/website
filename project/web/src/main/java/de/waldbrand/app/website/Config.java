@@ -42,6 +42,9 @@ public class Config
 	private Path fileOsmData;
 	@Getter
 	@Setter
+	private Path fileOsmWaynodes;
+	@Getter
+	@Setter
 	private String nullName = "Unbekannt";
 
 }

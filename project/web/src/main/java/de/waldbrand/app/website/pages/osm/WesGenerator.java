@@ -20,6 +20,8 @@ package de.waldbrand.app.website.pages.osm;
 import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
 import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
 import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
+import static de.waldbrand.app.website.osm.PoiType.WATER_POND;
+import static de.waldbrand.app.website.osm.PoiType.WATER_TANK;
 
 import java.io.IOException;
 
@@ -52,6 +54,8 @@ public class WesGenerator extends SimpleBaseGenerator
 		list.addA("/osm/map/saugstellen", SUCTION_POINT.getMultiple());
 		list.addA("/osm/map/ueberflurhydranten", HYDRANT_PILLAR.getMultiple());
 		list.addA("/osm/map/anschlussrohre", HYDRANT_PIPE.getMultiple());
+		list.addA("/osm/map/löschwasserteiche", WATER_POND.getMultiple());
+		list.addA("/osm/map/wassertanks", WATER_TANK.getMultiple());
 
 		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 

@@ -20,6 +20,8 @@ package de.waldbrand.app.website.osm;
 import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
 import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
 import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
+import static de.waldbrand.app.website.osm.PoiType.WATER_POND;
+import static de.waldbrand.app.website.osm.PoiType.WATER_TANK;
 
 import java.util.EnumSet;
 import java.util.Map;
@@ -34,8 +36,16 @@ public class OsmUtil
 		String emergency = tags.get("emergency");
 		String fireHydrantType = tags.get("fire_hydrant:type");
 
-		if ("suction_point".equals(emergency)) {
+		switch (emergency) {
+		case "suction_point":
 			types.add(SUCTION_POINT);
+			break;
+		case "water_tank":
+			types.add(WATER_TANK);
+			break;
+		case "fire_water_pond":
+			types.add(WATER_POND);
+			break;
 		}
 		if (fireHydrantType != null) {
 			switch (fireHydrantType) {

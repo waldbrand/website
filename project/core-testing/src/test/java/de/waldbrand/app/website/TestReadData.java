@@ -37,9 +37,11 @@ public class TestReadData
 				"github/waldbrand/wasserentnahmestellen/WES/daten/wes.gpkg");
 		Path fileOsm = SystemPaths.HOME
 				.resolve("github/waldbrand/osm-data/emergency.tbo");
+		Path fileWaynodes = SystemPaths.HOME
+				.resolve("github/waldbrand/osm-data/emergency-waynodes.tbo");
 
 		DataLoader dataLoader = new DataLoader();
-		dataLoader.loadData(fileWes, fileOsm);
+		dataLoader.loadData(fileWes, fileOsm, fileWaynodes);
 
 		Data data = dataLoader.getData();
 		List<Poi> pois = data.getPois();

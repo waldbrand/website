@@ -17,6 +17,11 @@
 
 package de.waldbrand.app.website;
 
+import static de.topobyte.osm4j.core.model.iface.EntityType.Node;
+import static de.topobyte.osm4j.core.model.iface.EntityType.Relation;
+import static de.topobyte.osm4j.core.model.iface.EntityType.Way;
+import static de.topobyte.osm4j.utils.FileFormat.TBO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +37,7 @@ import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
@@ -43,11 +49,15 @@ import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
 import de.topobyte.melon.resources.Resources;
 import de.topobyte.osm4j.core.access.OsmIteratorInput;
+import de.topobyte.osm4j.core.dataset.InMemoryListDataSet;
+import de.topobyte.osm4j.core.dataset.ListDataSetLoader;
 import de.topobyte.osm4j.core.model.iface.EntityContainer;
-import de.topobyte.osm4j.core.model.iface.EntityType;
+import de.topobyte.osm4j.core.model.iface.OsmEntity;
 import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
-import de.topobyte.osm4j.utils.FileFormat;
+import de.topobyte.osm4j.core.resolve.EntityNotFoundException;
+import de.topobyte.osm4j.geometry.GeometryBuilder;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.xml.SmxFileReader;
@@ -55,6 +65,7 @@ import de.waldbrand.app.website.lbforst.model.Data;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.osm.OsmUtil;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 import lombok.Getter;
 
 public class DataLoader
@@ -65,11 +76,11 @@ public class DataLoader
 	@Getter
 	private Data data = new Data();
 
-	public void loadData(Path fileWes, Path fileOsm)
+	public void loadData(Path fileWes, Path fileOsm, Path fileWaynodes)
 			throws IOException, QueryException
 	{
 		loadWesData(fileWes);
-		loadOsmData(fileOsm);
+		loadOsmData(fileOsm, fileWaynodes);
 		loadKreise();
 
 		process();
@@ -90,26 +101,62 @@ public class DataLoader
 		db.closeConnection(false);
 	}
 
-	private void loadOsmData(Path fileOsm) throws IOException
+	private void loadOsmData(Path fileData, Path fileWaynodes)
+			throws IOException
 	{
-		OsmFileInput osmFile = new OsmFileInput(fileOsm, FileFormat.TBO);
-		OsmIteratorInput iterator = osmFile.createIterator(true, false);
+		OsmFileInput inputWaynodes = new OsmFileInput(fileWaynodes, TBO);
+		OsmIteratorInput wayNodesIterator = inputWaynodes.createIterator(false,
+				false);
+		InMemoryListDataSet nodes = ListDataSetLoader.read(wayNodesIterator,
+				false, false, false);
+
+		OsmFileInput inputData = new OsmFileInput(fileData, TBO);
+		OsmIteratorInput iterator = inputData.createIterator(true, false);
 		for (EntityContainer container : iterator.getIterator()) {
-			if (container.getType() != EntityType.Node) {
+			if (container.getType() == Relation) {
 				continue;
 			}
-			OsmNode node = (OsmNode) container.getEntity();
-			Map<String, String> tags = OsmModelUtil.getTagsAsMap(node);
-
+			OsmEntity entity = container.getEntity();
+			Map<String, String> tags = OsmModelUtil.getTagsAsMap(entity);
 			EnumSet<PoiType> types = OsmUtil.classify(tags);
-			for (PoiType type : types) {
-				List<OsmNode> nodes = data.getTypeToNodes().get(type);
-				if (nodes == null) {
-					nodes = new ArrayList<>();
-					data.getTypeToNodes().put(type, nodes);
-				}
-				nodes.add(node);
+
+			if (types.isEmpty()) {
+				continue;
+			}
+
+			OsmPoi poi = null;
+
+			GeometryBuilder gb = new GeometryBuilder();
+
+			if (container.getType() == Node) {
+				OsmNode node = (OsmNode) entity;
 				data.getIdToNodes().put(node.getId(), node);
+				poi = new OsmPoi(node, node.getLongitude(), node.getLatitude());
+			} else if (container.getType() == Way) {
+				OsmWay way = (OsmWay) entity;
+				data.getIdToWays().put(way.getId(), way);
+				try {
+					Geometry geometry = gb.build(way, nodes);
+					Point centroid = geometry.getCentroid();
+					poi = new OsmPoi(way, centroid.getX(), centroid.getY());
+				} catch (EntityNotFoundException e) {
+					logger.warn(
+							String.format("Error while building way %d (%s)",
+									way.getId(), tags));
+				}
+			}
+
+			if (poi == null) {
+				continue;
+			}
+
+			for (PoiType type : types) {
+				List<OsmPoi> pois = data.getTypeToPois().get(type);
+				if (pois == null) {
+					pois = new ArrayList<>();
+					data.getTypeToPois().put(type, pois);
+				}
+				pois.add(poi);
 			}
 		}
 	}

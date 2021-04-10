@@ -15,32 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.osm.model;
 
-import java.io.IOException;
+import de.topobyte.osm4j.core.model.iface.OsmEntity;
+import lombok.Getter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.topobyte.luqe.iface.QueryException;
-
-public class WebsiteData
+public class OsmPoi
 {
 
-	final static Logger logger = LoggerFactory.getLogger(WebsiteData.class);
+	@Getter
+	private OsmEntity entity;
+	@Getter
+	private double lon;
+	@Getter
+	private double lat;
 
-	public static void load()
+	public OsmPoi(OsmEntity entity, double lon, double lat)
 	{
-		logger.info("loading data...");
-		try {
-			DataLoader dataLoader = new DataLoader();
-			dataLoader.loadData(Config.INSTANCE.getFileWesData(),
-					Config.INSTANCE.getFileOsmData(),
-					Config.INSTANCE.getFileOsmWaynodes());
-			Website.INSTANCE.setData(dataLoader.getData());
-		} catch (QueryException | IOException e) {
-			logger.error("Error while loading data", e);
-		}
+		this.entity = entity;
+		this.lon = lon;
+		this.lat = lat;
 	}
 
 }

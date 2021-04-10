@@ -39,7 +39,15 @@ public enum PoiType {
 			"Druckloser Anschluss",
 			"Drucklose Anschlüsse",
 			Arrays.asList(new Tag("emergency", "fire_hydrant"),
-					new Tag("fire_hydrant:type", "pipe")));
+					new Tag("fire_hydrant:type", "pipe"))),
+	WATER_TANK(
+			"Wasserbecken",
+			"Wasserbecken",
+			Arrays.asList(new Tag("emergency", "water_tank"))),
+	WATER_POND(
+			"Löschwasserteich",
+			"Löschwasserteiche",
+			Arrays.asList(new Tag("emergency", "fire_water_pond")));
 
 	@Getter
 	private String name;

@@ -23,9 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.slimjars.dist.gnu.trove.map.TLongObjectMap;
+import com.slimjars.dist.gnu.trove.map.hash.TLongObjectHashMap;
+
 import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,10 +48,12 @@ public class Data
 	private Map<String, EntityFile> idToEntity = new TreeMap<>();
 
 	@Getter
-	private Map<PoiType, List<OsmNode>> typeToNodes = new HashMap<>();
+	private Map<PoiType, List<OsmPoi>> typeToPois = new HashMap<>();
 
 	@Getter
-	private Map<Long, OsmNode> idToNodes = new HashMap<>();
+	private TLongObjectMap<OsmNode> idToNodes = new TLongObjectHashMap<>();
+	@Getter
+	private TLongObjectMap<OsmWay> idToWays = new TLongObjectHashMap<>();
 
 	public static String KEY_INTERNAL_ID = "internal-id";
 
