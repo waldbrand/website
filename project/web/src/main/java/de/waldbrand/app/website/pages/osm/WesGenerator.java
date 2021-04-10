@@ -44,6 +44,7 @@ public class WesGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/osm/map/alles", "Alle");
 		list.addA("/osm/map/saugstellen", "Saugstellen");
 		list.addA("/osm/map/ueberflurhydranten", "Überflurhydranten");
 		list.addA("/osm/map/anschlussrohre", "Anschlussrohre");

@@ -176,9 +176,15 @@ public class MapUtil
 	public static void addMarker(StringBuilder code, double latitude,
 			double longitude, String text)
 	{
+		addMarker(code, latitude, longitude, text, DEFAULT_MARKER_ID);
+	}
+
+	public static void addMarker(StringBuilder code, double latitude,
+			double longitude, String text, String markerId)
+	{
 		String coords = String.format(Locale.US, "%f, %f", latitude, longitude);
-		code.append("var marker = L.marker([" + coords + "], {icon: "
-				+ DEFAULT_MARKER_ID + "});");
+		code.append("var marker = L.marker([" + coords + "], {icon: " + markerId
+				+ "});");
 		code.append("markers.addLayer(marker);");
 		code.append("marker.bindPopup('" + sane(text) + "');");
 		code.append("\n");

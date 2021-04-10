@@ -22,6 +22,7 @@ import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
+import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
 
 public class WesOsmPathResolver
@@ -32,6 +33,11 @@ public class WesOsmPathResolver
 		map(new PathSpec("osm"), (path, output, request, data) -> {
 			return new WesGenerator(path);
 		});
+
+		map(new PathSpec("osm", "map", "alles"),
+				(path, output, request, data) -> {
+					return new WesMapAllGenerator(path);
+				});
 
 		map(new PathSpec("osm", "map", "saugstellen"),
 				(path, output, request, data) -> {
