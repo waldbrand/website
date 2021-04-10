@@ -15,11 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.lbforst;
 
-public class Tables
+import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.components.A;
+import de.waldbrand.app.website.lbforst.model.Poi;
+
+public class PoiLinks
 {
 
-	public static WesTable WES = new WesTable();
+	public static A link(Poi poi, String name)
+	{
+		return HTML.a("/poi/" + poi.getId(), name);
+	}
 
 }

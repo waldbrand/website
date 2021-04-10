@@ -30,9 +30,10 @@ import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.jsoup.nodes.Element;
 import de.waldbrand.app.website.Config;
-import de.waldbrand.app.website.PoiLinks;
 import de.waldbrand.app.website.config.MapPosition;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.NameUtil;
+import de.waldbrand.app.website.lbforst.PoiLinks;
+import de.waldbrand.app.website.lbforst.model.Poi;
 
 public class MapUtil
 {

@@ -15,22 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.lbforst;
 
-import java.util.Comparator;
-
-import de.waldbrand.app.website.model.Poi;
-import de.waldbrand.app.website.util.NameUtil;
-
-public class PoiByNameComparator implements Comparator<Poi>
+public class Tables
 {
 
-	@Override
-	public int compare(Poi o1, Poi o2)
-	{
-		String n1 = NameUtil.getName(o1);
-		String n2 = NameUtil.getName(o2);
-		return n1.compareTo(n2);
-	}
+	public static WesTable WES = new WesTable();
 
 }

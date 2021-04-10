@@ -26,10 +26,10 @@ import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.lbforst.NameUtil;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.NameUtil;
 
 public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 {

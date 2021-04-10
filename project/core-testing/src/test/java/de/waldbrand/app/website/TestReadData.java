@@ -25,8 +25,8 @@ import org.locationtech.jts.geom.Coordinate;
 
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.system.utils.SystemPaths;
-import de.waldbrand.app.website.model.Data;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.model.Data;
+import de.waldbrand.app.website.lbforst.model.Poi;
 
 public class TestReadData
 {

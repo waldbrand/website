@@ -17,7 +17,7 @@
 
 package de.waldbrand.app.website;
 
-import de.waldbrand.app.website.model.Data;
+import de.waldbrand.app.website.lbforst.model.Data;
 import lombok.Getter;
 import lombok.Setter;
 

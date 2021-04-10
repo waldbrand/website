@@ -15,18 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.lbforst;
 
-import de.topobyte.jsoup.HTML;
-import de.topobyte.jsoup.components.A;
-import de.waldbrand.app.website.model.Poi;
+import java.util.Comparator;
 
-public class PoiLinks
+import de.waldbrand.app.website.lbforst.model.Poi;
+
+public class PoiByNameComparator implements Comparator<Poi>
 {
 
-	public static A link(Poi poi, String name)
+	@Override
+	public int compare(Poi o1, Poi o2)
 	{
-		return HTML.a("/poi/" + poi.getId(), name);
+		String n1 = NameUtil.getName(o1);
+		String n2 = NameUtil.getName(o2);
+		return n1.compareTo(n2);
 	}
 
 }

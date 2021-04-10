@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.lbforst;
 
 import de.topobyte.jsqltables.table.ColumnClass;
 import de.topobyte.jsqltables.table.Table;

@@ -32,7 +32,7 @@ import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;

@@ -30,7 +30,9 @@ import de.topobyte.luqe.iface.IConnection;
 import de.topobyte.luqe.iface.IPreparedStatement;
 import de.topobyte.luqe.iface.IResultSet;
 import de.topobyte.luqe.iface.QueryException;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.Tables;
+import de.waldbrand.app.website.lbforst.WesTable;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import lombok.Getter;
 
 public class Dao

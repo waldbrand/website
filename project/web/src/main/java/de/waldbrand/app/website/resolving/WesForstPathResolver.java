@@ -20,7 +20,7 @@ package de.waldbrand.app.website.resolving;
 import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.wes.WesAddGenerator;
 import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;

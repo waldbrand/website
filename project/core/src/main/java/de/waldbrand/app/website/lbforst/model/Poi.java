@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.model;
+package de.waldbrand.app.website.lbforst.model;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.opengis.referencing.FactoryException;

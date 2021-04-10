@@ -29,11 +29,11 @@ import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.NameUtil;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.NameUtil;
 
 public class WesMapOartGenerator extends SimpleBaseGenerator
 {

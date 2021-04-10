@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.util;
+package de.waldbrand.app.website.lbforst;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.waldbrand.app.website.Config;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.model.Poi;
 
 public class NameUtil
 {

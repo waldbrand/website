@@ -28,7 +28,7 @@ import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.model.Poi;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
