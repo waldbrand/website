@@ -31,7 +31,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.wes.WesUtil;
+import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.NameUtil;
 
@@ -81,7 +81,7 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
-		WesUtil.attribution(content);
+		WesAttributionUtil.attribution(content);
 	}
 
 }

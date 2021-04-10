@@ -2,7 +2,7 @@ package de.waldbrand.app.website.osm;
 
 public enum PoiType {
 
-	// Suagstelle
+	// Saugstelle
 	// emergency=suction_point
 	SUCTION_POINT,
 	// Hydrant

@@ -29,7 +29,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.wes.WesUtil;
+import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
 public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
@@ -61,7 +61,7 @@ public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
 			list.addA("/wes/map/landkreis/" + key, name);
 		}
 
-		WesUtil.attribution(content);
+		WesAttributionUtil.attribution(content);
 	}
 
 }

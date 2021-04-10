@@ -37,6 +37,8 @@ import de.topobyte.webgun.resolving.Redirecter;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
 import de.waldbrand.app.website.resolving.MainPathResolver;
+import de.waldbrand.app.website.resolving.WesForstPathResolver;
+import de.waldbrand.app.website.resolving.WesOsmPathResolver;
 import de.waldbrand.app.website.util.ServletUtil;
 
 @WebServlet("/*")
@@ -48,6 +50,8 @@ public class IndexServlet extends HttpServlet
 	static List<PathResolver<ContentGeneratable, Void>> resolvers = new ArrayList<>();
 	static {
 		resolvers.add(new MainPathResolver());
+		resolvers.add(new WesForstPathResolver());
+		resolvers.add(new WesOsmPathResolver());
 	}
 
 	private interface Responder<T>

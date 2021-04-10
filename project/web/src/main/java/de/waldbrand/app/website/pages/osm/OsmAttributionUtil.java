@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes;
+package de.waldbrand.app.website.pages.osm;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.bootstrap4.Bootstrap;
@@ -24,7 +24,7 @@ import de.topobyte.jsoup.bootstrap4.components.ContextualType;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.nodes.Element;
 
-public class WesUtil
+public class OsmAttributionUtil
 {
 
 	public static void attribution(Element<?> element)
@@ -34,15 +34,11 @@ public class WesUtil
 
 		Div p = div;
 		p.at("Quelle: ");
-		p.ac(HTML.a("https://www.brandenburg-forst.de",
-				"Landesbetrieb Forst Brandenburg")).attr("target", "_blank");
-		p.at(", Datensatz: ");
-		p.ac(HTML.a(
-				"https://geoportal.brandenburg.de/detailansichtdienst/render?view=gdibb&url=https%3A%2F%2Fgeoportal.brandenburg.de%2Fgs-json%2Fxml%3Ffileid%3D4F8A8656-3467-4BE7-ACCA-AF54ECB6AAF7",
-				"Wasserentnahmestellen im Land Brandenburg - WMS"))
-				.attr("target", "_blank");
+		p.ac(HTML.a("https://www.openstreetmap.org/copyright",
+				"© OpenStreetMap contributors")).attr("target", "_blank");
 		p.at(", Lizenz: ");
-		p.ac(HTML.a("https://www.govdata.de/dl-de/by-2-0", "dl-de/by-2-0"))
+		p.ac(HTML.a("https://opendatacommons.org/licenses/odbl/",
+				"Open Data Commons Open Database License (ODbL)"))
 				.attr("target", "_blank");
 	}
 

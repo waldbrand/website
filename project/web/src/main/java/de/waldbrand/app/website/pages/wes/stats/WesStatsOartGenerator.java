@@ -33,7 +33,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.wes.WesUtil;
+import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.NameUtil;
 
@@ -75,7 +75,7 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 			row.cell().at(String.format("%d", entry.getCount()));
 		}
 
-		WesUtil.attribution(content);
+		WesAttributionUtil.attribution(content);
 	}
 
 }

@@ -47,11 +47,20 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
-		String link = "/wes";
-		card(deck, CacheBusting.resolve("images/feature-karte.png"), link,
-				"Wasserentnahmestellen",
-				HTML.a(link, "Zu den Wasserentnahmestellen"),
-				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen");
+		String linkWes = "/wes";
+		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkWes,
+				"Wasserentnahmestellen (Landesbetrieb Forst)",
+				HTML.a(linkWes, "Zu den Wasserentnahmestellen"),
+				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
+						+ " im Datensatz der Landesbetrieb Forst im  Geoportal Brandenburg"
+						+ " verfügbar sind.");
+
+		String linkOsm = "/osm";
+		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkOsm,
+				"Wasserentnahmestellen (OpenStreetMap)",
+				HTML.a(linkOsm, "Zu den Wasserentnahmestellen"),
+				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
+						+ " im Community-Projekt OpenStreetMap verfügbar sind.");
 
 		MiscContent.rowSponsors(content);
 	}

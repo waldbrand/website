@@ -41,7 +41,7 @@ public class WesGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		content.ac(HTML.h2("Wasserentnahmestellen"));
+		content.ac(HTML.h2("Wasserentnahmestellen (Landesbetrieb Forst)"));
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/wes/map", "Alle anzeigen");
@@ -62,7 +62,7 @@ public class WesGenerator extends SimpleBaseGenerator
 		list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/wes/eintragen", "Wasserentnahmestelle eintragen");
 
-		WesUtil.attribution(content);
+		WesAttributionUtil.attribution(content);
 	}
 
 }

@@ -15,26 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.wes.maps;
+package de.waldbrand.app.website.pages.osm;
 
 import java.io.IOException;
-import java.util.List;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
-import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.NameUtil;
 
-public class WesMapOartFilterGenerator extends SimpleBaseGenerator
+public class WesGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapOartFilterGenerator(WebPath path)
+	public WesGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -45,20 +41,24 @@ public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		content.ac(HTML.h2("Wasserentnahmestellen"));
-
-		P p = content.ac(HTML.p());
-		p.appendText("Art auswählen:");
+		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/osm/map/saugstellen", "Saugstellen");
+		list.addA("/osm/map/ueberflurhydranten", "Überflurhydranten");
+		list.addA("/osm/map/anschlussrohre", "Anschlussrohre");
 
-		List<Integer> oarts = NameUtil.getOarts();
-		for (int oart : oarts) {
-			list.addA("/wes/map/oart/" + oart,
-					String.format("%s (%d)", NameUtil.typeName(oart), oart));
-		}
+		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 
-		WesAttributionUtil.attribution(content);
+		list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/osm/stats", "Statistiken");
+
+		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
+
+		list = content.ac(Bootstrap.listGroupDiv());
+		list.addA("/osm/eintragen", "Wasserentnahmestelle eintragen");
+
+		OsmAttributionUtil.attribution(content);
 	}
 
 }
