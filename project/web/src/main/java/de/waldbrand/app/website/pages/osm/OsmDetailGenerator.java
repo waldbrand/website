@@ -44,6 +44,7 @@ import de.waldbrand.app.website.osm.OsmUtil;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.MarkerShape;
 
 public class OsmDetailGenerator extends SimpleBaseGenerator
 {
@@ -130,7 +131,8 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 
 		MapUtil.addMap(container, node.getLatitude(), node.getLongitude(), 17);
 
-		MapUtil.addMarkerDef(container, "red", "fa", "tint");
+		MapUtil.addMarkerDef(container, MarkerShape.CIRCLE, "red", "fa",
+				"fa-tint");
 
 		Script script = container.ac(HTML.script());
 		StringBuilder code = new StringBuilder();

@@ -104,26 +104,29 @@ public class MapUtil
 		script.ac(new DataNode(code.toString()));
 	}
 
-	public static void addMarkerDef(Element<?> content, String markerColor)
+	public static void addMarkerDef(Element<?> content, MarkerShape shape,
+			String markerColor)
 	{
 		StringBuilder code = new StringBuilder();
 
 		code.append("var " + DEFAULT_MARKER_ID + " = L.AwesomeMarkers.icon({");
-		code.append("    markerColor: '" + markerColor + "'");
+		code.append("    markerColor: '" + markerColor + "',");
+		code.append("    shape: '" + shape.getId() + "'");
 		code.append("  });");
 
 		Script script = content.ac(HTML.script());
 		script.ac(new DataNode(code.toString()));
 	}
 
-	public static void addMarkerDef(Element<?> content, String markerColor,
-			String prefix, String icon)
+	public static void addMarkerDef(Element<?> content, MarkerShape shape,
+			String markerColor, String prefix, String icon)
 	{
-		addMarkerDef(content, DEFAULT_MARKER_ID, markerColor, prefix, icon);
+		addMarkerDef(content, DEFAULT_MARKER_ID, shape, markerColor, prefix,
+				icon);
 	}
 
 	public static void addMarkerDef(Element<?> content, String id,
-			String markerColor, String prefix, String icon)
+			MarkerShape shape, String markerColor, String prefix, String icon)
 	{
 		StringBuilder code = new StringBuilder();
 
@@ -131,7 +134,7 @@ public class MapUtil
 		code.append("    icon: '" + icon + "',");
 		code.append("    prefix: '" + prefix + "',");
 		code.append("    markerColor: '" + markerColor + "',");
-		code.append("    shape: 'square'");
+		code.append("    shape: '" + shape.getId() + "'");
 		code.append("  });");
 
 		Script script = content.ac(HTML.script());

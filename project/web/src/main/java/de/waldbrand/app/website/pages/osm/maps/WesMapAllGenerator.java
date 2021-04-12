@@ -17,15 +17,9 @@
 
 package de.waldbrand.app.website.pages.osm.maps;
 
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
-import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
-
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jsoup.nodes.DataNode;
 
@@ -67,15 +61,12 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 
 		MapUtil.addMap(content);
 
-		Map<PoiType, String> typeToColor = new HashMap<>();
-		typeToColor.put(HYDRANT_PILLAR, "red");
-		typeToColor.put(HYDRANT_PIPE, "purple");
-		typeToColor.put(SUCTION_POINT, "blue");
-
 		for (PoiType type : PoiType.values()) {
 			markerId(type);
+			;
 			MapUtil.addMarkerDef(content, type.toString(),
-					typeToColor.get(type), "fa", "tint");
+					OsmMarkers.getShape(type), OsmMarkers.getColor(type), "fa",
+					"fa-tint");
 		}
 
 		Script script = content.ac(HTML.script());

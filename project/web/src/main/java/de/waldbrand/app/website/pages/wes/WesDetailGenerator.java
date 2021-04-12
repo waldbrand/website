@@ -35,6 +35,7 @@ import de.waldbrand.app.website.lbforst.NameUtil;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.MarkerShape;
 
 public class WesDetailGenerator extends SimpleBaseGenerator
 {
@@ -132,7 +133,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		Coordinate c = poi.getCoordinate();
 		MapUtil.addMap(container, c.getY(), c.getX(), 17);
 
-		MapUtil.addMarkerDef(container, "red", "fa", "tint");
+		MapUtil.addMarkerDef(container, MarkerShape.CIRCLE, "red", "fa",
+				"fa-tint");
 
 		Script script = container.ac(HTML.script());
 		StringBuilder code = new StringBuilder();

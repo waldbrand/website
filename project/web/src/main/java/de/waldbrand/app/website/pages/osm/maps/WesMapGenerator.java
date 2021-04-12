@@ -57,7 +57,8 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		MapUtil.addMap(content);
 
-		MapUtil.addMarkerDef(content, "red", "fa", "tint");
+		MapUtil.addMarkerDef(content, OsmMarkers.getShape(type),
+				OsmMarkers.getColor(type), "fa", "fa-tint");
 
 		Script script = content.ac(HTML.script());
 		StringBuilder code = new StringBuilder();
