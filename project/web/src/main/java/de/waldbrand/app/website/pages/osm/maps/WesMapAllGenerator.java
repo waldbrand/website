@@ -62,8 +62,6 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 		MapUtil.addMap(content);
 
 		for (PoiType type : PoiType.values()) {
-			markerId(type);
-			;
 			MapUtil.addMarkerDef(content, type.toString(),
 					OsmMarkers.getShape(type), OsmMarkers.getColor(type), "fa",
 					"fa-tint");
