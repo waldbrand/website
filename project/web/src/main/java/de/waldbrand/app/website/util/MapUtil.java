@@ -58,9 +58,9 @@ public class MapUtil
 		head.ac(ElementBuilder.styleSheet(
 				"https://use.fontawesome.com/releases/v5.7.2/css/all.css"));
 		head.ac(ElementBuilder.styleSheet(
-				"/client/leaflet.awesome-markers/leaflet.awesome-markers.css"));
+				"/client/leaflet-extra-markers/css/leaflet.extra-markers.min.css"));
 		head.ac(ElementBuilder.script(
-				"/client/leaflet.awesome-markers/leaflet.awesome-markers.js"));
+				"/client/leaflet-extra-markers/js/leaflet.extra-markers.js"));
 	}
 
 	public static void addMap(Element<?> content)
@@ -127,10 +127,11 @@ public class MapUtil
 	{
 		StringBuilder code = new StringBuilder();
 
-		code.append("var " + id + " = L.AwesomeMarkers.icon({");
+		code.append("var " + id + " = L.ExtraMarkers.icon({");
 		code.append("    icon: '" + icon + "',");
 		code.append("    prefix: '" + prefix + "',");
-		code.append("    markerColor: '" + markerColor + "'");
+		code.append("    markerColor: '" + markerColor + "',");
+		code.append("    shape: 'square'");
 		code.append("  });");
 
 		Script script = content.ac(HTML.script());
