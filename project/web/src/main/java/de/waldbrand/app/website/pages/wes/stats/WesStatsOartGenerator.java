@@ -67,13 +67,20 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 		headRow.cell("Art");
 		headRow.cell("Anzahl");
 
+		int total = 0;
+
 		for (Entry<Integer> entry : histogram.entrySet()) {
 			TableRow row = table.row();
 			int oart = entry.getElement();
 			row.cell().at(
 					String.format("%s (%d)", NameUtil.typeName(oart), oart));
 			row.cell().at(String.format("%d", entry.getCount()));
+			total += entry.getCount();
 		}
+
+		TableRow row = table.row();
+		row.cell("Insgesamt");
+		row.cell(String.format("%d", total));
 
 		WesAttributionUtil.attribution(content);
 	}

@@ -75,12 +75,19 @@ public class WesStatsGenerator extends SimpleBaseGenerator
 		headRow.cell(colTitle1);
 		headRow.cell("Anzahl");
 
+		int total = 0;
+
 		for (Entry<Integer> entry : histogram.entrySet()) {
 			TableRow row = table.row();
-			int oart = entry.getElement();
-			row.cell().at(String.format("%d", oart));
+			int value = entry.getElement();
+			row.cell().at(String.format("%d", value));
 			row.cell().at(String.format("%d", entry.getCount()));
+			total += entry.getCount();
 		}
+
+		TableRow row = table.row();
+		row.cell("Insgesamt");
+		row.cell(String.format("%d", total));
 
 		WesAttributionUtil.attribution(content);
 	}

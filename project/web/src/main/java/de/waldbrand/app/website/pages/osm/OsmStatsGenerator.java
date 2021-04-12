@@ -27,6 +27,7 @@ import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Table;
+import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
@@ -58,14 +59,25 @@ public class OsmStatsGenerator extends SimpleBaseGenerator
 
 		Table table = content.ac(HTML.table());
 		table.addClass("table");
+		TableHead tableHead = table.head();
+		TableRow headRow = tableHead.row();
+		headRow.cell("Art");
+		headRow.cell("Anzahl");
+
+		int total = 0;
 
 		for (PoiType type : PoiType.values()) {
 			List<OsmPoi> pois = Website.INSTANCE.getData().getTypeToPois()
 					.get(type);
+			total += pois.size();
 			TableRow row = table.row();
 			row.cell(type.getName());
 			row.cell(String.format("%d", pois.size()));
 		}
+
+		TableRow row = table.row();
+		row.cell("Insgesamt");
+		row.cell(String.format("%d", total));
 
 		OsmAttributionUtil.attribution(content);
 	}
