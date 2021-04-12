@@ -79,9 +79,9 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 		}
 
 		Script script = content.ac(HTML.script());
-		StringBuilder code = new StringBuilder();
 
 		for (PoiType type : PoiType.values()) {
+			StringBuilder code = new StringBuilder();
 			MapUtil.markerStart(code);
 			for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
 					.get(type)) {
