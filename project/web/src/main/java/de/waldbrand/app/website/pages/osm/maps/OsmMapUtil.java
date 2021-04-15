@@ -30,11 +30,16 @@ public class OsmMapUtil
 	public static void marker(StringBuilder code, OsmPoi poi, PoiType type,
 			String markerId)
 	{
+		String content = content(poi, type);
+		MapUtil.addMarker(code, poi.getLat(), poi.getLon(), content, markerId);
+	}
+
+	public static String content(OsmPoi poi, PoiType type)
+	{
 		Node link = OsmLinks.link(poi, "Details");
 		String name = poi.getEntity().getType().toString().toLowerCase();
-		String content = type.getName() + "<br>OSM " + name + " "
+		return type.getName() + "<br>OSM " + name + " "
 				+ poi.getEntity().getId() + "  " + link;
-		MapUtil.addMarker(code, poi.getLat(), poi.getLon(), content, markerId);
 	}
 
 }

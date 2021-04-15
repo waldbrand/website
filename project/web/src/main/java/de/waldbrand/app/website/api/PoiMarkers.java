@@ -3,6 +3,7 @@ package de.waldbrand.app.website.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import lombok.Getter;
 
@@ -12,10 +13,10 @@ public class PoiMarkers
 	@Getter
 	private List<Marker> markers = new ArrayList<>();
 
-	public PoiMarkers(List<OsmPoi> pois)
+	public PoiMarkers(List<OsmPoi> pois, PoiType type)
 	{
 		for (OsmPoi poi : pois) {
-			markers.add(new Marker(poi));
+			markers.add(new Marker(poi, type));
 		}
 	}
 
