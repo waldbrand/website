@@ -69,6 +69,7 @@ public class PoisGenerator implements ApiEndpoint
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();
+		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(gson.toJson(markers));
 	}
 
