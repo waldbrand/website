@@ -16,7 +16,7 @@ public class PoiMarkers
 	@Getter
 	private Map<String, List<Marker>> markers = new LinkedHashMap<>();
 
-	public void add(PoiType type, List<OsmPoi> pois)
+	public void add(PoiType type, Iterable<OsmPoi> pois)
 	{
 		List<Marker> list = new ArrayList<>();
 		markers.put(type.toString(), list);
@@ -25,7 +25,7 @@ public class PoiMarkers
 		}
 	}
 
-	public void add(String type, List<Poi> pois)
+	public void add(String type, Iterable<Poi> pois)
 	{
 		List<Marker> list = new ArrayList<>();
 		markers.put(type.toString(), list);

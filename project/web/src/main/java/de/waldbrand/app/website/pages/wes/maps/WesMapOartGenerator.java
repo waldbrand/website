@@ -17,6 +17,8 @@
 
 package de.waldbrand.app.website.pages.wes.maps;
 
+import static de.waldbrand.app.website.lbforst.PoiUtil.only;
+
 import java.io.IOException;
 
 import org.jsoup.nodes.DataNode;
@@ -71,10 +73,7 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 		StringBuilder code = new StringBuilder();
 
 		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			if (poi.getOart() != oart) {
-				continue;
-			}
+		for (Poi poi : only(Website.INSTANCE.getData().getPois(), oart)) {
 			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
 					"markers");
 		}

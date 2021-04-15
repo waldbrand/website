@@ -17,6 +17,8 @@
 
 package de.waldbrand.app.website.pages.wes.maps;
 
+import static de.waldbrand.app.website.lbforst.PoiUtil.not;
+
 import java.io.IOException;
 
 import org.jsoup.nodes.DataNode;
@@ -28,6 +30,7 @@ import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
@@ -61,7 +64,8 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		StringBuilder code = new StringBuilder();
 
 		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+		for (Poi poi : not(Website.INSTANCE.getData().getPois(),
+				WesType.GEPLANT.getId())) {
 			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
 					"markers");
 		}

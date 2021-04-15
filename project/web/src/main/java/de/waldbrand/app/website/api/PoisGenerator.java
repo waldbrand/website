@@ -17,6 +17,8 @@
 
 package de.waldbrand.app.website.api;
 
+import static de.waldbrand.app.website.lbforst.PoiUtil.not;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ import de.topobyte.webgun.util.ParameterUtil;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.ApiEndpoint;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Data;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.osm.PoiType;
@@ -68,7 +71,8 @@ public class PoisGenerator implements ApiEndpoint
 			markers.add(type, pois);
 		}
 
-		markers.add("forst", filterLbf(data.getPois(), envelope));
+		markers.add("forst", filterLbf(
+				not(data.getPois(), WesType.GEPLANT.getId()), envelope));
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();
@@ -76,7 +80,7 @@ public class PoisGenerator implements ApiEndpoint
 		response.getWriter().write(gson.toJson(markers));
 	}
 
-	private List<Poi> filterLbf(List<Poi> pois, Envelope envelope)
+	private Iterable<Poi> filterLbf(Iterable<Poi> pois, Envelope envelope)
 	{
 		List<Poi> results = new ArrayList<>();
 		for (Poi poi : pois) {
@@ -87,7 +91,7 @@ public class PoisGenerator implements ApiEndpoint
 		return results;
 	}
 
-	private List<OsmPoi> filterOsm(List<OsmPoi> pois, Envelope envelope)
+	private List<OsmPoi> filterOsm(Iterable<OsmPoi> pois, Envelope envelope)
 	{
 		List<OsmPoi> results = new ArrayList<>();
 		for (OsmPoi poi : pois) {

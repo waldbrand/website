@@ -41,22 +41,10 @@ public class NameUtil
 
 	private static Map<Integer, String> oartToName = new HashMap<>();
 
-	// Spezifiziert in Kleiner Anfrage 6/9805, Seite 6
 	static {
-		oartToName.put(400,
-				"Wasserentnahmestelle geplant (ohne Spezifikation)");
-		oartToName.put(410, "Saugstelle unendlich");
-		oartToName.put(414, "Saugstelle unendlich, nur mit Tragkraftspritze");
-		oartToName.put(420, "Saugstelle endlich");
-		oartToName.put(424, "Saugstelle endlich, nur mit Tragkraftspritze");
-		oartToName.put(430, "Grundwassertiefbrunnen");
-		oartToName.put(440, "Flachspiegelbrunnen");
-		oartToName.put(450, "Hydrant");
-		oartToName.put(460, "Staueinrichtung, nutzbar");
-		oartToName.put(464,
-				"Staueinrichtung, nutzbar nur mit Tragkraft Spritze");
-		oartToName.put(470, "Löschwasserteich");
-		oartToName.put(480, "Zisterne, Tank");
+		for (WesType type : WesType.values()) {
+			oartToName.put(type.getId(), type.getDescription());
+		}
 	}
 
 	public static String typeName(int oart)

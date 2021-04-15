@@ -17,6 +17,8 @@
 
 package de.waldbrand.app.website.pages.wes.maps;
 
+import static de.waldbrand.app.website.lbforst.PoiUtil.not;
+
 import java.io.IOException;
 
 import org.jsoup.nodes.DataNode;
@@ -30,6 +32,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
@@ -73,7 +76,8 @@ public class WesMapKreisGenerator extends SimpleBaseGenerator
 		StringBuilder code = new StringBuilder();
 
 		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+		for (Poi poi : not(Website.INSTANCE.getData().getPois(),
+				WesType.GEPLANT.getId())) {
 			String poiKreis = poi.getKreis();
 			if (poiKreis == null || !poiKreis.equals(kreisId)) {
 				continue;
