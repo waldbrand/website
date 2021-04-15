@@ -38,6 +38,7 @@ import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
+import de.waldbrand.app.website.pages.wes.maps.WesMapUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.MarkerShape;
 
@@ -89,7 +90,7 @@ public class WesMapOsmForstGenerator extends SimpleBaseGenerator
 		code = new StringBuilder();
 		MapUtil.markerStart(code, "forst");
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			MapUtil.addMarker(code, poi, true, "forst", "markers.get('forst')");
+			WesMapUtil.marker(code, poi, true, "forst", "markers.get('forst')");
 		}
 		MapUtil.markerEnd(code, "forst");
 		script.ac(new DataNode(code.toString()));

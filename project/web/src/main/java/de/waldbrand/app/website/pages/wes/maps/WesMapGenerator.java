@@ -62,7 +62,8 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		MapUtil.markerStart(code);
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			MapUtil.addMarker(code, poi, true);
+			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
+					"markers");
 		}
 		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));

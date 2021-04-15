@@ -37,6 +37,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.ApiEndpoint;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.lbforst.model.Data;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 
@@ -62,10 +63,12 @@ public class PoisGenerator implements ApiEndpoint
 
 		Data data = Website.INSTANCE.getData();
 		for (PoiType type : PoiType.values()) {
-			List<OsmPoi> pois = filter(data.getTypeToPois().get(type),
+			List<OsmPoi> pois = filterOsm(data.getTypeToPois().get(type),
 					envelope);
 			markers.add(type, pois);
 		}
+
+		markers.add("forst", filterLbf(data.getPois(), envelope));
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();
@@ -73,7 +76,18 @@ public class PoisGenerator implements ApiEndpoint
 		response.getWriter().write(gson.toJson(markers));
 	}
 
-	private List<OsmPoi> filter(List<OsmPoi> pois, Envelope envelope)
+	private List<Poi> filterLbf(List<Poi> pois, Envelope envelope)
+	{
+		List<Poi> results = new ArrayList<>();
+		for (Poi poi : pois) {
+			if (envelope.contains(poi.getCoordinate())) {
+				results.add(poi);
+			}
+		}
+		return results;
+	}
+
+	private List<OsmPoi> filterOsm(List<OsmPoi> pois, Envelope envelope)
 	{
 		List<OsmPoi> results = new ArrayList<>();
 		for (OsmPoi poi : pois) {

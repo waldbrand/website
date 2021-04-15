@@ -20,7 +20,6 @@ package de.waldbrand.app.website.util;
 import java.util.Locale;
 
 import org.jsoup.nodes.DataNode;
-import org.jsoup.nodes.Node;
 import org.locationtech.jts.geom.Coordinate;
 
 import de.topobyte.jsoup.ElementBuilder;
@@ -31,9 +30,6 @@ import de.topobyte.jsoup.components.Script;
 import de.topobyte.jsoup.nodes.Element;
 import de.waldbrand.app.website.Config;
 import de.waldbrand.app.website.config.MapPosition;
-import de.waldbrand.app.website.lbforst.NameUtil;
-import de.waldbrand.app.website.lbforst.PoiLinks;
-import de.waldbrand.app.website.lbforst.model.Poi;
 
 public class MapUtil
 {
@@ -185,25 +181,6 @@ public class MapUtil
 	{
 		code.append("var marker = L.marker([52.5, 13.4], {icon: "
 				+ DEFAULT_MARKER_ID + "}).addTo(map);");
-	}
-
-	public static void addMarker(StringBuilder code, Poi poi, boolean withLink)
-	{
-		addMarker(code, poi, withLink, DEFAULT_MARKER_ID, "markers");
-	}
-
-	public static void addMarker(StringBuilder code, Poi poi, boolean withLink,
-			String markerId, String markers)
-	{
-		String name = NameUtil.getName(poi);
-		Coordinate c = poi.getCoordinate();
-
-		String content = sane(name);
-		if (withLink) {
-			Node link = PoiLinks.link(poi, "Details");
-			content += " " + link.toString();
-		}
-		addMarker(code, c.getY(), c.getX(), content, markerId, markers);
 	}
 
 	public static void addMarker(StringBuilder code, double latitude,

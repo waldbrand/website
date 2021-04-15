@@ -75,7 +75,8 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 			if (poi.getOart() != oart) {
 				continue;
 			}
-			MapUtil.addMarker(code, poi, true);
+			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
+					"markers");
 		}
 		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));

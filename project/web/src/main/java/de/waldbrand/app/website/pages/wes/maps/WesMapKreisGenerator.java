@@ -78,7 +78,8 @@ public class WesMapKreisGenerator extends SimpleBaseGenerator
 			if (poiKreis == null || !poiKreis.equals(kreisId)) {
 				continue;
 			}
-			MapUtil.addMarker(code, poi, true);
+			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
+					"markers");
 		}
 		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
