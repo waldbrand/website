@@ -5,7 +5,9 @@ map.on("moveend", function() {
 function reloadPois() {
   if (map.getZoom() < 10) {
     clearPois();
+    $("#overlay").show();
   } else {
+    $("#overlay").hide();
     $.getJSON("/pois?bbox=" + map.getBounds().toBBoxString(), function(data) {
       updatePois(data);
     }).fail(function(d, textStatus, error) {

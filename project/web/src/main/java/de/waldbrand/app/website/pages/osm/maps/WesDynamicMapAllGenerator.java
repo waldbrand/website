@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.jsoup.nodes.DataNode;
 
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.nodes.Element;
@@ -52,7 +53,17 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		P p = content.ac(HTML.p());
 		p.appendText("OpenStreetmap + Landesbetrieb Forst");
 
-		MapUtil.addMap(content);
+		Div container = content.ac(HTML.div());
+		container.attr("style", "position:relative");
+		Div overlay = container.ac(HTML.div());
+		overlay.attr("id", "overlay");
+		overlay.attr("style", "position: absolute; width: 100%; height: 100px;"
+				+ " background-color: rgba(255,255,255, 0.5); z-index: 500; text-align: center;"
+				+ " line-height: 100px");
+		MapUtil.addMap(container);
+
+		overlay.ac(HTML.span()).at(
+				"Bitte Karte weiter vergrößern, um Wasserentnahmestellen anzuzeigen");
 
 		StringBuilder code = new StringBuilder();
 		code.append("var icons = new Map();");
