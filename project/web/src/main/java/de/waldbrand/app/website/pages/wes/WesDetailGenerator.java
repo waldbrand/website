@@ -141,8 +141,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 
 		MapUtil.markerStart(code);
 		MapUtil.addMarker(code, poi, false);
+		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(container, code);
 	}
 
 }

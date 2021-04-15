@@ -15,16 +15,18 @@ function reloadPois() {
 }
 
 function clearPois() {
-  markers.clearLayers();
+  for (let [key, value] of markers) {
+    value.clearLayers();
+  }
 }
 
 function updatePois(data) {
-  markers.clearLayers();
+  clearPois();
   data.markers.forEach(item => {
     var marker = L.marker([item.lat, item.lon], {
       icon: redMarker
     });
-    markers.addLayer(marker);
+    markers.get('SUCTION_POINT').addLayer(marker);
     marker.bindPopup(item.popup);
   });
 }

@@ -28,10 +28,11 @@ public class OsmMapUtil
 {
 
 	public static void marker(StringBuilder code, OsmPoi poi, PoiType type,
-			String markerId)
+			String markerId, String markers)
 	{
 		String content = content(poi, type);
-		MapUtil.addMarker(code, poi.getLat(), poi.getLon(), content, markerId);
+		MapUtil.addMarker(code, poi.getLat(), poi.getLon(), content, markerId,
+				markers);
 	}
 
 	public static String content(OsmPoi poi, PoiType type)

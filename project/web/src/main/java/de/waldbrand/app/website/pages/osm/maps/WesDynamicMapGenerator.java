@@ -27,9 +27,7 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
-import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.osm.PoiType;
-import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -63,13 +61,10 @@ public class WesDynamicMapGenerator extends SimpleBaseGenerator
 		Script script = content.ac(HTML.script());
 		StringBuilder code = new StringBuilder();
 
-		MapUtil.markerStart(code);
-		for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
-				.get(type)) {
-			OsmMapUtil.marker(code, poi, type, MapUtil.getDefaultMarkerId());
-		}
+		code.append("var markers = new Map();");
+		MapUtil.markerStart(code, type.toString());
+		MapUtil.markerEnd(code, type.toString());
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));

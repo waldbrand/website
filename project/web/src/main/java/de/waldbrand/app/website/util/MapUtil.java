@@ -147,12 +147,22 @@ public class MapUtil
 				"var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 40});");
 	}
 
-	public static void markerEnd(Element<?> content, StringBuilder code)
+	public static void markerEnd(StringBuilder code)
 	{
 		code.append("map.addLayer(markers);");
+	}
 
-		Script script = content.ac(HTML.script());
-		script.ac(new DataNode(code.toString()));
+	public static void markerStart(StringBuilder code, String markerId)
+	{
+		code.append(String.format(
+				"markers.set('%s', L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 40}));",
+				markerId));
+	}
+
+	public static void markerEnd(StringBuilder code, String markerId)
+	{
+		code.append(
+				String.format("map.addLayer(markers.get('%s'));", markerId));
 	}
 
 	public static void marker(StringBuilder code)
@@ -163,34 +173,37 @@ public class MapUtil
 
 	public static void addMarker(StringBuilder code, Poi poi, boolean withLink)
 	{
+		addMarker(code, poi, withLink, DEFAULT_MARKER_ID, "markers");
+	}
+
+	public static void addMarker(StringBuilder code, Poi poi, boolean withLink,
+			String markerId, String markers)
+	{
 		String name = NameUtil.getName(poi);
 		Coordinate c = poi.getCoordinate();
-		String coords = String.format(Locale.US, "%f, %f", c.getY(), c.getX());
-		code.append("var marker = L.marker([" + coords + "], {icon: "
-				+ DEFAULT_MARKER_ID + "});");
-		code.append("markers.addLayer(marker);");
+
 		String content = sane(name);
 		if (withLink) {
 			Node link = PoiLinks.link(poi, "Details");
 			content += " " + link.toString();
 		}
-		code.append("marker.bindPopup('" + content + "');");
-		code.append("\n");
+		addMarker(code, c.getY(), c.getX(), content, markerId, markers);
 	}
 
 	public static void addMarker(StringBuilder code, double latitude,
 			double longitude, String text)
 	{
-		addMarker(code, latitude, longitude, text, DEFAULT_MARKER_ID);
+		addMarker(code, latitude, longitude, text, DEFAULT_MARKER_ID,
+				"markers");
 	}
 
 	public static void addMarker(StringBuilder code, double latitude,
-			double longitude, String text, String markerId)
+			double longitude, String text, String markerId, String markers)
 	{
 		String coords = String.format(Locale.US, "%f, %f", latitude, longitude);
 		code.append("var marker = L.marker([" + coords + "], {icon: " + markerId
 				+ "});");
-		code.append("markers.addLayer(marker);");
+		code.append(markers + ".addLayer(marker);");
 		code.append("marker.bindPopup('" + sane(text) + "');");
 		code.append("\n");
 	}

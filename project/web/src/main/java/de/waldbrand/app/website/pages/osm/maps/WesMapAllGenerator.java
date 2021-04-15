@@ -69,16 +69,18 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 
 		Script script = content.ac(HTML.script());
 
+		StringBuilder code = new StringBuilder();
+		code.append("var markers = new Map();");
 		for (PoiType type : PoiType.values()) {
-			StringBuilder code = new StringBuilder();
-			MapUtil.markerStart(code);
+			MapUtil.markerStart(code, type.toString());
 			for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
 					.get(type)) {
-				OsmMapUtil.marker(code, poi, type, markerId(type));
+				OsmMapUtil.marker(code, poi, type, markerId(type),
+						String.format("markers.get('%s')", type));
 			}
-			script.ac(new DataNode(code.toString()));
-			MapUtil.markerEnd(content, code);
+			MapUtil.markerEnd(code, type.toString());
 		}
+		script.ac(new DataNode(code.toString()));
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));

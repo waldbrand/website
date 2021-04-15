@@ -64,8 +64,8 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		for (Poi poi : Website.INSTANCE.getData().getPois()) {
 			MapUtil.addMarker(code, poi, true);
 		}
+		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));

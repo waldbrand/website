@@ -66,10 +66,11 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		MapUtil.markerStart(code);
 		for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
 				.get(type)) {
-			OsmMapUtil.marker(code, poi, type, MapUtil.getDefaultMarkerId());
+			OsmMapUtil.marker(code, poi, type, MapUtil.getDefaultMarkerId(),
+					"markers");
 		}
+		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));

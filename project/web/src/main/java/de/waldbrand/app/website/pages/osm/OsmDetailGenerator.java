@@ -140,8 +140,8 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		MapUtil.markerStart(code);
 		MapUtil.addMarker(code, node.getLatitude(), node.getLongitude(),
 				"Node " + id);
+		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(container, code);
 	}
 
 }

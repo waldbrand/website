@@ -69,30 +69,30 @@ public class WesMapOsmForstGenerator extends SimpleBaseGenerator
 					"fa-tint");
 		}
 
-		MapUtil.addMarkerDef(content, MarkerShape.CIRCLE, "yellow", "fa",
-				"fa-tint");
-
-		Script script = content.ac(HTML.script());
-
-		for (PoiType type : PoiType.values()) {
-			StringBuilder code = new StringBuilder();
-			MapUtil.markerStart(code);
-			for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
-					.get(type)) {
-				OsmMapUtil.marker(code, poi, type, markerId(type));
-			}
-			script.ac(new DataNode(code.toString()));
-			MapUtil.markerEnd(content, code);
-		}
+		MapUtil.addMarkerDef(content, "forst", MarkerShape.CIRCLE, "yellow",
+				"fa", "fa-tint");
 
 		StringBuilder code = new StringBuilder();
-
-		MapUtil.markerStart(code);
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
-			MapUtil.addMarker(code, poi, true);
+		code.append("var markers = new Map();");
+		for (PoiType type : PoiType.values()) {
+			MapUtil.markerStart(code, type.toString());
+			for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
+					.get(type)) {
+				OsmMapUtil.marker(code, poi, type, markerId(type),
+						String.format("markers.get('%s')", type));
+			}
+			MapUtil.markerEnd(code, type.toString());
 		}
+		Script script = content.ac(HTML.script());
 		script.ac(new DataNode(code.toString()));
-		MapUtil.markerEnd(content, code);
+
+		code = new StringBuilder();
+		MapUtil.markerStart(code, "forst");
+		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+			MapUtil.addMarker(code, poi, true, "forst", "markers.get('forst')");
+		}
+		MapUtil.markerEnd(code, "forst");
+		script.ac(new DataNode(code.toString()));
 
 		script = content.ac(HTML.script());
 		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
