@@ -141,6 +141,22 @@ public class MapUtil
 		script.ac(new DataNode(code.toString()));
 	}
 
+	public static void addMarkerDef(Element<?> content, String mapId, String id,
+			MarkerShape shape, String markerColor, String prefix, String icon)
+	{
+		StringBuilder code = new StringBuilder();
+
+		code.append(mapId + ".set('" + id + "', L.ExtraMarkers.icon({");
+		code.append("    icon: '" + icon + "',");
+		code.append("    prefix: '" + prefix + "',");
+		code.append("    markerColor: '" + markerColor + "',");
+		code.append("    shape: '" + shape.getId() + "'");
+		code.append("  }));");
+
+		Script script = content.ac(HTML.script());
+		script.ac(new DataNode(code.toString()));
+	}
+
 	public static void markerStart(StringBuilder code)
 	{
 		code.append(

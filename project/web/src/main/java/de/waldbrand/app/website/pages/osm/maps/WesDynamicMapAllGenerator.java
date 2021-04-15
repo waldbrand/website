@@ -24,23 +24,21 @@ import org.jsoup.nodes.DataNode;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
-import de.topobyte.jsoup.components.Script;
+import de.topobyte.jsoup.nodes.Element;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.MarkerShape;
 
-public class WesDynamicMapGenerator extends SimpleBaseGenerator
+public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 {
 
-	private PoiType type;
-
-	public WesDynamicMapGenerator(WebPath path, PoiType type)
+	public WesDynamicMapAllGenerator(WebPath path)
 	{
 		super(path);
-		this.type = type;
 	}
 
 	@Override
@@ -51,28 +49,48 @@ public class WesDynamicMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
-		p.appendText("Typ: " + type.getMultiple());
+		p.appendText("Alle");
 
 		MapUtil.addMap(content);
 
-		MapUtil.addMarkerDef(content, OsmMarkers.getShape(type),
-				OsmMarkers.getColor(type), "fa", "fa-tint");
-
-		Script script = content.ac(HTML.script());
 		StringBuilder code = new StringBuilder();
+		code.append("var icons = new Map();");
+		script(content, code);
+
+		for (PoiType type : PoiType.values()) {
+			MapUtil.addMarkerDef(content, "icons", type.toString(),
+					OsmMarkers.getShape(type), OsmMarkers.getColor(type), "fa",
+					"fa-tint");
+		}
+
+		MapUtil.addMarkerDef(content, "icons", "forst", MarkerShape.CIRCLE,
+				"yellow", "fa", "fa-tint");
+
+		code = new StringBuilder();
 
 		code.append("var markers = new Map();");
-		MapUtil.markerStart(code, type.toString());
-		MapUtil.markerEnd(code, type.toString());
-		script.ac(new DataNode(code.toString()));
+		for (PoiType type : PoiType.values()) {
+			MapUtil.markerStart(code, type.toString());
+			MapUtil.markerEnd(code, type.toString());
+		}
+		MapUtil.markerStart(code, "forst");
+		MapUtil.markerEnd(code, "forst");
+		script(content, code);
 
-		script = content.ac(HTML.script());
-		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
-
-		script = content.ac(HTML.script());
-		script.ac(new DataNode(Resources.loadString("js/map-update.js")));
+		script(content, Resources.loadString("js/map-history.js"));
+		script(content, Resources.loadString("js/map-update.js"));
 
 		OsmAttributionUtil.attribution(content);
+	}
+
+	private void script(Element<?> content, String code)
+	{
+		content.ac(HTML.script()).ac(new DataNode(code));
+	}
+
+	private void script(Element<?> content, StringBuilder code)
+	{
+		content.ac(HTML.script()).ac(new DataNode(code.toString()));
 	}
 
 }

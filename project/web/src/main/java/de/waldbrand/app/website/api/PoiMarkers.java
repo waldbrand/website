@@ -1,7 +1,9 @@
 package de.waldbrand.app.website.api;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -11,12 +13,14 @@ public class PoiMarkers
 {
 
 	@Getter
-	private List<Marker> markers = new ArrayList<>();
+	private Map<String, List<Marker>> markers = new LinkedHashMap<>();
 
-	public PoiMarkers(List<OsmPoi> pois, PoiType type)
+	public void add(PoiType type, List<OsmPoi> pois)
 	{
+		List<Marker> list = new ArrayList<>();
+		markers.put(type.toString(), list);
 		for (OsmPoi poi : pois) {
-			markers.add(new Marker(poi, type));
+			list.add(new Marker(poi, type));
 		}
 	}
 

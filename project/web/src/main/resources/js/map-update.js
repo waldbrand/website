@@ -22,11 +22,14 @@ function clearPois() {
 
 function updatePois(data) {
   clearPois();
-  data.markers.forEach(item => {
-    var marker = L.marker([item.lat, item.lon], {
-      icon: redMarker
+  Object.keys(data.markers).forEach(function(id) {
+    var list = data.markers[id];
+    list.forEach(item => {
+      var marker = L.marker([item.lat, item.lon], {
+        icon: icons.get(id)
+      });
+      markers.get(id).addLayer(marker);
+      marker.bindPopup(item.popup);
     });
-    markers.get('SUCTION_POINT').addLayer(marker);
-    marker.bindPopup(item.popup);
   });
 }

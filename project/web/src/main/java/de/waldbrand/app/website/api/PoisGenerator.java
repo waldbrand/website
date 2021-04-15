@@ -58,11 +58,14 @@ public class PoisGenerator implements ApiEndpoint
 		BBox box = BBoxString.parse(bbox).toBbox();
 		Envelope envelope = box.toEnvelope();
 
-		PoiType type = PoiType.SUCTION_POINT;
-		Data data = Website.INSTANCE.getData();
-		List<OsmPoi> pois = filter(data.getTypeToPois().get(type), envelope);
+		PoiMarkers markers = new PoiMarkers();
 
-		PoiMarkers markers = new PoiMarkers(pois, type);
+		Data data = Website.INSTANCE.getData();
+		for (PoiType type : PoiType.values()) {
+			List<OsmPoi> pois = filter(data.getTypeToPois().get(type),
+					envelope);
+			markers.add(type, pois);
+		}
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();
