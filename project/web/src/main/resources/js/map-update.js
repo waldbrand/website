@@ -3,13 +3,19 @@ map.on("moveend", function() {
 });
 
 function reloadPois() {
-  if (map.getZoom() >= 10) {
+  if (map.getZoom() < 10) {
+    clearPois();
+  } else {
     $.getJSON("/pois?bbox=" + map.getBounds().toBBoxString(), function(data) {
       updatePois(data);
     }).fail(function(d, textStatus, error) {
       console.error("getJSON failed, status: " + textStatus + ", error: " + error)
     });
   }
+}
+
+function clearPois() {
+  markers.clearLayers();
 }
 
 function updatePois(data) {
