@@ -42,6 +42,9 @@ import de.waldbrand.app.website.pages.wes.maps.WesMapUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.MarkerShape;
 
+/**
+ * Currently not used any more
+ */
 public class WesMapOsmForstGenerator extends SimpleBaseGenerator
 {
 

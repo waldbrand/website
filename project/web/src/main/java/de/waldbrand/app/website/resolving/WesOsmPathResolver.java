@@ -25,10 +25,8 @@ import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.osm.OsmDetailGenerator;
 import de.waldbrand.app.website.pages.osm.OsmStatsGenerator;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
-import de.waldbrand.app.website.pages.osm.maps.WesDynamicMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
-import de.waldbrand.app.website.pages.osm.maps.WesMapOsmForstGenerator;
 
 public class WesOsmPathResolver
 		extends PathSpecResolver<ContentGeneratable, Void>
@@ -80,15 +78,6 @@ public class WesOsmPathResolver
 					String sId = output.getParameter("id");
 					long id = Long.parseLong(sId);
 					return new OsmDetailGenerator(path, EntityType.Way, id);
-				});
-
-		map(new PathSpec("osm", "map", "vergleich"),
-				(path, output, request, data) -> {
-					return new WesMapOsmForstGenerator(path);
-				});
-		map(new PathSpec("osm", "map", "test"),
-				(path, output, request, data) -> {
-					return new WesDynamicMapAllGenerator(path);
 				});
 	}
 

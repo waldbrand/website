@@ -30,6 +30,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
+import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.MarkerShape;
 
@@ -47,9 +48,9 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
+		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Alle");
+		p.appendText("OpenStreetmap + Landesbetrieb Forst");
 
 		MapUtil.addMap(content);
 
@@ -81,6 +82,7 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		script(content, Resources.loadString("js/map-update.js"));
 
 		OsmAttributionUtil.attribution(content);
+		WesAttributionUtil.attribution(content);
 	}
 
 	private void script(Element<?> content, String code)

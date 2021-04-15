@@ -47,6 +47,15 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
+		String linkMap = "/wes/map/osm-forst";
+		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkMap,
+				"Wasserentnahmestellen", HTML.a(linkMap, "Zur Karte"),
+				"Hier gibt es eine Karte mit Wasserentnahmestellen die"
+						+ " in den Datensätzen der OpenStreetMap und des Landesbetrieb Forst"
+						+ " verfügbar sind.");
+
+		cardIntro(deck);
+
 		String linkWes = "/wes";
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkWes,
 				"Wasserentnahmestellen (Landesbetrieb Forst)",
@@ -63,6 +72,24 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " im Community-Projekt OpenStreetMap verfügbar sind.");
 
 		MiscContent.rowSponsors(content);
+	}
+
+	private void cardIntro(Div deck)
+	{
+		Div col = deck
+				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
+		Div card = col.ac(HTML.div("card mb-4"));
+		Div body = card.ac(HTML.div("card-body"));
+		body.ac(HTML.h5("Die Waldbrand-App")).addClass("card-title");
+		P p = body.ac(HTML.p());
+		p.at("Im Rahmen des Prototype-Fund entwickeln wir"
+				+ " im Zeitraum März bis September 2021 eine App, die relevante"
+				+ " Informationen für die Brandenburger Feuerwehren zur Bekämpfung"
+				+ " von Waldbränden in einer offline-fähigen App verfügbar macht.");
+		p = body.ac(HTML.p());
+		p.at("Eine wichtige Rolle spielen in diesem Zusammenhang die Wasserentnahmestellen."
+				+ " Auf dieser Seite sind verschiedene Datenquellen zu diesem Thema"
+				+ " visualisiert.");
 	}
 
 	private void card(Div deck, String image, String imageLink, String title,

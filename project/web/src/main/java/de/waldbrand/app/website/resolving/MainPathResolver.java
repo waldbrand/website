@@ -24,6 +24,7 @@ import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
+import de.waldbrand.app.website.pages.osm.maps.WesDynamicMapAllGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
@@ -62,6 +63,11 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 		map(new PathSpec("reload-data"), (path, output, request, data) -> {
 			return new RefreshGenerator(path);
 		});
+
+		map(new PathSpec("wes", "map", "osm-forst"),
+				(path, output, request, data) -> {
+					return new WesDynamicMapAllGenerator(path);
+				});
 	}
 
 }
