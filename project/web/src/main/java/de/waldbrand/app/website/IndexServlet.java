@@ -36,6 +36,7 @@ import de.topobyte.webgun.resolving.PathResolver;
 import de.topobyte.webgun.resolving.Redirecter;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
+import de.waldbrand.app.website.resolving.ApiPathResolver;
 import de.waldbrand.app.website.resolving.MainPathResolver;
 import de.waldbrand.app.website.resolving.WesForstPathResolver;
 import de.waldbrand.app.website.resolving.WesOsmPathResolver;
@@ -52,6 +53,11 @@ public class IndexServlet extends HttpServlet
 		resolvers.add(new MainPathResolver());
 		resolvers.add(new WesForstPathResolver());
 		resolvers.add(new WesOsmPathResolver());
+	}
+
+	static List<PathResolver<ApiEndpoint, Void>> apiResolvers = new ArrayList<>();
+	static {
+		apiResolvers.add(new ApiPathResolver());
 	}
 
 	private interface Responder<T>
@@ -95,6 +101,19 @@ public class IndexServlet extends HttpServlet
 				response.sendRedirect(location);
 				return;
 			}
+		}
+
+		ApiEndpoint apiEndpoint = null;
+		for (PathResolver<ApiEndpoint, Void> resolver : apiResolvers) {
+			apiEndpoint = resolver.getGenerator(path, request, null);
+			if (apiEndpoint != null) {
+				break;
+			}
+		}
+
+		if (apiEndpoint != null) {
+			apiEndpoint.respond(path, response, parameters);
+			return;
 		}
 
 		ContentGeneratable generator = null;

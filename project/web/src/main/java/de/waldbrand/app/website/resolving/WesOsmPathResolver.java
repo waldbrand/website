@@ -24,6 +24,7 @@ import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.osm.OsmDetailGenerator;
 import de.waldbrand.app.website.pages.osm.OsmStatsGenerator;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
+import de.waldbrand.app.website.pages.osm.maps.WesDynamicMapGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapOsmForstGenerator;
@@ -77,6 +78,11 @@ public class WesOsmPathResolver
 		map(new PathSpec("osm", "map", "vergleich"),
 				(path, output, request, data) -> {
 					return new WesMapOsmForstGenerator(path);
+				});
+		map(new PathSpec("osm", "map", "test"),
+				(path, output, request, data) -> {
+					return new WesDynamicMapGenerator(path,
+							PoiType.SUCTION_POINT);
 				});
 	}
 
