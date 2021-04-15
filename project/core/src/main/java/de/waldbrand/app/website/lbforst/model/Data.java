@@ -26,8 +26,6 @@ import java.util.TreeMap;
 import com.slimjars.dist.gnu.trove.map.TLongObjectMap;
 import com.slimjars.dist.gnu.trove.map.hash.TLongObjectHashMap;
 
-import de.topobyte.osm4j.core.model.iface.OsmNode;
-import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -51,9 +49,9 @@ public class Data
 	private Map<PoiType, List<OsmPoi>> typeToPois = new HashMap<>();
 
 	@Getter
-	private TLongObjectMap<OsmNode> idToNodes = new TLongObjectHashMap<>();
+	private TLongObjectMap<OsmPoi> idToNodes = new TLongObjectHashMap<>();
 	@Getter
-	private TLongObjectMap<OsmWay> idToWays = new TLongObjectHashMap<>();
+	private TLongObjectMap<OsmPoi> idToWays = new TLongObjectHashMap<>();
 
 	public static String KEY_INTERNAL_ID = "internal-id";
 

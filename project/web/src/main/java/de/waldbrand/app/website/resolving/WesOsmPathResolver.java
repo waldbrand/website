@@ -18,6 +18,7 @@
 package de.waldbrand.app.website.resolving;
 
 import de.topobyte.jsoup.ContentGeneratable;
+import de.topobyte.osm4j.core.model.iface.EntityType;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
 import de.waldbrand.app.website.osm.PoiType;
@@ -72,7 +73,13 @@ public class WesOsmPathResolver
 				(path, output, request, data) -> {
 					String sId = output.getParameter("id");
 					long id = Long.parseLong(sId);
-					return new OsmDetailGenerator(path, id);
+					return new OsmDetailGenerator(path, EntityType.Node, id);
+				});
+		map(new PathSpec("osm", "way", ":id:"),
+				(path, output, request, data) -> {
+					String sId = output.getParameter("id");
+					long id = Long.parseLong(sId);
+					return new OsmDetailGenerator(path, EntityType.Way, id);
 				});
 
 		map(new PathSpec("osm", "map", "vergleich"),

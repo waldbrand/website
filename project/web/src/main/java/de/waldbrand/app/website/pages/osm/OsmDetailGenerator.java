@@ -33,15 +33,18 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.jsoup.components.Table;
 import de.topobyte.jsoup.components.TableRow;
-import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.core.model.iface.EntityType;
+import de.topobyte.osm4j.core.model.iface.OsmEntity;
 import de.topobyte.osm4j.core.model.iface.OsmTag;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.lbforst.model.Data;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.OsmUtil;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.MarkerShape;
@@ -49,21 +52,34 @@ import de.waldbrand.app.website.util.MarkerShape;
 public class OsmDetailGenerator extends SimpleBaseGenerator
 {
 
+	private EntityType type;
 	private long id;
 
-	public OsmDetailGenerator(WebPath path, long id)
+	public OsmDetailGenerator(WebPath path, EntityType type, long id)
 	{
 		super(path);
+		this.type = type;
 		this.id = id;
 	}
 
 	@Override
 	protected void content()
 	{
-		OsmNode node = Website.INSTANCE.getData().getIdToNodes().get(id);
-		if (node == null) {
+		Data data = Website.INSTANCE.getData();
+
+		OsmPoi poi = null;
+		OsmEntity entity;
+
+		if (type == EntityType.Node) {
+			poi = data.getIdToNodes().get(id);
+		} else if (type == EntityType.Way) {
+			poi = data.getIdToWays().get(id);
+		}
+		if (poi == null) {
 			throw new PageNotFoundException();
 		}
+
+		entity = poi.getEntity();
 
 		// close button
 		Div divClose = content.ac(HTML.div()).attr("style",
@@ -73,7 +89,7 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 				.addClass("btn btn-secondary");
 
 		// headline
-		Map<String, String> tags = OsmModelUtil.getTagsAsMap(node);
+		Map<String, String> tags = OsmModelUtil.getTagsAsMap(entity);
 		EnumSet<PoiType> types = OsmUtil.classify(tags);
 
 		List<String> names = OsmTypes.names(types);
@@ -87,34 +103,42 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		Div col1 = row.ac(HTML.div("col-12 col-md-6"));
 		Div col2 = row.ac(HTML.div("col-12 col-md-6"));
 
-		map(col1, node);
-		data(col2, node);
+		map(col1, poi);
+		data(col2, entity);
 
 		P p = col2.ac(HTML.p());
 		p.appendText(
 				"Angaben falsch, oder es fehlt was? Sag uns gerne bescheid: ");
 		p.ac(HTML.a(String.format(
-				"mailto:team@waldbrand-app.de?subject=Feedback: node id %d", id,
-				node.getId()), "team@waldbrand-app.de"));
+				"mailto:team@waldbrand-app.de?subject=Feedback: %s id %d",
+				typename(type), id), "team@waldbrand-app.de"));
 
 		OsmAttributionUtil.attribution(content);
 	}
 
-	private void data(Div container, OsmNode node)
+	private void data(Div container, OsmEntity entity)
 	{
 		Table table = container.ac(HTML.table());
 		table.addClass("table");
 
-		for (int i = 0; i < node.getNumberOfTags(); i++) {
-			OsmTag tag = node.getTag(i);
+		for (int i = 0; i < entity.getNumberOfTags(); i++) {
+			OsmTag tag = entity.getTag(i);
 			row(table, tag.getKey(), tag.getValue());
 		}
 
 		TableRow rowLinkOsm = table.row();
 		rowLinkOsm.cell("OSM");
-		rowLinkOsm.cell(HTML.a(
-				String.format("https://www.openstreetmap.org/node/%d", id),
-				String.format("Node %d", id)));
+		String typename = typename(entity.getType());
+		rowLinkOsm
+				.cell(HTML.a(
+						String.format("https://www.openstreetmap.org/%s/%d",
+								typename, id),
+						String.format("%s %d", typename, id)));
+	}
+
+	private String typename(EntityType type)
+	{
+		return type.toString().toLowerCase();
 	}
 
 	private void row(Table table, String val1, String val2)
@@ -124,12 +148,12 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		row.cell(val2);
 	}
 
-	private void map(Div container, OsmNode node)
+	private void map(Div container, OsmPoi poi)
 	{
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		MapUtil.addMap(container, node.getLatitude(), node.getLongitude(), 17);
+		MapUtil.addMap(container, poi.getLat(), poi.getLon(), 17);
 
 		MapUtil.addMarkerDef(container, MarkerShape.CIRCLE, "red", "fa",
 				"fa-tint");
@@ -137,9 +161,11 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		Script script = container.ac(HTML.script());
 		StringBuilder code = new StringBuilder();
 
+		String typename = typename(poi.getEntity().getType());
+
 		MapUtil.markerStart(code);
-		MapUtil.addMarker(code, node.getLatitude(), node.getLongitude(),
-				"Node " + id);
+		MapUtil.addMarker(code, poi.getLat(), poi.getLon(),
+				String.format("%s %d", typename, id));
 		MapUtil.markerEnd(code);
 		script.ac(new DataNode(code.toString()));
 	}

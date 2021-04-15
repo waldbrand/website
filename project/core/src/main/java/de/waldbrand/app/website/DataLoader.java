@@ -130,15 +130,15 @@ public class DataLoader
 
 			if (container.getType() == Node) {
 				OsmNode node = (OsmNode) entity;
-				data.getIdToNodes().put(node.getId(), node);
 				poi = new OsmPoi(node, node.getLongitude(), node.getLatitude());
+				data.getIdToNodes().put(node.getId(), poi);
 			} else if (container.getType() == Way) {
 				OsmWay way = (OsmWay) entity;
-				data.getIdToWays().put(way.getId(), way);
 				try {
 					Geometry geometry = gb.build(way, nodes);
 					Point centroid = geometry.getCentroid();
 					poi = new OsmPoi(way, centroid.getX(), centroid.getY());
+					data.getIdToWays().put(way.getId(), poi);
 				} catch (EntityNotFoundException e) {
 					logger.warn(
 							String.format("Error while building way %d (%s)",
