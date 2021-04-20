@@ -5,7 +5,9 @@ import lombok.Getter;
 public enum MarkerShape {
 
 	CIRCLE("circle"),
-	SQUARE("square");
+	SQUARE("square"),
+	STAR("star"),
+	PENTA("penta");
 
 	@Getter
 	private String id;

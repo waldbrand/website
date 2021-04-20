@@ -35,11 +35,26 @@ public enum PoiType {
 			"Überflurhydranten",
 			Arrays.asList(new Tag("emergency", "fire_hydrant"),
 					new Tag("fire_hydrant:type", "pillar"))),
+	HYDRANT_UNDERGROUND(
+			"Unterflurhydrant",
+			"Unterflurhydranten",
+			Arrays.asList(new Tag("emergency", "fire_hydrant"),
+					new Tag("fire_hydrant:type", "underground"))),
+	HYDRANT_WALL(
+			"Wandhydrant",
+			"Wandhydranten",
+			Arrays.asList(new Tag("emergency", "fire_hydrant"),
+					new Tag("fire_hydrant:type", "wall"))),
 	HYDRANT_PIPE(
 			"Druckloser Anschluss",
 			"Drucklose Anschlüsse",
 			Arrays.asList(new Tag("emergency", "fire_hydrant"),
 					new Tag("fire_hydrant:type", "pipe"))),
+	HYDRANT_OTHER(
+			"Unspezifizierter Hydrant",
+			"Unspezifizierte Hydranten",
+			Arrays.asList(new Tag("emergency", "fire_hydrant")),
+			Arrays.asList("fire_hydrant:type")),
 	WATER_TANK(
 			"Wasserbecken",
 			"Wasserbecken",
@@ -55,12 +70,24 @@ public enum PoiType {
 	private String multiple;
 	@Getter
 	private List<OsmTag> tags;
+	@Getter
+	private List<String> missingKeys;
 
 	private PoiType(String name, String multiple, List<OsmTag> tags)
 	{
 		this.name = name;
 		this.multiple = multiple;
 		this.tags = tags;
+		this.missingKeys = null;
+	}
+
+	private PoiType(String name, String multiple, List<OsmTag> tags,
+			List<String> missingKeys)
+	{
+		this.name = name;
+		this.multiple = multiple;
+		this.tags = tags;
+		this.missingKeys = missingKeys;
 	}
 
 }

@@ -17,14 +17,10 @@
 
 package de.waldbrand.app.website.osm;
 
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
-import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
-import static de.waldbrand.app.website.osm.PoiType.WATER_POND;
-import static de.waldbrand.app.website.osm.PoiType.WATER_TANK;
-
 import java.util.EnumSet;
 import java.util.Map;
+
+import de.topobyte.osm4j.core.model.iface.OsmTag;
 
 public class OsmUtil
 {
@@ -33,32 +29,31 @@ public class OsmUtil
 	{
 		EnumSet<PoiType> types = EnumSet.noneOf(PoiType.class);
 
-		String emergency = tags.get("emergency");
-		String fireHydrantType = tags.get("fire_hydrant:type");
-
-		switch (emergency) {
-		case "suction_point":
-			types.add(SUCTION_POINT);
-			break;
-		case "water_tank":
-			types.add(WATER_TANK);
-			break;
-		case "fire_water_pond":
-			types.add(WATER_POND);
-			break;
-		}
-		if (fireHydrantType != null) {
-			switch (fireHydrantType) {
-			case "pillar":
-				types.add(HYDRANT_PILLAR);
-				break;
-			case "pipe":
-				types.add(HYDRANT_PIPE);
-				break;
+		for (PoiType type : PoiType.values()) {
+			if (fits(type, tags)) {
+				types.add(type);
 			}
 		}
 
 		return types;
+	}
+
+	private static boolean fits(PoiType type, Map<String, String> tags)
+	{
+		if (type.getMissingKeys() != null) {
+			for (String key : type.getMissingKeys()) {
+				if (tags.containsKey(key)) {
+					return false;
+				}
+			}
+		}
+		for (OsmTag tag : type.getTags()) {
+			String value = tags.get(tag.getKey());
+			if (!tag.getValue().equals(value)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
