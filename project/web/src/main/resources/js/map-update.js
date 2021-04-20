@@ -3,7 +3,7 @@ map.on("moveend", function() {
 });
 
 function reloadPois() {
-  if (map.getZoom() < 10) {
+  if (map.getZoom() < 11) {
     clearPois();
     $("#overlay").show();
   } else {
