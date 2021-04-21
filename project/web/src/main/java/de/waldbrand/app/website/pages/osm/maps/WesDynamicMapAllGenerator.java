@@ -28,6 +28,7 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.nodes.Element;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.LeafletIcon;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
@@ -77,6 +78,12 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 
 		MapUtil.addMarkerDef(content, "icons", "forst", MarkerShape.CIRCLE,
 				"yellow", "fa", "fa-tint");
+
+		script(content, new LeafletIcon("HYDRANT_UNDERGROUND",
+				"marker/hydrant.svg", null).toString());
+		script(content,
+				new LeafletIcon("SUCTION_POINT", "marker/saugstelle.svg", null)
+						.toString());
 
 		code = new StringBuilder();
 
