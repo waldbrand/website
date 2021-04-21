@@ -92,7 +92,7 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		Map<String, String> tags = OsmModelUtil.getTagsAsMap(entity);
 		EnumSet<PoiType> types = OsmUtil.classify(tags);
 
-		List<String> names = OsmTypes.names(types);
+		List<String> names = OsmTypes.singleNames(types);
 		content.ac(HTML.h1(Joiner.on(", ").join(names)));
 
 		// clear div to avoid close button to interfere with other column

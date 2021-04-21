@@ -23,7 +23,16 @@ import java.util.List;
 public class OsmTypes
 {
 
-	public static List<String> names(Iterable<PoiType> types)
+	public static List<String> singleNames(Iterable<PoiType> types)
+	{
+		List<String> names = new ArrayList<>();
+		for (PoiType type : types) {
+			names.add(type.getName());
+		}
+		return names;
+	}
+
+	public static List<String> multiNames(Iterable<PoiType> types)
 	{
 		List<String> names = new ArrayList<>();
 		for (PoiType type : types) {

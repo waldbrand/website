@@ -53,7 +53,7 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		List<String> names = OsmTypes.names(Arrays.asList(PoiType.values()));
+		List<String> names = OsmTypes.multiNames(Arrays.asList(PoiType.values()));
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
