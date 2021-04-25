@@ -10,8 +10,8 @@
    version="1.1"
    id="svg2"
    sodipodi:docname="saugstelle.svg"
-   width="100.03957"
-   height="84.960724"
+   width="172.95758"
+   height="48.205326"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata8">
@@ -44,63 +44,50 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="6.675088"
-     inkscape:cx="40.858936"
-     inkscape:cy="39.335807"
+     inkscape:zoom="3.337544"
+     inkscape:cx="164.097"
+     inkscape:cy="10.071309"
      inkscape:window-x="1680"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2" />
+     inkscape:current-layer="layer1"
+     inkscape:snap-bbox="false"
+     inkscape:object-paths="true" />
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="bg">
-    <rect
-       ry="11.379784"
-       y="2.752044"
-       x="2.7520442"
-       height="79.495926"
-       width="94.495911"
-       id="rect815-3"
-       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.5040884;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-  </g>
+     inkscape:label="bg"
+     transform="translate(33.863144,-120.60384)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="inhalt"
+     style="display:inline"
+     transform="translate(33.863144,-120.60384)" />
   <g
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="schild"
-     transform="translate(0.01978536)">
-    <g
-       id="g930"
-       transform="matrix(1,0,0,0.9857745,-5.7395906,-2.0711097)"
-       style="stroke-width:1.00718951">
-      <rect
-         ry="11.544003"
-         y="4.8728275"
-         x="8.4916353"
-         height="80.643112"
-         width="94.495911"
-         id="rect815"
-         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#b10000;stroke-width:5.54366016;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <g
-         transform="matrix(1.1008176,0,0,1.1008176,-0.57865205,-8.8989695)"
-         id="g907"
-         style="stroke-width:1.00718951">
-        <path
-           inkscape:connector-curvature="0"
-           style="opacity:1;vector-effect:none;fill:#b10000;fill-opacity:1;stroke:none;stroke-width:5.0359478;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-           d="m 18.726562,12.509766 c -5.809661,0 -10.4863276,4.678619 -10.4863276,10.488281 V 36.179688 H 94.082031 V 22.998047 c 0,-5.809662 -4.67862,-10.488281 -10.488281,-10.488281 z"
-           id="rect815-6" />
-      </g>
-    </g>
+     transform="translate(33.882929,-120.60384)"
+     style="display:inline">
+    <rect
+       y="123.10384"
+       x="-31.382929"
+       height="43.205326"
+       width="167.95758"
+       id="rect1070"
+       style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#b10000;stroke-width:5.00000048;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:16px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       x="8.1757832"
-       y="20.542097"
-       id="text936"><tspan
-         sodipodi:role="line"
-         id="tspan934"
-         x="8.1757832"
-         y="20.542097">Saugstelle</tspan></text>
+       transform="scale(1.0166196,0.9836521)"
+       id="text1074"
+       y="154.68291"
+       x="-20.005112"
+       style="font-style:normal;font-weight:normal;font-size:27.44482231px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.00718951"
+       xml:space="preserve"><tspan
+         style="stroke-width:1.00718951"
+         y="154.68291"
+         x="-20.005112"
+         id="tspan1072"
+         sodipodi:role="line">Saugstelle</tspan></text>
   </g>
 </svg>
