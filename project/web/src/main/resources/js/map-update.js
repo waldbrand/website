@@ -25,12 +25,14 @@ function clearPois() {
 function updatePois(data) {
   clearPois();
   Object.keys(data.markers).forEach(function(id) {
-    var list = data.markers[id];
+    var poiMarkers = data.markers[id];
+    var iconId = poiMarkers.iconId;
+    var list = poiMarkers.list;
     list.forEach(item => {
       var marker = L.marker([item.lat, item.lon], {
-        icon: icons.get(id)
+        icon: icons.get(iconId)
       });
-      markers.get(id).addLayer(marker);
+      markers.get(iconId).addLayer(marker);
       marker.bindPopup(item.popup);
     });
   });

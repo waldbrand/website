@@ -1,4 +1,4 @@
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.icons;
 
 import java.io.IOException;
 
@@ -10,6 +10,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import de.topobyte.cachebusting.CacheBusting;
+import de.waldbrand.app.website.icons.resize.MaxVolumeResizer;
+import de.waldbrand.app.website.icons.resize.Resizer;
+import de.waldbrand.app.website.icons.resize.Size;
 
 public class LeafletIcon
 {
@@ -19,12 +22,17 @@ public class LeafletIcon
 	private String id;
 	private String image;
 	private String shadow;
+	private double width;
+	private double height;
 
-	public LeafletIcon(String id, String image, String shadow)
+	public LeafletIcon(String id, String image, String shadow, double width,
+			double height)
 	{
 		this.id = id;
 		this.image = image;
 		this.shadow = shadow;
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
@@ -48,9 +56,15 @@ public class LeafletIcon
 			json.addProperty("shadowUrl", "/" + CacheBusting.resolve(shadow));
 		}
 
-		json.add("iconSize", array(100 / 3., 85 / 3.));
+		Resizer resizer = new MaxVolumeResizer(1400);
+		Size size = resizer.resize(new Size(width, height));
+
+		System.out.println(width + " " + height + " " + size.getWidth() + " "
+				+ size.getHeight());
+
+		json.add("iconSize", array(size.getWidth(), size.getHeight()));
 		json.add("shadowSize", array(50, 64));
-		json.add("iconAnchor", array(100 / 6., 85 / 3.));
+		json.add("iconAnchor", array(size.getWidth() / 2, size.getHeight()));
 		if (shadow != null) {
 			json.add("shadowAnchor", array(4, 62));
 		}

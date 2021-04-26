@@ -14,21 +14,21 @@ public class PoiMarkers
 {
 
 	@Getter
-	private Map<String, List<Marker>> markers = new LinkedHashMap<>();
+	private Map<String, MarkerList> markers = new LinkedHashMap<>();
 
-	public void add(PoiType type, Iterable<OsmPoi> pois)
+	public void add(PoiType type, String iconId, Iterable<OsmPoi> pois)
 	{
 		List<Marker> list = new ArrayList<>();
-		markers.put(type.toString(), list);
+		markers.put(type.toString(), new MarkerList(iconId, list));
 		for (OsmPoi poi : pois) {
 			list.add(new Marker(poi, type));
 		}
 	}
 
-	public void add(String type, Iterable<Poi> pois)
+	public void add(String type, String iconId, Iterable<Poi> pois)
 	{
 		List<Marker> list = new ArrayList<>();
-		markers.put(type.toString(), list);
+		markers.put(type.toString(), new MarkerList(iconId, list));
 		for (Poi poi : pois) {
 			list.add(new Marker(poi));
 		}

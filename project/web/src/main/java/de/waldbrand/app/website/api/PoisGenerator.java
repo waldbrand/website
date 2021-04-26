@@ -17,7 +17,7 @@
 
 package de.waldbrand.app.website.api;
 
-import static de.waldbrand.app.website.lbforst.PoiUtil.not;
+import static de.waldbrand.app.website.lbforst.PoiUtil.only;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,6 +38,8 @@ import de.topobyte.webgun.util.ParameterUtil;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.ApiEndpoint;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.icons.Icon;
+import de.waldbrand.app.website.icons.IconMapping;
 import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Data;
 import de.waldbrand.app.website.lbforst.model.Poi;
@@ -66,13 +68,20 @@ public class PoisGenerator implements ApiEndpoint
 
 		Data data = Website.INSTANCE.getData();
 		for (PoiType type : PoiType.values()) {
+			Icon icon = IconMapping.get(type);
 			List<OsmPoi> pois = filterOsm(data.getTypeToPois().get(type),
 					envelope);
-			markers.add(type, pois);
+			markers.add(type, icon.getName(), pois);
 		}
 
-		markers.add("forst", filterLbf(
-				not(data.getPois(), WesType.GEPLANT.getId()), envelope));
+		for (WesType type : WesType.values()) {
+			if (type == WesType.GEPLANT) {
+				continue;
+			}
+			Icon icon = IconMapping.get(type);
+			markers.add("forst-" + type.getId(), icon.getName(),
+					filterLbf(only(data.getPois(), type.getId()), envelope));
+		}
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();

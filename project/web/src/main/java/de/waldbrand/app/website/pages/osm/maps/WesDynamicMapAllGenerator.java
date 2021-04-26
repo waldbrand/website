@@ -28,13 +28,13 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.nodes.Element;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
-import de.waldbrand.app.website.LeafletIcon;
-import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.icons.Icon;
+import de.waldbrand.app.website.icons.Icons;
+import de.waldbrand.app.website.icons.LeafletIcon;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
-import de.waldbrand.app.website.util.MarkerShape;
 
 public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 {
@@ -70,30 +70,20 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		code.append("var icons = new Map();");
 		script(content, code);
 
-		for (PoiType type : PoiType.values()) {
-			MapUtil.addMarkerDef(content, "icons", type.toString(),
-					OsmMarkers.getShape(type), OsmMarkers.getColor(type), "fa",
-					"fa-tint");
+		for (Icon icon : Icons.getAll()) {
+			script(content,
+					new LeafletIcon(icon.getName(),
+							"marker/" + icon.getFilename(), null,
+							icon.getWidth(), icon.getHeight()).toString());
 		}
-
-		MapUtil.addMarkerDef(content, "icons", "forst", MarkerShape.CIRCLE,
-				"yellow", "fa", "fa-tint");
-
-		script(content, new LeafletIcon("HYDRANT_UNDERGROUND",
-				"marker/hydrant.svg", null).toString());
-		script(content,
-				new LeafletIcon("SUCTION_POINT", "marker/saugstelle.svg", null)
-						.toString());
 
 		code = new StringBuilder();
 
 		code.append("var markers = new Map();");
-		for (PoiType type : PoiType.values()) {
-			MapUtil.markerStart(code, type.toString());
-			MapUtil.markerEnd(code, type.toString());
+		for (Icon icon : Icons.getAll()) {
+			MapUtil.markerStart(code, icon.getName());
+			MapUtil.markerEnd(code, icon.getName());
 		}
-		MapUtil.markerStart(code, "forst");
-		MapUtil.markerEnd(code, "forst");
 		script(content, code);
 
 		script(content, Resources.loadString("js/map-history.js"));
