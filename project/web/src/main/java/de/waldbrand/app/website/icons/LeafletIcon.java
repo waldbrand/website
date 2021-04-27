@@ -27,8 +27,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import de.topobyte.cachebusting.CacheBusting;
-import de.waldbrand.app.website.icons.resize.MaxVolumeResizer;
-import de.waldbrand.app.website.icons.resize.Resizer;
 import de.waldbrand.app.website.icons.resize.Size;
 
 public class LeafletIcon
@@ -73,8 +71,7 @@ public class LeafletIcon
 			json.addProperty("shadowUrl", "/" + CacheBusting.resolve(shadow));
 		}
 
-		Resizer resizer = new MaxVolumeResizer(1400);
-		Size size = resizer.resize(new Size(width, height));
+		Size size = IconUtil.getResizer().resize(new Size(width, height));
 
 		json.add("iconSize", array(size.getWidth(), size.getHeight()));
 		json.add("shadowSize", array(50, 64));

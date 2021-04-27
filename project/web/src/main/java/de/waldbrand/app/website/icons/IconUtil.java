@@ -17,41 +17,29 @@
 
 package de.waldbrand.app.website.icons;
 
-import lombok.Getter;
+import de.topobyte.cachebusting.CacheBusting;
+import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.components.Img;
+import de.topobyte.jsoup.nodes.Element;
+import de.waldbrand.app.website.icons.resize.MaxVolumeResizer;
+import de.waldbrand.app.website.icons.resize.Resizer;
+import de.waldbrand.app.website.icons.resize.Size;
 
-public enum Icon {
+public class IconUtil
+{
 
-	FLACHBRUNNEN("flachbrunnen.svg", 100, 85),
-	SAUGSTELLE("saugstelle.svg", 173, 48),
-	HYDRANT("hydrant.svg", 100, 85),
-	HYDRANT_UNSPEZIFIZIERT("hydrant-unklar.svg", 100, 85),
-	SPEICHER("speicher.svg", 100, 85),
-	TIEFBRUNNEN("tiefbrunnen.svg", 100, 85),
-	TIEFBRUNNEN_E("tiefbrunnen-e.svg", 100, 85),
-	TIEFBRUNNEN_T("tiefbrunnen-t.svg", 100, 85);
-
-	@Getter
-	private String filename;
-	@Getter
-	private int width;
-	@Getter
-	private int height;
-
-	private Icon(String filename, int width, int height)
+	public static void icon(Element<?> e, Icon icon)
 	{
-		this.filename = filename;
-		this.width = width;
-		this.height = height;
+		Img img = e.ac(HTML.img("/" + CacheBusting.resolve(icon.getPath())));
+		Size size = getResizer()
+				.resize(new Size(icon.getWidth(), icon.getHeight()));
+		img.attr("width", Double.toString(size.getWidth()));
+		img.attr("height", Double.toString(size.getHeight()));
 	}
 
-	public String getName()
+	public static Resizer getResizer()
 	{
-		return name().toLowerCase();
-	}
-
-	public String getPath()
-	{
-		return "marker/" + filename;
+		return new MaxVolumeResizer(1400);
 	}
 
 }

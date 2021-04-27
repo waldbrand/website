@@ -31,7 +31,11 @@ import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.icons.Icon;
+import de.waldbrand.app.website.icons.IconMapping;
+import de.waldbrand.app.website.icons.IconUtil;
 import de.waldbrand.app.website.lbforst.NameUtil;
+import de.waldbrand.app.website.lbforst.WesUtil;
 import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
@@ -66,6 +70,7 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 		TableRow headRow = tableHead.row();
 		headRow.cell("Art");
 		headRow.cell("Anzahl");
+		headRow.cell("Icon");
 
 		int total = 0;
 
@@ -76,11 +81,18 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 					String.format("%s (%d)", NameUtil.typeName(oart), oart));
 			row.cell().at(String.format("%d", entry.getCount()));
 			total += entry.getCount();
+			Icon icon = IconMapping.get(WesUtil.getById(oart));
+			if (icon == null) {
+				row.cell();
+			} else {
+				IconUtil.icon(row.cell(), icon);
+			}
 		}
 
 		TableRow row = table.row();
 		row.cell("Insgesamt");
 		row.cell(String.format("%d", total));
+		row.cell();
 
 		WesAttributionUtil.attribution(content);
 	}

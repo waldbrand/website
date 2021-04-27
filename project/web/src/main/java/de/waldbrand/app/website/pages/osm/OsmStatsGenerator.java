@@ -31,6 +31,8 @@ import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.icons.IconMapping;
+import de.waldbrand.app.website.icons.IconUtil;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -51,7 +53,8 @@ public class OsmStatsGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		List<String> names = OsmTypes.multiNames(Arrays.asList(PoiType.values()));
+		List<String> names = OsmTypes
+				.multiNames(Arrays.asList(PoiType.values()));
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
@@ -63,6 +66,7 @@ public class OsmStatsGenerator extends SimpleBaseGenerator
 		TableRow headRow = tableHead.row();
 		headRow.cell("Art");
 		headRow.cell("Anzahl");
+		headRow.cell("Icon");
 
 		int total = 0;
 
@@ -73,11 +77,13 @@ public class OsmStatsGenerator extends SimpleBaseGenerator
 			TableRow row = table.row();
 			row.cell(type.getName());
 			row.cell(String.format("%d", pois.size()));
+			IconUtil.icon(row.cell(), IconMapping.get(type));
 		}
 
 		TableRow row = table.row();
 		row.cell("Insgesamt");
 		row.cell(String.format("%d", total));
+		row.cell();
 
 		OsmAttributionUtil.attribution(content);
 	}

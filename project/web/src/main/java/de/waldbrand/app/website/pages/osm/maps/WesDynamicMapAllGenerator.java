@@ -71,10 +71,8 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		script(content, code);
 
 		for (Icon icon : Icons.getAll()) {
-			script(content,
-					new LeafletIcon(icon.getName(),
-							"marker/" + icon.getFilename(), null,
-							icon.getWidth(), icon.getHeight()).toString());
+			script(content, new LeafletIcon(icon.getName(), icon.getPath(),
+					null, icon.getWidth(), icon.getHeight()).toString());
 		}
 
 		code = new StringBuilder();

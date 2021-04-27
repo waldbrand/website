@@ -33,6 +33,8 @@ import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.icons.IconMapping;
+import de.waldbrand.app.website.icons.IconUtil;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -67,6 +69,7 @@ public class OsmMappingGenerator extends SimpleBaseGenerator
 		headRow.cell("Art");
 		headRow.cell("Anzahl");
 		headRow.cell("Tags");
+		headRow.cell("Icon");
 
 		int total = 0;
 
@@ -78,11 +81,13 @@ public class OsmMappingGenerator extends SimpleBaseGenerator
 			row.cell(type.getName());
 			row.cell(String.format("%d", pois.size()));
 			tagDef(row.cell(), type);
+			IconUtil.icon(row.cell(), IconMapping.get(type));
 		}
 
 		TableRow row = table.row();
 		row.cell("Insgesamt");
 		row.cell(String.format("%d", total));
+		row.cell();
 		row.cell();
 
 		OsmAttributionUtil.attribution(content);
