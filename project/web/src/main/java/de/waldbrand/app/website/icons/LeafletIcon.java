@@ -76,9 +76,6 @@ public class LeafletIcon
 		Resizer resizer = new MaxVolumeResizer(1400);
 		Size size = resizer.resize(new Size(width, height));
 
-		System.out.println(width + " " + height + " " + size.getWidth() + " "
-				+ size.getHeight());
-
 		json.add("iconSize", array(size.getWidth(), size.getHeight()));
 		json.add("shadowSize", array(50, 64));
 		json.add("iconAnchor", array(size.getWidth() / 2, size.getHeight()));
