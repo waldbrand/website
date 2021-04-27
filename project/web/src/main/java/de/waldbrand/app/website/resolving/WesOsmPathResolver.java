@@ -25,6 +25,8 @@ import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.osm.OsmDetailGenerator;
 import de.waldbrand.app.website.pages.osm.OsmMappingGenerator;
 import de.waldbrand.app.website.pages.osm.OsmStatsGenerator;
+import de.waldbrand.app.website.pages.osm.OsmTypeStatsKeyValuesGenerator;
+import de.waldbrand.app.website.pages.osm.OsmTypeStatsKeysGenerator;
 import de.waldbrand.app.website.pages.osm.WesGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
@@ -54,6 +56,22 @@ public class WesOsmPathResolver
 			map(new PathSpec("osm", "map", type.getUrlKeyword()),
 					(path, output, request, data) -> {
 						return new WesMapGenerator(path, type);
+					});
+		}
+
+		for (PoiType type : PoiType.values()) {
+			map(new PathSpec("osm", "type-stats", type.getUrlKeyword()),
+					(path, output, request, data) -> {
+						return new OsmTypeStatsKeysGenerator(path, type);
+					});
+		}
+
+		for (PoiType type : PoiType.values()) {
+			map(new PathSpec("osm", "type-stats", type.getUrlKeyword(), "key",
+					":key:"), (path, output, request, data) -> {
+						String key = output.getParameter("key");
+						return new OsmTypeStatsKeyValuesGenerator(path, type,
+								key);
 					});
 		}
 

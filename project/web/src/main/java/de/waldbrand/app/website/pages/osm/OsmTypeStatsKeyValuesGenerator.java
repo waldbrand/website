@@ -18,35 +18,41 @@
 package de.waldbrand.app.website.pages.osm;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.Multiset;
+import com.google.common.collect.Multisets;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.jsoup.components.Table;
-import de.topobyte.jsoup.components.TableCell;
 import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
+import de.topobyte.osm4j.core.model.iface.OsmEntity;
+import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.icons.IconMapping;
-import de.waldbrand.app.website.icons.IconUtil;
-import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class OsmMappingGenerator extends SimpleBaseGenerator
+public class OsmTypeStatsKeyValuesGenerator extends SimpleBaseGenerator
 {
 
-	public OsmMappingGenerator(WebPath path)
+	private PoiType type;
+	private String key;
+
+	public OsmTypeStatsKeyValuesGenerator(WebPath path, PoiType type,
+			String key)
 	{
 		super(path);
+		this.type = type;
+		this.key = key;
 	}
 
 	@Override
@@ -55,56 +61,48 @@ public class OsmMappingGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		List<String> names = OsmTypes
-				.multiNames(Arrays.asList(PoiType.values()));
+		List<OsmPoi> pois = Website.INSTANCE.getData().getTypeToPois()
+				.get(type);
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
-		p.appendText("Typen: " + Joiner.on(", ").join(names));
+		p.at(String.format("%s (%d insgesamt), Schlüssel '%s'",
+				type.getMultiple(), pois.size(), key));
 
-		Table table = content.ac(HTML.table());
-		table.addClass("table");
-		TableHead tableHead = table.head();
-		TableRow headRow = tableHead.row();
-		headRow.cell("Art");
-		headRow.cell("Anzahl");
-		headRow.cell("Tags");
-		headRow.cell("Icon");
-
-		int total = 0;
-
-		for (PoiType type : PoiType.values()) {
-			List<OsmPoi> pois = Website.INSTANCE.getData().getTypeToPois()
-					.get(type);
-			total += pois.size();
-			TableRow row = table.row();
-			row.cell().ac(HTML.a(
-					String.format("/osm/type-stats/%s", type.getUrlKeyword()),
-					type.getName()));
-			row.cell(String.format("%d", pois.size()));
-			tagDef(row.cell(), type);
-			IconUtil.icon(row.cell(), IconMapping.get(type));
+		Multiset<String> values = HashMultiset.create();
+		for (OsmPoi poi : pois) {
+			OsmEntity entity = poi.getEntity();
+			Map<String, String> tags = OsmModelUtil.getTagsAsMap(entity);
+			String value = tags.get(key);
+			if (value != null) {
+				values.add(value);
+			}
 		}
 
-		TableRow row = table.row();
-		row.cell("Insgesamt");
-		row.cell(String.format("%d", total));
-		row.cell();
-		row.cell();
+		if (values.isEmpty()) {
+			content.ac(HTML.p()).at("Nichts gefunden");
+		} else {
+			stats(values);
+		}
 
 		OsmAttributionUtil.attribution(content);
 	}
 
-	private void tagDef(TableCell cell, PoiType type)
+	private void stats(Multiset<String> values)
 	{
-		Joiner joiner = Joiner.on(", ");
-		cell.at(joiner.join(type.getTags()));
-		if (type.getMissingKeys() != null) {
-			cell.at(";");
-			cell.ac(HTML.br());
-			cell.at("nicht: ");
-			cell.at(joiner.join(Collections2.transform(type.getMissingKeys(),
-					s -> s + "=*")));
+		Table table = content.ac(HTML.table());
+		table.addClass("table");
+		TableHead tableHead = table.head();
+		TableRow headRow = tableHead.row();
+		headRow.cell("Wert");
+		headRow.cell("Anzahl");
+
+		ImmutableMultiset<String> histogram = Multisets
+				.copyHighestCountFirst(values);
+		for (String value : histogram.elementSet()) {
+			TableRow row = table.row();
+			row.cell(value);
+			row.cell(String.format("%d", values.count(value)));
 		}
 	}
 
