@@ -24,6 +24,7 @@ public enum Icon {
 	FLACHBRUNNEN("flachbrunnen.svg", 100, 85),
 	SAUGSTELLE("saugstelle.svg", 173, 48),
 	HYDRANT("hydrant.svg", 100, 85),
+	HYDRANT_UNSPEZIFIZIERT("hydrant-unklar.svg", 100, 85),
 	SPEICHER("speicher.svg", 100, 85),
 	TIEFBRUNNEN_E("tiefbrunnen-e.svg", 100, 85),
 	TIEFBRUNNEN_T("tiefbrunnen-t.svg", 100, 85);

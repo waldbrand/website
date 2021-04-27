@@ -31,7 +31,7 @@ public class IconMapping
 		osmToIcon.put(PoiType.HYDRANT_UNDERGROUND, Icon.HYDRANT);
 		osmToIcon.put(PoiType.HYDRANT_PILLAR, Icon.HYDRANT);
 		osmToIcon.put(PoiType.HYDRANT_WALL, Icon.HYDRANT);
-		osmToIcon.put(PoiType.HYDRANT_OTHER, Icon.HYDRANT);
+		osmToIcon.put(PoiType.HYDRANT_OTHER, Icon.HYDRANT_UNSPEZIFIZIERT);
 		osmToIcon.put(PoiType.SUCTION_POINT, Icon.SAUGSTELLE);
 		osmToIcon.put(PoiType.WATER_TANK, Icon.SPEICHER);
 		osmToIcon.put(PoiType.WATER_POND, Icon.SPEICHER);
