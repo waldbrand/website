@@ -15,25 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.osm;
+package de.waldbrand.app.website.pages.osm.maps;
 
 import java.io.IOException;
 
+import org.jsoup.nodes.DataNode;
+
 import de.topobyte.jsoup.HTML;
-import de.topobyte.jsoup.bootstrap4.Bootstrap;
-import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
+import de.topobyte.jsoup.components.P;
+import de.topobyte.jsoup.components.Script;
+import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.osm.PoiType;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesGenerator extends SimpleBaseGenerator
+public class OsmWesMapGenerator extends SimpleBaseGenerator
 {
 
-	public WesGenerator(WebPath path)
+	private PoiType type;
+
+	public OsmWesMapGenerator(WebPath path, PoiType type)
 	{
 		super(path);
+		this.type = type;
 	}
 
 	@Override
@@ -43,23 +52,28 @@ public class WesGenerator extends SimpleBaseGenerator
 		MapUtil.head(head);
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
+		P p = content.ac(HTML.p());
+		p.appendText("Typ: " + type.getMultiple());
 
-		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/osm/map/alles", "Alle");
-		for (PoiType type : PoiType.values()) {
-			list.addA("/osm/map/" + type.getUrlKeyword(), type.getMultiple());
+		MapUtil.addMap(content);
+
+		MapUtil.addMarkerDef(content, OsmMarkers.getShape(type),
+				OsmMarkers.getColor(type), "fa", "fa-tint");
+
+		Script script = content.ac(HTML.script());
+		StringBuilder code = new StringBuilder();
+
+		MapUtil.markerStart(code);
+		for (OsmPoi poi : Website.INSTANCE.getData().getTypeToPois()
+				.get(type)) {
+			OsmMapUtil.marker(code, poi, type, MapUtil.getDefaultMarkerId(),
+					"markers");
 		}
+		MapUtil.markerEnd(code);
+		script.ac(new DataNode(code.toString()));
 
-		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
-
-		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/osm/stats", "Statistiken");
-		list.addA("/osm/mapping", "Mapping");
-
-		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
-
-		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/osm/eintragen", "Wasserentnahmestelle eintragen");
+		script = content.ac(HTML.script());
+		script.ac(new DataNode(Resources.loadString("js/map-history.js")));
 
 		OsmAttributionUtil.attribution(content);
 	}

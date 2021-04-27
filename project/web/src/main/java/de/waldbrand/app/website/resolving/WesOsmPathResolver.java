@@ -27,9 +27,9 @@ import de.waldbrand.app.website.pages.osm.OsmMappingGenerator;
 import de.waldbrand.app.website.pages.osm.OsmStatsGenerator;
 import de.waldbrand.app.website.pages.osm.OsmTypeStatsKeyValuesGenerator;
 import de.waldbrand.app.website.pages.osm.OsmTypeStatsKeysGenerator;
-import de.waldbrand.app.website.pages.osm.WesGenerator;
-import de.waldbrand.app.website.pages.osm.maps.WesMapAllGenerator;
-import de.waldbrand.app.website.pages.osm.maps.WesMapGenerator;
+import de.waldbrand.app.website.pages.osm.OsmWesGenerator;
+import de.waldbrand.app.website.pages.osm.maps.OsmWesMapAllGenerator;
+import de.waldbrand.app.website.pages.osm.maps.OsmWesMapGenerator;
 
 public class WesOsmPathResolver
 		extends PathSpecResolver<ContentGeneratable, Void>
@@ -37,7 +37,7 @@ public class WesOsmPathResolver
 
 	{
 		map(new PathSpec("osm"), (path, output, request, data) -> {
-			return new WesGenerator(path);
+			return new OsmWesGenerator(path);
 		});
 
 		map(new PathSpec("osm", "stats"), (path, output, request, data) -> {
@@ -49,13 +49,13 @@ public class WesOsmPathResolver
 
 		map(new PathSpec("osm", "map", "alles"),
 				(path, output, request, data) -> {
-					return new WesMapAllGenerator(path);
+					return new OsmWesMapAllGenerator(path);
 				});
 
 		for (PoiType type : PoiType.values()) {
 			map(new PathSpec("osm", "map", type.getUrlKeyword()),
 					(path, output, request, data) -> {
-						return new WesMapGenerator(path, type);
+						return new OsmWesMapGenerator(path, type);
 					});
 		}
 

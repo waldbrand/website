@@ -32,17 +32,23 @@ import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.lbforst.model.Poi;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
+import de.waldbrand.app.website.pages.wes.maps.WesMapUtil;
 import de.waldbrand.app.website.util.MapUtil;
+import de.waldbrand.app.website.util.MarkerShape;
 
-public class WesMapAllGenerator extends SimpleBaseGenerator
+/**
+ * Currently not used any more
+ */
+public class OsmWesMapOsmForstGenerator extends SimpleBaseGenerator
 {
 
-	public WesMapAllGenerator(WebPath path)
+	public OsmWesMapOsmForstGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -67,7 +73,8 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 					"fa-tint");
 		}
 
-		Script script = content.ac(HTML.script());
+		MapUtil.addMarkerDef(content, "forst", MarkerShape.CIRCLE, "yellow",
+				"fa", "fa-tint");
 
 		StringBuilder code = new StringBuilder();
 		code.append("var markers = new Map();");
@@ -80,6 +87,15 @@ public class WesMapAllGenerator extends SimpleBaseGenerator
 			}
 			MapUtil.markerEnd(code, type.toString());
 		}
+		Script script = content.ac(HTML.script());
+		script.ac(new DataNode(code.toString()));
+
+		code = new StringBuilder();
+		MapUtil.markerStart(code, "forst");
+		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+			WesMapUtil.marker(code, poi, true, "forst", "markers.get('forst')");
+		}
+		MapUtil.markerEnd(code, "forst");
 		script.ac(new DataNode(code.toString()));
 
 		script = content.ac(HTML.script());
