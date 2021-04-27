@@ -61,6 +61,7 @@ public class WesGenerator extends SimpleBaseGenerator
 
 		list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/osm/stats", "Statistiken");
+		list.addA("/osm/mapping", "Mapping");
 
 		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
 
