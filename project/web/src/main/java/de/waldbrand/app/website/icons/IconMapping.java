@@ -35,7 +35,7 @@ public class IconMapping
 		osmToIcon.put(PoiType.SUCTION_POINT, Icon.SAUGSTELLE);
 		osmToIcon.put(PoiType.WATER_TANK, Icon.SPEICHER);
 		osmToIcon.put(PoiType.WATER_POND, Icon.SPEICHER);
-		osmToIcon.put(PoiType.HYDRANT_PIPE, Icon.TIEFBRUNNEN_E);
+		osmToIcon.put(PoiType.HYDRANT_PIPE, Icon.TIEFBRUNNEN);
 	}
 
 	public static Icon get(PoiType type)
@@ -49,7 +49,7 @@ public class IconMapping
 		forstToIcon.put(WesType.SAUGSTELLE_ENDLICH_TKS, Icon.SAUGSTELLE);
 		forstToIcon.put(WesType.SAUGSTELLE_UNENDLICH, Icon.SAUGSTELLE);
 		forstToIcon.put(WesType.SAUGSTELLE_UNENDLICH_TKS, Icon.SAUGSTELLE);
-		forstToIcon.put(WesType.GRUNDWASSERTIEFBRUNNEN, Icon.TIEFBRUNNEN_E);
+		forstToIcon.put(WesType.GRUNDWASSERTIEFBRUNNEN, Icon.TIEFBRUNNEN);
 		forstToIcon.put(WesType.FLACHSPIEGELBRUNEN, Icon.FLACHBRUNNEN);
 		forstToIcon.put(WesType.HYDRANT, Icon.HYDRANT);
 		forstToIcon.put(WesType.STAUEINRICHTUNG, Icon.SPEICHER);
