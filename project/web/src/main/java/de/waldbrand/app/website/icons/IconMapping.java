@@ -29,7 +29,7 @@ public class IconMapping
 	private static Map<WesType, Icon> forstToIcon = new HashMap<>();
 	static {
 		forstToIcon.put(WesType.SAUGSTELLE_ENDLICH, Icon.SAUGSTELLE);
-		forstToIcon.put(WesType.SAUGSTELLE_TKS, Icon.SAUGSTELLE);
+		forstToIcon.put(WesType.SAUGSTELLE_ENDLICH_TKS, Icon.SAUGSTELLE);
 		forstToIcon.put(WesType.SAUGSTELLE_UNENDLICH, Icon.SAUGSTELLE);
 		forstToIcon.put(WesType.SAUGSTELLE_UNENDLICH_TKS, Icon.SAUGSTELLE);
 		forstToIcon.put(WesType.GRUNDWASSERTIEFBRUNNEN, Icon.TIEFBRUNNEN_E);

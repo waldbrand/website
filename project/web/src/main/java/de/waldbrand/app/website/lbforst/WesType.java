@@ -11,7 +11,7 @@ public enum WesType {
 			414,
 			"Saugstelle unendlich, nur mit Tragkraftspritze"),
 	SAUGSTELLE_ENDLICH(420, "Saugstelle endlich"),
-	SAUGSTELLE_TKS(424, "Saugstelle endlich, nur mit Tragkraftspritze"),
+	SAUGSTELLE_ENDLICH_TKS(424, "Saugstelle endlich, nur mit Tragkraftspritze"),
 	GRUNDWASSERTIEFBRUNNEN(430, "Grundwassertiefbrunnen"),
 	FLACHSPIEGELBRUNEN(440, "Flachspiegelbrunnen"),
 	HYDRANT(450, "Hydrant"),
