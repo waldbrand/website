@@ -67,19 +67,13 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 	{
 		Data data = Website.INSTANCE.getData();
 
-		OsmPoi poi = null;
-		OsmEntity entity;
+		OsmPoi poi = OsmUtil.getPoi(data, type, id);
 
-		if (type == EntityType.Node) {
-			poi = data.getIdToNodes().get(id);
-		} else if (type == EntityType.Way) {
-			poi = data.getIdToWays().get(id);
-		}
 		if (poi == null) {
 			throw new PageNotFoundException();
 		}
 
-		entity = poi.getEntity();
+		OsmEntity entity = poi.getEntity();
 
 		// close button
 		Div divClose = content.ac(HTML.div()).attr("style",

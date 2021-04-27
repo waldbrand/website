@@ -20,7 +20,10 @@ package de.waldbrand.app.website.osm;
 import java.util.EnumSet;
 import java.util.Map;
 
+import de.topobyte.osm4j.core.model.iface.EntityType;
 import de.topobyte.osm4j.core.model.iface.OsmTag;
+import de.waldbrand.app.website.lbforst.model.Data;
+import de.waldbrand.app.website.osm.model.OsmPoi;
 
 public class OsmUtil
 {
@@ -54,6 +57,16 @@ public class OsmUtil
 			}
 		}
 		return true;
+	}
+
+	public static OsmPoi getPoi(Data data, EntityType type, long id)
+	{
+		if (type == EntityType.Node) {
+			return data.getIdToNodes().get(id);
+		} else if (type == EntityType.Way) {
+			return data.getIdToWays().get(id);
+		}
+		return null;
 	}
 
 }
