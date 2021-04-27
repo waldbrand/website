@@ -17,12 +17,6 @@
 
 package de.waldbrand.app.website.pages.osm;
 
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PILLAR;
-import static de.waldbrand.app.website.osm.PoiType.HYDRANT_PIPE;
-import static de.waldbrand.app.website.osm.PoiType.SUCTION_POINT;
-import static de.waldbrand.app.website.osm.PoiType.WATER_POND;
-import static de.waldbrand.app.website.osm.PoiType.WATER_TANK;
-
 import java.io.IOException;
 
 import de.topobyte.jsoup.HTML;
@@ -30,6 +24,7 @@ import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
@@ -51,11 +46,9 @@ public class WesGenerator extends SimpleBaseGenerator
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 		list.addA("/osm/map/alles", "Alle");
-		list.addA("/osm/map/saugstellen", SUCTION_POINT.getMultiple());
-		list.addA("/osm/map/ueberflurhydranten", HYDRANT_PILLAR.getMultiple());
-		list.addA("/osm/map/anschlussrohre", HYDRANT_PIPE.getMultiple());
-		list.addA("/osm/map/löschwasserteiche", WATER_POND.getMultiple());
-		list.addA("/osm/map/wassertanks", WATER_TANK.getMultiple());
+		for (PoiType type : PoiType.values()) {
+			list.addA("/osm/map/" + type.getUrlKeyword(), type.getMultiple());
+		}
 
 		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 

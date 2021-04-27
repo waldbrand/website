@@ -90,4 +90,10 @@ public enum PoiType {
 		this.missingKeys = missingKeys;
 	}
 
+	public String getUrlKeyword()
+	{
+		return multiple.toLowerCase().replace(" ", "-").replace("ü", "ue")
+				.replace("ö", "oe").replace("ä", "ae").replace("ß", "ss");
+	}
+
 }

@@ -50,26 +50,12 @@ public class WesOsmPathResolver
 					return new WesMapAllGenerator(path);
 				});
 
-		map(new PathSpec("osm", "map", "saugstellen"),
-				(path, output, request, data) -> {
-					return new WesMapGenerator(path, PoiType.SUCTION_POINT);
-				});
-		map(new PathSpec("osm", "map", "ueberflurhydranten"),
-				(path, output, request, data) -> {
-					return new WesMapGenerator(path, PoiType.HYDRANT_PILLAR);
-				});
-		map(new PathSpec("osm", "map", "anschlussrohre"),
-				(path, output, request, data) -> {
-					return new WesMapGenerator(path, PoiType.HYDRANT_PIPE);
-				});
-		map(new PathSpec("osm", "map", "löschwasserteiche"),
-				(path, output, request, data) -> {
-					return new WesMapGenerator(path, PoiType.WATER_POND);
-				});
-		map(new PathSpec("osm", "map", "wassertanks"),
-				(path, output, request, data) -> {
-					return new WesMapGenerator(path, PoiType.WATER_TANK);
-				});
+		for (PoiType type : PoiType.values()) {
+			map(new PathSpec("osm", "map", type.getUrlKeyword()),
+					(path, output, request, data) -> {
+						return new WesMapGenerator(path, type);
+					});
+		}
 
 		map(new PathSpec("osm", "node", ":id:"),
 				(path, output, request, data) -> {
