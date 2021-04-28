@@ -18,9 +18,9 @@
 package de.waldbrand.app.website.resolving;
 
 import de.topobyte.jsoup.ContentGeneratable;
-import de.topobyte.webgun.resolving.pathspec.PathSpec;
-import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
+import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
 import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.wes.WesAddGenerator;
 import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
 import de.waldbrand.app.website.pages.wes.WesGenerator;
@@ -33,74 +33,49 @@ import de.waldbrand.app.website.pages.wes.stats.WesStatsGenerator;
 import de.waldbrand.app.website.pages.wes.stats.WesStatsOartGenerator;
 
 public class WesForstPathResolver
-		extends PathSpecResolver<ContentGeneratable, Void>
+		extends SmartPathSpecResolver<ContentGeneratable, Void>
 {
 
 	{
-		map(new PathSpec("wes"), (path, output, request, data) -> {
-			return new WesGenerator(path);
-		});
-		map(new PathSpec("wes", "map"), (path, output, request, data) -> {
-			return new WesMapGenerator(path);
-		});
-		map(new PathSpec("wes", "map", "filter-landkreis-select"),
-				(path, output, request, data) -> {
-					return new WesMapLandkreisFilterGenerator(path);
-				});
-		map(new PathSpec("wes", "map", "filter-oart-select"),
-				(path, output, request, data) -> {
-					return new WesMapOartFilterGenerator(path);
-				});
-		map(new PathSpec("wes", "map", "landkreis", ":kreis:"),
-				(path, output, request, data) -> {
-					String kreis = output.getParameter("kreis");
-					return new WesMapKreisGenerator(path, kreis);
-				});
-		map(new PathSpec("wes", "map", "oart", ":oart:"),
-				(path, output, request, data) -> {
-					String sOart = output.getParameter("oart");
-					try {
-						int oart = Integer.parseInt(sOart);
-						return new WesMapOartGenerator(path, oart);
-					} catch (NumberFormatException e) {
-						return null;
-					}
-				});
-		map(new PathSpec("poi", ":id:"), (path, output, request, data) -> {
-			int id = Integer.parseInt(output.getParameter("id"));
-			return new WesDetailGenerator(path, id);
-		});
-		map(new PathSpec("wes", "stats", "oart"),
-				(path, output, request, data) -> {
-					return new WesStatsOartGenerator(path);
-				});
-		map(new PathSpec("wes", "stats", "baujahr"),
-				(path, output, request, data) -> {
-					return new WesStatsGenerator(path, "Baujahr",
-							"Baujahre der Wasserentnahmestellen",
-							Poi::getBaujahr);
-				});
-		map(new PathSpec("wes", "stats", "fstatus"),
-				(path, output, request, data) -> {
-					return new WesStatsGenerator(path, "Status",
-							"Status der Wasserentnahmestellen (was heißt das?)",
-							Poi::getFstatus);
-				});
-		map(new PathSpec("wes", "stats", "fkt_faehig"),
-				(path, output, request, data) -> {
-					return new WesStatsGenerator(path, "Funktionsfähigkeit",
-							"Funktionsfähigkeit der Wasserentnahmestellen (was heißt das?)",
-							Poi::getFktFaehig);
-				});
-		map(new PathSpec("wes", "stats", "menge"),
-				(path, output, request, data) -> {
-					return new WesStatsGenerator(path, "Menge",
-							"Menge (maximaler Durchfluss?)", Poi::getMenge);
-				});
+		map(LinkDefs.FORST,
+				(path, output, request, data) -> new WesGenerator(path));
+		map(LinkDefs.FORST_MAP,
+				(path, output, request, data) -> new WesMapGenerator(path));
+		map(LinkDefs.FORST_MAP_FILTER_LANDKREIS_SELECT, (path, output, request,
+				data) -> new WesMapLandkreisFilterGenerator(path));
+		map(LinkDefs.FORST_MAP_FILTER_OART_SELECT, (path, output, request,
+				data) -> new WesMapOartFilterGenerator(path));
+		map(LinkDefs.FORST_MAP_LANDKREIS, (path, output, request, data,
+				kreis) -> new WesMapKreisGenerator(path, kreis));
+		map(LinkDefs.FORST_MAP_OART, (path, output, request, data,
+				oart) -> new WesMapOartGenerator(path, oart));
 
-		map(new PathSpec("wes", "eintragen"), (path, output, request, data) -> {
-			return new WesAddGenerator(path);
-		});
+		map(LinkDefs.FORST_POI, (path, output, request, data,
+				id) -> new WesDetailGenerator(path, id));
+		map(LinkDefs.FORST_STATS_OART, (path, output, request,
+				data) -> new WesStatsOartGenerator(path));
+		map(LinkDefs.FORST_STATS_BAUJAHR,
+				(path, output, request, data) -> new WesStatsGenerator(path,
+						"Baujahr", "Baujahre der Wasserentnahmestellen",
+						Poi::getBaujahr));
+		map(LinkDefs.FORST_STATS_FSTATUS,
+				(path, output, request, data) -> new WesStatsGenerator(path,
+						"Status",
+						"Status der Wasserentnahmestellen (was heißt das?)",
+						Poi::getFstatus));
+		map(LinkDefs.FORST_STATS_FKT_FAEHIG,
+				(path, output, request, data) -> new WesStatsGenerator(path,
+						"Funktionsfähigkeit",
+						"Funktionsfähigkeit der Wasserentnahmestellen (was heißt das?)",
+						Poi::getFktFaehig));
+
+		map(LinkDefs.FORST_STATS_MENGE,
+				(path, output, request, data) -> new WesStatsGenerator(path,
+						"Menge", "Menge (maximaler Durchfluss?)",
+						Poi::getMenge));
+
+		map(LinkDefs.FORST_ADD,
+				(path, output, request, data) -> new WesAddGenerator(path));
 	}
 
 }
