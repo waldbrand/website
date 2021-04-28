@@ -28,7 +28,7 @@ import de.topobyte.jsoup.components.UnorderedList;
 import de.topobyte.jsoup.feather.Feather;
 import de.topobyte.jsoup.nodes.Element;
 import de.topobyte.pagegen.core.LinkResolver;
-import de.waldbrand.app.website.PathHelper;
+import de.waldbrand.app.website.links.LinkDefs;
 
 public class MainFooter extends Element<MainFooter>
 {
@@ -42,10 +42,8 @@ public class MainFooter extends Element<MainFooter>
 
 		UnorderedList links = div.ac(HTML.ul());
 
-		links.addItem(a(resolver.getLink(PathHelper.imprint()), "Impressum"));
-
-		links.addItem(a(resolver.getLink(PathHelper.privacy()), "Datenschutz"));
-
+		links.addItem(a(LinkDefs.IMPRINT.getLink(), "Impressum"));
+		links.addItem(a(LinkDefs.PRIVACY_POLICY.getLink(), "Datenschutz"));
 		links.addItem(a("https://github.com/waldbrand", "GitHub"));
 
 		P p = div.ac(p().addClass("text-muted"));

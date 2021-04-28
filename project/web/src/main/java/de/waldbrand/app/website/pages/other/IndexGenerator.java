@@ -25,6 +25,7 @@ import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.content.MiscContent;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
 public class IndexGenerator extends SimpleBaseGenerator
@@ -47,7 +48,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
-		String linkMap = "/wes/map/osm-forst";
+		String linkMap = LinkDefs.MAP.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkMap,
 				"Wasserentnahmestellen", HTML.a(linkMap, "Zur Karte"),
 				"Hier gibt es eine Karte mit Wasserentnahmestellen die"
@@ -56,7 +57,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 
 		cardIntro(deck);
 
-		String linkWes = "/wes";
+		String linkWes = LinkDefs.FORST.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkWes,
 				"Wasserentnahmestellen (Landesbetrieb Forst)",
 				HTML.a(linkWes, "Zu den Wasserentnahmestellen"),
@@ -64,7 +65,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " im Datensatz der Landesbetrieb Forst im  Geoportal Brandenburg"
 						+ " verfügbar sind.");
 
-		String linkOsm = "/osm";
+		String linkOsm = LinkDefs.OSM.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkOsm,
 				"Wasserentnahmestellen (OpenStreetMap)",
 				HTML.a(linkOsm, "Zu den Wasserentnahmestellen"),

@@ -27,6 +27,7 @@ import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.lbforst.NameUtil;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -54,7 +55,7 @@ public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 
 		List<Integer> oarts = NameUtil.getOarts();
 		for (int oart : oarts) {
-			list.addA("/wes/map/oart/" + oart,
+			list.addA(LinkDefs.FORST_MAP_OART.getLink(oart),
 					String.format("%s (%d)", NameUtil.typeName(oart), oart));
 		}
 

@@ -20,13 +20,14 @@ package de.waldbrand.app.website.lbforst;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.A;
 import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.links.LinkDefs;
 
 public class PoiLinks
 {
 
 	public static A link(Poi poi, String name)
 	{
-		return HTML.a("/poi/" + poi.getId(), name);
+		return HTML.a(LinkDefs.FORST_POI.getLink(poi.getId()), name);
 	}
 
 }

@@ -26,6 +26,7 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
 import de.waldbrand.app.website.content.MiscContent;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
 public class AboutGenerator extends SimpleBaseGenerator
@@ -60,7 +61,7 @@ public class AboutGenerator extends SimpleBaseGenerator
 
 		p = colRight.ac(HTML.p());
 		p.appendText("Für Feedback bitte ");
-		p.ac(HTML.a("/kontakt", "hier"));
+		p.ac(HTML.a(LinkDefs.CONTACT.getLink(), "hier"));
 		p.appendText(" vorbeischauen.");
 
 		MiscContent.rowSponsors(content);

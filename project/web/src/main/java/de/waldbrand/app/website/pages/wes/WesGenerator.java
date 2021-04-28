@@ -24,6 +24,7 @@ import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 
@@ -44,23 +45,28 @@ public class WesGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h2("Wasserentnahmestellen (Landesbetrieb Forst)"));
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/map", "Alle anzeigen");
-		list.addA("/wes/map/filter-landkreis-select", "Landkreis-Filter");
-		list.addA("/wes/map/filter-oart-select", "Art-Filter");
+		list.addA(LinkDefs.FORST_MAP.getLink(), "Alle anzeigen");
+		list.addA(LinkDefs.FORST_MAP_FILTER_LANDKREIS_SELECT.getLink(),
+				"Landkreis-Filter");
+		list.addA(LinkDefs.FORST_MAP_FILTER_OART_SELECT.getLink(),
+				"Art-Filter");
 
 		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 
 		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/stats/oart", "Typen von Entnahmestellen");
-		list.addA("/wes/stats/baujahr", "Baujahre");
-		list.addA("/wes/stats/fstatus", "Status");
-		list.addA("/wes/stats/fkt_faehig", "Funktionsfähigkeit");
-		list.addA("/wes/stats/menge", "Menge");
+		list.addA(LinkDefs.FORST_STATS_OART.getLink(),
+				"Typen von Entnahmestellen");
+		list.addA(LinkDefs.FORST_STATS_BAUJAHR.getLink(), "Baujahre");
+		list.addA(LinkDefs.FORST_STATS_FSTATUS.getLink(), "Status");
+		list.addA(LinkDefs.FORST_STATS_FKT_FAEHIG.getLink(),
+				"Funktionsfähigkeit");
+		list.addA(LinkDefs.FORST_STATS_MENGE.getLink(), "Menge");
 
 		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
 
 		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/wes/eintragen", "Wasserentnahmestelle eintragen");
+		list.addA(LinkDefs.FORST_ADD.getLink(),
+				"Wasserentnahmestelle eintragen");
 
 		WesAttributionUtil.attribution(content);
 	}

@@ -28,6 +28,7 @@ import de.topobyte.jsoup.components.P;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -58,7 +59,7 @@ public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
 		for (String key : idToEntity.keySet()) {
 			EntityFile entity = idToEntity.get(key);
 			String name = entity.getTags().get("name:de");
-			list.addA("/wes/map/landkreis/" + key, name);
+			list.addA(LinkDefs.FORST_MAP_LANDKREIS.getLink(key), name);
 		}
 
 		WesAttributionUtil.attribution(content);

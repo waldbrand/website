@@ -13,6 +13,18 @@ public class LinkDefs
 {
 
 	/*
+	 * Allgemein
+	 */
+
+	public static PathDef0 IMPRINT = new PathDef0(new PathSpec("impressum"));
+	public static PathDef0 PRIVACY_POLICY = new PathDef0(
+			new PathSpec("privacy-policy"));
+	public static PathDef0 CONTACT = new PathDef0(new PathSpec("kontakt"));
+
+	public static PathDef0 MAP = new PathDef0(
+			new PathSpec("wes", "map", "osm-forst"));
+
+	/*
 	 * OSM
 	 */
 

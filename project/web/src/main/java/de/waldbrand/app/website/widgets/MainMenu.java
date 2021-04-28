@@ -30,6 +30,7 @@ import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.UnorderedList;
 import de.topobyte.pagegen.core.LinkResolver;
 import de.topobyte.webpaths.WebPaths;
+import de.waldbrand.app.website.links.LinkDefs;
 
 public class MainMenu
 {
@@ -59,10 +60,10 @@ public class MainMenu
 		UnorderedList main = menu.addSection(collapse);
 		UnorderedList right = menu.addSectionRight(collapse);
 
-		menu.addLink(main, "/wes",
+		menu.addLink(main, LinkDefs.FORST.getLink(),
 				"Wasserentnahmestellen (Landesbetrieb Forst)", false);
-		menu.addLink(main, "/osm", "Wasserentnahmestellen (OpenStreetMap)",
-				false);
+		menu.addLink(main, LinkDefs.OSM.getLink(),
+				"Wasserentnahmestellen (OpenStreetMap)", false);
 
 		menu.addLink(right, "/about", "Über", false);
 
