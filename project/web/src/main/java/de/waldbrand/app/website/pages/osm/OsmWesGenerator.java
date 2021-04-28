@@ -24,6 +24,7 @@ import de.topobyte.jsoup.bootstrap4.Bootstrap;
 import de.topobyte.jsoup.bootstrap4.components.ListGroupDiv;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
@@ -45,16 +46,16 @@ public class OsmWesGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/osm/map/alles", "Alle");
+		list.addA(LinkDefs.OSM_MAP_ALL.getLink(), "Alle");
 		for (PoiType type : PoiType.values()) {
-			list.addA("/osm/map/" + type.getUrlKeyword(), type.getMultiple());
+			list.addA(LinkDefs.OSM_MAP.getLink(type), type.getMultiple());
 		}
 
 		content.ac(HTML.h3("Statistiken")).addClass("mt-3");
 
 		list = content.ac(Bootstrap.listGroupDiv());
-		list.addA("/osm/stats", "Statistiken");
-		list.addA("/osm/mapping", "Mapping");
+		list.addA(LinkDefs.OSM_STATS.getLink(), "Statistiken");
+		list.addA(LinkDefs.OSM_MAPPING.getLink(), "Mapping");
 
 		content.ac(HTML.h3("Mitmachen")).addClass("mt-3");
 

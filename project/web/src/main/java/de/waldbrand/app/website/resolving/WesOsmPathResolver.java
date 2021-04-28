@@ -19,9 +19,8 @@ package de.waldbrand.app.website.resolving;
 
 import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.osm4j.core.model.iface.EntityType;
-import de.topobyte.webgun.resolving.pathspec.PathSpec;
-import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
-import de.waldbrand.app.website.osm.PoiType;
+import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.osm.OsmDetailGenerator;
 import de.waldbrand.app.website.pages.osm.OsmMappingGenerator;
 import de.waldbrand.app.website.pages.osm.OsmStatsGenerator;
@@ -32,61 +31,38 @@ import de.waldbrand.app.website.pages.osm.maps.OsmWesMapAllGenerator;
 import de.waldbrand.app.website.pages.osm.maps.OsmWesMapGenerator;
 
 public class WesOsmPathResolver
-		extends PathSpecResolver<ContentGeneratable, Void>
+		extends SmartPathSpecResolver<ContentGeneratable, Void>
 {
 
 	{
-		map(new PathSpec("osm"), (path, output, request, data) -> {
+		map(LinkDefs.OSM, (path, output, request, data) -> {
 			return new OsmWesGenerator(path);
 		});
 
-		map(new PathSpec("osm", "stats"), (path, output, request, data) -> {
+		map(LinkDefs.OSM_STATS, (path, output, request, data) -> {
 			return new OsmStatsGenerator(path);
 		});
-		map(new PathSpec("osm", "mapping"), (path, output, request, data) -> {
+		map(LinkDefs.OSM_MAPPING, (path, output, request, data) -> {
 			return new OsmMappingGenerator(path);
 		});
 
-		map(new PathSpec("osm", "map", "alles"),
-				(path, output, request, data) -> {
-					return new OsmWesMapAllGenerator(path);
-				});
+		map(LinkDefs.OSM_MAP_ALL, (path, output, request, data) -> {
+			return new OsmWesMapAllGenerator(path);
+		});
 
-		for (PoiType type : PoiType.values()) {
-			map(new PathSpec("osm", "map", type.getUrlKeyword()),
-					(path, output, request, data) -> {
-						return new OsmWesMapGenerator(path, type);
-					});
-		}
+		map(LinkDefs.OSM_MAP, (path, output, request, data,
+				type) -> new OsmWesMapGenerator(path, type));
 
-		for (PoiType type : PoiType.values()) {
-			map(new PathSpec("osm", "type-stats", type.getUrlKeyword()),
-					(path, output, request, data) -> {
-						return new OsmTypeStatsKeysGenerator(path, type);
-					});
-		}
+		map(LinkDefs.OSM_TYPE_STATS, (path, output, request, data,
+				type) -> new OsmTypeStatsKeysGenerator(path, type));
 
-		for (PoiType type : PoiType.values()) {
-			map(new PathSpec("osm", "type-stats", type.getUrlKeyword(), "key",
-					":key:"), (path, output, request, data) -> {
-						String key = output.getParameter("key");
-						return new OsmTypeStatsKeyValuesGenerator(path, type,
-								key);
-					});
-		}
+		map(LinkDefs.OSM_TYPE_STATS_KEY, (path, output, request, data, type,
+				key) -> new OsmTypeStatsKeyValuesGenerator(path, type, key));
 
-		map(new PathSpec("osm", "node", ":id:"),
-				(path, output, request, data) -> {
-					String sId = output.getParameter("id");
-					long id = Long.parseLong(sId);
-					return new OsmDetailGenerator(path, EntityType.Node, id);
-				});
-		map(new PathSpec("osm", "way", ":id:"),
-				(path, output, request, data) -> {
-					String sId = output.getParameter("id");
-					long id = Long.parseLong(sId);
-					return new OsmDetailGenerator(path, EntityType.Way, id);
-				});
+		map(LinkDefs.OSM_NODE, (path, output, request, data,
+				id) -> new OsmDetailGenerator(path, EntityType.Node, id));
+		map(LinkDefs.OSM_WAY, (path, output, request, data,
+				id) -> new OsmDetailGenerator(path, EntityType.Way, id));
 	}
 
 }

@@ -20,6 +20,7 @@ package de.waldbrand.app.website.osm;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.A;
 import de.topobyte.osm4j.core.model.iface.EntityType;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 
 public class OsmLinks
@@ -28,11 +29,15 @@ public class OsmLinks
 	public static A link(OsmPoi poi, String name)
 	{
 		if (poi.getEntity().getType() == EntityType.Node) {
-			return HTML.a("/osm/node/" + poi.getEntity().getId(), name);
+			return HTML.a(LinkDefs.OSM_NODE.getLink(poi.getEntity().getId()),
+					name);
 		} else if (poi.getEntity().getType() == EntityType.Way) {
-			return HTML.a("/osm/way/" + poi.getEntity().getId(), name);
+			return HTML.a(LinkDefs.OSM_WAY.getLink(poi.getEntity().getId()),
+					name);
 		} else {
-			return HTML.a("/osm/relation/" + poi.getEntity().getId(), name);
+			return HTML.a(
+					LinkDefs.OSM_RELATION.getLink(poi.getEntity().getId()),
+					name);
 		}
 	}
 

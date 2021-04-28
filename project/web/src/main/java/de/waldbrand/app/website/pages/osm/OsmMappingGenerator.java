@@ -35,6 +35,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.icons.IconMapping;
 import de.waldbrand.app.website.icons.IconUtil;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -78,8 +79,7 @@ public class OsmMappingGenerator extends SimpleBaseGenerator
 					.get(type);
 			total += pois.size();
 			TableRow row = table.row();
-			row.cell().ac(HTML.a(
-					String.format("/osm/type-stats/%s", type.getUrlKeyword()),
+			row.cell().ac(HTML.a(LinkDefs.OSM_TYPE_STATS.getLink(type),
 					type.getName()));
 			row.cell(String.format("%d", pois.size()));
 			tagDef(row.cell(), type);

@@ -36,6 +36,7 @@ import de.topobyte.osm4j.core.model.iface.OsmEntity;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
@@ -95,8 +96,8 @@ public class OsmTypeStatsKeysGenerator extends SimpleBaseGenerator
 				.copyHighestCountFirst(keys);
 		for (String key : histogram.elementSet()) {
 			TableRow row = table.row();
-			row.cell().ac(HTML.a(String.format("/osm/type-stats/%s/key/%s",
-					type.getUrlKeyword(), key), key));
+			row.cell().ac(HTML.a(LinkDefs.OSM_TYPE_STATS_KEY.getLink(type, key),
+					key));
 			row.cell(String.format("%d", keys.count(key)));
 		}
 	}
