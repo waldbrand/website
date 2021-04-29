@@ -25,6 +25,7 @@ public class Website
 {
 
 	public static final String TITLE = "Waldbrand-App";
+	public static final String CONTACT = "team@waldbrand-app.de";
 
 	public static final Website INSTANCE = new Website();
 

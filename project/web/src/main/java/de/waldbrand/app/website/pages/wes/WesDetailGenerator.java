@@ -83,8 +83,8 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		p.appendText(
 				"Angaben falsch, oder es fehlt was? Sag uns gerne bescheid: ");
 		p.ac(HTML.a(String.format(
-				"mailto:team@waldbrand-app.de?subject=Feedback: %s (id=%s)",
-				name, poi.getId()), "team@waldbrand-app.de"));
+				"mailto:" + Website.CONTACT + "?subject=Feedback: %s (id=%s)",
+				name, poi.getId()), Website.CONTACT));
 
 		WesAttributionUtil.attribution(content);
 	}

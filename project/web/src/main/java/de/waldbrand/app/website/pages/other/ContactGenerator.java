@@ -20,6 +20,7 @@ package de.waldbrand.app.website.pages.other;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
 public class ContactGenerator extends SimpleBaseGenerator
@@ -38,7 +39,7 @@ public class ContactGenerator extends SimpleBaseGenerator
 		P p = content.ac(HTML.p());
 		p.appendText("Falls du irgendein Feedback hast"
 				+ " melde dich bitte hier: ");
-		p.ac(HTML.a("mailto:team@waldbrand-app.de", "team@waldbrand-app.de"));
+		p.ac(HTML.a("mailto:" + Website.CONTACT, Website.CONTACT));
 
 		p = content.ac(HTML.p());
 		p.appendText("Danke! Sebastian und Mo");

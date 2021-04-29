@@ -104,8 +104,8 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		p.appendText(
 				"Angaben falsch, oder es fehlt was? Sag uns gerne bescheid: ");
 		p.ac(HTML.a(String.format(
-				"mailto:team@waldbrand-app.de?subject=Feedback: %s id %d",
-				typename(type), id), "team@waldbrand-app.de"));
+				"mailto:" + Website.CONTACT + "?subject=Feedback: %s id %d",
+				typename(type), id), Website.CONTACT));
 
 		OsmAttributionUtil.attribution(content);
 	}

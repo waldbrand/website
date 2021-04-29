@@ -6,6 +6,7 @@ import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.P;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.pages.base.DatabaseBaseGenerator;
 
 public class LoginFailureGenerator extends DatabaseBaseGenerator
@@ -26,7 +27,7 @@ public class LoginFailureGenerator extends DatabaseBaseGenerator
 
 		p = content.ac(HTML.p());
 		p.at("Falls du dein Passwort vergessen hast, schreibe bitte eine Email an ");
-		p.ac(HTML.a("mailto:team@waldbrand-app.de", "team@waldbrand-app.de"));
+		p.ac(HTML.a("mailto:" + Website.CONTACT, Website.CONTACT));
 		p.at(" und wir werden es für dich zurücksetzen.");
 	}
 
