@@ -5,6 +5,11 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>waldbrand-website</display-name>
 
+	<session-config>
+		<session-timeout>1440</session-timeout>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
 	<context-param>
 		<param-name>logbackDisableServletContainerInitializer</param-name>
 		<param-value>true</param-value>
@@ -13,5 +18,23 @@
 	<listener>
 		<listener-class>de.waldbrand.app.website.InitListener</listener-class>
 	</listener>
+
+	<listener>
+		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>ShiroFilter</filter-name>
+		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ShiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
 
 </web-app>

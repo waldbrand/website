@@ -34,8 +34,11 @@ import de.topobyte.jsoup.JsoupServletUtil;
 import de.topobyte.webgun.exceptions.WebStatusException;
 import de.topobyte.webgun.resolving.PathResolver;
 import de.topobyte.webgun.resolving.Redirecter;
+import de.topobyte.webgun.resolving.pathspec.PathSpec;
+import de.topobyte.webgun.resolving.pathspec.PathSpecOutput;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
+import de.waldbrand.app.website.pages.login.LoginFailureGenerator;
 import de.waldbrand.app.website.resolving.ApiPathResolver;
 import de.waldbrand.app.website.resolving.MainPathResolver;
 import de.waldbrand.app.website.resolving.WesForstPathResolver;
@@ -150,10 +153,31 @@ public class IndexServlet extends HttpServlet
 
 		ContentGeneratable generator = null;
 
-		for (PathResolver<ContentGeneratable, Void> resolver : resolvers) {
-			generator = resolver.getGenerator(path, request, null);
-			if (generator != null) {
-				break;
+		PathSpecOutput output = new PathSpecOutput();
+		PathSpec pathSpecLogin = new PathSpec("login");
+		if (pathSpecLogin.matches(path, output)) {
+			Object loginFailure = request.getAttribute("shiroLoginFailure");
+			if (loginFailure != null) {
+
+				if (loginFailure.equals(
+						"org.apache.shiro.authc.AuthenticationException")) {
+					generator = new LoginFailureGenerator(path);
+				} else if (loginFailure.equals(
+						"org.apache.shiro.authc.UnknownAccountException")) {
+					generator = new LoginFailureGenerator(path);
+				} else if (loginFailure.equals(
+						"org.apache.shiro.authc.IncorrectCredentialsException")) {
+					generator = new LoginFailureGenerator(path);
+				}
+			}
+		}
+
+		if (generator == null) {
+			for (PathResolver<ContentGeneratable, Void> resolver : resolvers) {
+				generator = resolver.getGenerator(path, request, null);
+				if (generator != null) {
+					break;
+				}
 			}
 		}
 

@@ -21,6 +21,8 @@ public class LinkDefs
 			new PathSpec("privacy-policy"));
 	public static PathDef0 CONTACT = new PathDef0(new PathSpec("kontakt"));
 
+	public static PathDef0 LOGIN = new PathDef0(new PathSpec("login"));
+
 	public static PathDef0 MAP = new PathDef0(
 			new PathSpec("wes", "map", "osm-forst"));
 

@@ -21,16 +21,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
-import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
+import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.combined.WesDynamicMapAllGenerator;
+import de.waldbrand.app.website.pages.login.LoginGenerator;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
 
-public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
+public class MainPathResolver
+		extends SmartPathSpecResolver<ContentGeneratable, Void>
 {
 
 	@Override
@@ -59,6 +62,9 @@ public class MainPathResolver extends PathSpecResolver<ContentGeneratable, Void>
 			return new MarkdownResourceGenerator(path,
 					"markdown/de/privacy-policy.md");
 		});
+
+		map(LinkDefs.LOGIN,
+				(path, output, request, data) -> new LoginGenerator(path));
 
 		map(new PathSpec("reload-data"), (path, output, request, data) -> {
 			return new RefreshGenerator(path);

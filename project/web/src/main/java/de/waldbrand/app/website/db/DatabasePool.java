@@ -1,0 +1,48 @@
+package de.waldbrand.app.website.db;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.topobyte.luqe.jdbc.database.Database;
+import de.waldbrand.app.website.Config;
+
+public class DatabasePool
+{
+
+	final static Logger logger = LoggerFactory.getLogger(DatabasePool.class);
+
+	private static BasicDataSource pool = new BasicDataSource();
+
+	static {
+		pool.setUrl("jdbc:sqlite:" + Config.INSTANCE.getDatabase());
+		pool.setMinIdle(1);
+		pool.setMaxIdle(2);
+		pool.setMaxOpenPreparedStatements(100);
+		pool.setDefaultAutoCommit(false);
+	}
+
+	public static Connection getConnection() throws SQLException
+	{
+		return pool.getConnection();
+	}
+
+	public static Database getDatabase() throws SQLException
+	{
+		Connection connection = getConnection();
+		return new Database(connection);
+	}
+
+	public static void close()
+	{
+		try {
+			pool.close();
+		} catch (SQLException e) {
+			logger.error("Error while closing database pool", e);
+		}
+	}
+
+}

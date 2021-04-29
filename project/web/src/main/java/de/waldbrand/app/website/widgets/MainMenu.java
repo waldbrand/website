@@ -19,6 +19,9 @@ package de.waldbrand.app.website.widgets;
 
 import static de.topobyte.jsoup.HTML.a;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.bootstrap4.components.Expand;
@@ -28,8 +31,11 @@ import de.topobyte.jsoup.components.A;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.UnorderedList;
+import de.topobyte.jsoup.nodes.Element;
 import de.topobyte.pagegen.core.LinkResolver;
+import de.topobyte.weblogin.realm.SystemUser;
 import de.topobyte.webpaths.WebPaths;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.links.LinkDefs;
 
 public class MainMenu
@@ -51,7 +57,7 @@ public class MainMenu
 		image.attr("style", "padding-right:15px");
 		brand.ap(image);
 
-		brand.appendText("Waldbrand-App");
+		brand.appendText(Website.TITLE);
 
 		menu.addBrand(brand);
 		menu.addToggleButton();
@@ -64,10 +70,31 @@ public class MainMenu
 				"Wasserentnahmestellen (Landesbetrieb Forst)", false);
 		menu.addLink(main, LinkDefs.OSM.getLink(),
 				"Wasserentnahmestellen (OpenStreetMap)", false);
+		addLogin(menu, right, resolver);
 
 		menu.addLink(right, "/about", "Über", false);
 
 		return menu;
+	}
+
+	private static void addLogin(Menu menu, Element<?> section,
+			LinkResolver resolver)
+	{
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.isAuthenticated()) {
+			if (subject.hasRole("admin")) {
+				menu.addLink(section, "/admin", "Admin-Bereich", false);
+			}
+			SystemUser user = (SystemUser) subject.getPrincipal();
+			if (user != null && user.getUsername().equals("root")) {
+				menu.addLink(section, "/admin/root", "Root-Bereich", false);
+			}
+
+			menu.addLink(section, "/user/preferences", "Einstellungen", false);
+			menu.addLink(section, "/logout", "Ausloggen", false);
+		} else {
+			menu.addLink(section, "/login", "Login", false);
+		}
 	}
 
 }

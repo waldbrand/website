@@ -37,9 +37,17 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.LoggerContext;
 import de.topobyte.cachebusting.CacheBusting;
+import de.topobyte.ioutils.ShellPaths;
+import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.melon.commons.io.Resources;
+import de.topobyte.shiro.AuthInfo;
+import de.topobyte.weblogin.realm.DbRealm;
+import de.topobyte.weblogin.realm.Root;
+import de.topobyte.weblogin.realm.UserInfo;
 import de.waldbrand.app.website.config.MapPosition;
-import de.waldbrand.app.website.util.ConnectionUtil;
+import de.waldbrand.app.website.db.ConnectionUtil;
+import de.waldbrand.app.website.db.DatabasePoolDatabaseFactory;
+import de.waldbrand.app.website.db.DbCreator;
 
 @WebListener
 public class InitListener implements ServletContextListener
@@ -87,6 +95,10 @@ public class InitListener implements ServletContextListener
 		Path fileOsmWaynodes = Paths.get(config.getProperty("osm.waynodes"));
 		Config.INSTANCE.setFileOsmWaynodes(fileOsmWaynodes);
 
+		Path databasePath = ShellPaths
+				.resolve(config.getProperty("database.path"));
+		Config.INSTANCE.setDatabase(databasePath);
+
 		WebsiteData.load();
 
 		logger.info("loading secure configuration...");
@@ -96,6 +108,29 @@ public class InitListener implements ServletContextListener
 		} catch (Throwable e) {
 			logger.error("Unable to load secure configuration", e);
 		}
+
+		logger.info("creating database if necessary");
+		try {
+			DbCreator dbCreator = new DbCreator();
+			dbCreator.createDatabase();
+		} catch (SQLException | QueryException e) {
+			logger.warn("Error while creating database", e);
+		}
+
+		logger.info("setting up db realm");
+
+		String rootLoginHash = secureConfig.getProperty("root.login.hash");
+		String rootLoginSalt = secureConfig.getProperty("root.login.salt");
+
+		if (rootLoginHash == null || rootLoginSalt == null) {
+			throw new RuntimeException(
+					"Make sure properties 'root.login.hash' and 'root.login.salt'"
+							+ " are set in secure.properties");
+		}
+
+		DbRealm.DATABASE_FACTORY = new DatabasePoolDatabaseFactory();
+		DbRealm.ROOT_USER_INFO = new UserInfo(new Root(),
+				new AuthInfo(rootLoginHash, rootLoginSalt));
 
 		long stop = System.currentTimeMillis();
 

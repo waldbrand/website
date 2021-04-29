@@ -23,6 +23,7 @@ dependencies {
     implementation 'de.topobyte:pagegen-bootstrap:1.2.0'
     implementation 'de.topobyte:webgun-core:1.3.0'
     implementation 'de.topobyte:webgun-resolving:1.3.0'
+    implementation 'de.topobyte:weblogin-web:0.1.0'
     implementation 'de.topobyte:jsoup-bootstrap4:1.1.2'
     implementation 'de.topobyte:jsoup-servlet:0.2.0'
     implementation 'de.topobyte:jsoup-jquery:0.1.0'
@@ -39,6 +40,8 @@ dependencies {
     implementation 'com.vladsch.flexmark:flexmark-ext-wikilink:0.28.18'
 
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'org.apache.commons:commons-dbcp2:2.6.0'
 
     implementation 'org.slf4j:slf4j-api:1.7.20'
 

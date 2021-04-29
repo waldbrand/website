@@ -47,4 +47,8 @@ public class Config
 	@Setter
 	private String nullName = "Unbekannt";
 
+	@Getter
+	@Setter
+	private Path database;
+
 }
