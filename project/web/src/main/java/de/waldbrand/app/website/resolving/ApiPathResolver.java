@@ -17,16 +17,16 @@
 
 package de.waldbrand.app.website.resolving;
 
-import de.topobyte.webgun.resolving.pathspec.PathSpec;
-import de.topobyte.webgun.resolving.pathspec.PathSpecResolver;
+import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
 import de.waldbrand.app.website.ApiEndpoint;
 import de.waldbrand.app.website.api.PoisGenerator;
+import de.waldbrand.app.website.links.LinkDefs;
 
-public class ApiPathResolver extends PathSpecResolver<ApiEndpoint, Void>
+public class ApiPathResolver extends SmartPathSpecResolver<ApiEndpoint, Void>
 {
 
 	{
-		map(new PathSpec("pois"),
+		map(LinkDefs.API_POIS,
 				(path, output, request, data) -> new PoisGenerator(request));
 	}
 

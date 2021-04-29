@@ -20,7 +20,6 @@ package de.waldbrand.app.website.resolving;
 import javax.servlet.http.HttpServletRequest;
 
 import de.topobyte.jsoup.ContentGeneratable;
-import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.links.LinkDefs;
@@ -47,33 +46,26 @@ public class MainPathResolver
 	}
 
 	{
-		map(new PathSpec("kontakt"), (path, output, request, data) -> {
-			return new ContactGenerator(path);
-		});
+		map(LinkDefs.CONTACT,
+				(path, output, request, data) -> new ContactGenerator(path));
 
-		map(new PathSpec("about"), (path, output, request, data) -> {
-			return new AboutGenerator(path);
-		});
-		map(new PathSpec("impressum"), (path, output, request, data) -> {
-			return new MarkdownResourceGenerator(path,
-					"markdown/de/impressum.md");
-		});
-		map(new PathSpec("privacy-policy"), (path, output, request, data) -> {
-			return new MarkdownResourceGenerator(path,
-					"markdown/de/privacy-policy.md");
-		});
+		map(LinkDefs.ABOUT,
+				(path, output, request, data) -> new AboutGenerator(path));
+		map(LinkDefs.IMPRINT,
+				(path, output, request, data) -> new MarkdownResourceGenerator(
+						path, "markdown/de/impressum.md"));
+		map(LinkDefs.PRIVACY_POLICY,
+				(path, output, request, data) -> new MarkdownResourceGenerator(
+						path, "markdown/de/privacy-policy.md"));
 
 		map(LinkDefs.LOGIN,
 				(path, output, request, data) -> new LoginGenerator(path));
 
-		map(new PathSpec("reload-data"), (path, output, request, data) -> {
-			return new RefreshGenerator(path);
-		});
+		map(LinkDefs.RELOAD_DATA,
+				(path, output, request, data) -> new RefreshGenerator(path));
 
-		map(new PathSpec("wes", "map", "osm-forst"),
-				(path, output, request, data) -> {
-					return new WesDynamicMapAllGenerator(path);
-				});
+		map(LinkDefs.MAP, (path, output, request,
+				data) -> new WesDynamicMapAllGenerator(path));
 	}
 
 }

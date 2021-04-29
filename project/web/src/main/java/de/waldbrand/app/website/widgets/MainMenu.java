@@ -72,7 +72,7 @@ public class MainMenu
 				"Wasserentnahmestellen (OpenStreetMap)", false);
 		addLogin(menu, right, resolver);
 
-		menu.addLink(right, "/about", "Über", false);
+		menu.addLink(right, LinkDefs.ABOUT.getLink(), "Über", false);
 
 		return menu;
 	}

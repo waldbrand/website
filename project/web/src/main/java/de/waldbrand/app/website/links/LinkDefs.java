@@ -20,8 +20,14 @@ public class LinkDefs
 	public static PathDef0 PRIVACY_POLICY = new PathDef0(
 			new PathSpec("privacy-policy"));
 	public static PathDef0 CONTACT = new PathDef0(new PathSpec("kontakt"));
+	public static PathDef0 ABOUT = new PathDef0(new PathSpec("about"));
 
 	public static PathDef0 LOGIN = new PathDef0(new PathSpec("login"));
+
+	public static PathDef0 API_POIS = new PathDef0(new PathSpec("pois"));
+
+	public static PathDef0 RELOAD_DATA = new PathDef0(
+			new PathSpec("reload-data"));
 
 	public static PathDef0 MAP = new PathDef0(
 			new PathSpec("wes", "map", "osm-forst"));
