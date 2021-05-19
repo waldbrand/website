@@ -17,12 +17,16 @@
 
 package de.waldbrand.app.website.pages.other;
 
+import java.io.IOException;
+
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.Markdown;
 import de.topobyte.jsoup.components.A;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Img;
 import de.topobyte.jsoup.components.P;
+import de.topobyte.webgun.exceptions.InternalServerErrorException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
@@ -81,16 +85,15 @@ public class IndexGenerator extends SimpleBaseGenerator
 				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
 		Div card = col.ac(HTML.div("card mb-4"));
 		Div body = card.ac(HTML.div("card-body"));
-		body.ac(HTML.h5("Die Waldbrand-App")).addClass("card-title");
-		P p = body.ac(HTML.p());
-		p.at("Im Rahmen des Prototype-Fund entwickeln wir"
-				+ " im Zeitraum März bis September 2021 eine App, die relevante"
-				+ " Informationen für die Brandenburger Feuerwehren zur Bekämpfung"
-				+ " von Waldbränden in einer offline-fähigen App verfügbar macht.");
-		p = body.ac(HTML.p());
-		p.at("Eine wichtige Rolle spielen in diesem Zusammenhang die Wasserentnahmestellen."
-				+ " Auf dieser Seite sind verschiedene Datenquellen zu diesem Thema"
-				+ " visualisiert.");
+		body.ac(HTML.h5("Finde deine Wasserentnahemstellen"))
+				.addClass("card-title");
+
+		try {
+			Markdown.renderResource(body, "markdown/de/startseitentext.md");
+		} catch (IOException e) {
+			throw new InternalServerErrorException(
+					"Error while rendering intro markdown", e);
+		}
 	}
 
 	private void card(Div deck, String image, String imageLink, String title,
