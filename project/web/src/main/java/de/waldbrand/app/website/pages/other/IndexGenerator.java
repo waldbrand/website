@@ -18,6 +18,8 @@
 package de.waldbrand.app.website.pages.other;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
@@ -52,19 +54,23 @@ public class IndexGenerator extends SimpleBaseGenerator
 						+ " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		Div deck = content.ac(HTML.div("row"));
+
+		cardIntro(deck);
+
 		String linkMap = LinkDefs.MAP.getLink();
+		String linkEditor = LinkDefs.EDITOR.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkMap,
-				"Wasserentnahmestellen", HTML.a(linkMap, "Zur Karte"),
+				"Wasserentnahmestellen",
+				Arrays.asList(HTML.a(linkMap, "Zur Karte"),
+						HTML.a(linkEditor, "Zum Editor")),
 				"Hier gibt es eine Karte mit Wasserentnahmestellen die"
 						+ " in den Datensätzen der OpenStreetMap und des Landesbetrieb Forst"
 						+ " verfügbar sind.");
 
-		cardIntro(deck);
-
 		String linkWes = LinkDefs.FORST.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkWes,
 				"Wasserentnahmestellen (Landesbetrieb Forst)",
-				HTML.a(linkWes, "Zu den Wasserentnahmestellen"),
+				Arrays.asList(HTML.a(linkWes, "Zu den Wasserentnahmestellen")),
 				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
 						+ " im Datensatz der Landesbetrieb Forst im  Geoportal Brandenburg"
 						+ " verfügbar sind.");
@@ -72,7 +78,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 		String linkOsm = LinkDefs.OSM.getLink();
 		card(deck, CacheBusting.resolve("images/feature-karte.png"), linkOsm,
 				"Wasserentnahmestellen (OpenStreetMap)",
-				HTML.a(linkOsm, "Zu den Wasserentnahmestellen"),
+				Arrays.asList(HTML.a(linkOsm, "Zu den Wasserentnahmestellen")),
 				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
 						+ " im Community-Projekt OpenStreetMap verfügbar sind.");
 
@@ -97,7 +103,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 	}
 
 	private void card(Div deck, String image, String imageLink, String title,
-			A link, String text)
+			List<A> links, String text)
 	{
 		Div col = deck
 				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
@@ -112,7 +118,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 		body.ac(HTML.h5(title)).addClass("card-title");
 		P p = body.ac(HTML.p());
 		p.appendText(text);
-		if (link != null) {
+		for (A link : links) {
 			body.ac(link).addClass("card-link");
 		}
 	}
