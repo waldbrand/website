@@ -2,4 +2,4 @@
 
 set -e
 
-ssh root@web1.topobyte.de touch /opt/tomcat/tomcat-secure/rootapps/waldbrand/ROOT.war
+ssh root@waldbrand-app.de touch /opt/tomcat/tomcat-secure/rootapps/waldbrand/ROOT.war
