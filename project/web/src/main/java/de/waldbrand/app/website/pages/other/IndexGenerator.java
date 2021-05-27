@@ -91,7 +91,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
 		Div card = col.ac(HTML.div("card mb-4"));
 		Div body = card.ac(HTML.div("card-body"));
-		body.ac(HTML.h5("Finde deine Wasserentnahemstellen"))
+		body.ac(HTML.h5("Finde deine Wasserentnahmestellen"))
 				.addClass("card-title");
 
 		try {
