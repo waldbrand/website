@@ -58,12 +58,12 @@ public class MiscContent
 		String style1 = "height: 12em; margin: 1em 1em";
 		String style2 = "height: 9em; margin: 4em 1em 1em 1em";
 
-		col.ac(HTML.img(CacheBusting.resolve("images/bmbf.jpg"))).attr("style",
-				style1);
-		col.ac(HTML.img(CacheBusting.resolve("images/prototypefund.png")))
+		col.ac(HTML.img("/" + CacheBusting.resolve("images/bmbf.jpg")))
+				.attr("style", style1);
+		col.ac(HTML.img("/" + CacheBusting.resolve("images/prototypefund.png")))
 				.attr("style", style2);
-		col.ac(HTML.img(CacheBusting.resolve("images/okfn.png"))).attr("style",
-				style2);
+		col.ac(HTML.img("/" + CacheBusting.resolve("images/okfn.png")))
+				.attr("style", style2);
 	}
 
 }

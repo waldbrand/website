@@ -19,19 +19,23 @@ package de.waldbrand.app.website.pages.other;
 
 import static de.waldbrand.app.website.widgets.Cards.card;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.Markdown;
 import de.topobyte.jsoup.components.Div;
+import de.topobyte.webgun.exceptions.InternalServerErrorException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
-public class IndexGenerator extends SimpleBaseGenerator
+public class WesLandingPage extends SimpleBaseGenerator
 {
 
-	public IndexGenerator(WebPath path)
+	public WesLandingPage(WebPath path)
 	{
 		super(path);
 	}
@@ -39,33 +43,29 @@ public class IndexGenerator extends SimpleBaseGenerator
 	@Override
 	protected void content()
 	{
-		content.ac(HTML.h1("Die Waldbrand-App für Brandenburg"));
-
-		// P p = content.ac(HTML.p());
-		// p.appendText(
-		// "Im Rahmen des Prototype Fund entwickeln wir einen Baukasten zum"
-		// + " Erstellen von offline-fähigen Waldbrand-Apps zur"
-		// + " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
-
-		// "Finde deine Wasserentnahmestellen"
+		try {
+			Markdown.renderResource(content.ac(HTML.p()),
+					"markdown/de/landing-wes-intro.md");
+		} catch (IOException e) {
+			throw new InternalServerErrorException(e);
+		}
 
 		Div deck = content.ac(HTML.div("row"));
 
-		card(deck, "markdown/de/intro-editor.md", Arrays.asList(
-				HTML.a(LinkDefs.LANDING_EDITOR.getLink(), "Mehr erfahren"),
-				HTML.a(LinkDefs.EDITOR.getLink(), "Direkt zum Editor")));
+		String linkWes = LinkDefs.FORST.getLink();
+		card(deck, "/" + CacheBusting.resolve("images/feature-karte.png"),
+				linkWes, "Wasserentnahmestellen (Landesbetrieb Forst)",
+				Arrays.asList(HTML.a(linkWes, "Zu den Wasserentnahmestellen")),
+				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
+						+ " im Datensatz der Landesbetrieb Forst im  Geoportal Brandenburg"
+						+ " verfügbar sind.");
 
-		card(deck, "markdown/de/intro-karte.md",
-				Arrays.asList(HTML.a(LinkDefs.MAP.getLink(), "Zur Karte")));
-
-		card(deck, "markdown/de/intro-wer.md");
-
-		card(deck, "markdown/de/intro-was.md");
-
-		card(deck, "markdown/de/intro-suche.md");
-
-		card(deck, "markdown/de/intro-wes.md", Arrays.asList(
-				HTML.a(LinkDefs.LANDING_WES.getLink(), "Mehr erfahren")));
+		String linkOsm = LinkDefs.OSM.getLink();
+		card(deck, "/" + CacheBusting.resolve("images/feature-karte.png"),
+				linkOsm, "Wasserentnahmestellen (OpenStreetMap)",
+				Arrays.asList(HTML.a(linkOsm, "Zu den Wasserentnahmestellen")),
+				"Hier gibt es Infos und Karten zu den Wasserentnahmestellen die"
+						+ " im Community-Projekt OpenStreetMap verfügbar sind.");
 
 		MiscContent.rowSponsors(content);
 	}

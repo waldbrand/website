@@ -66,10 +66,10 @@ public class MainMenu
 		UnorderedList main = menu.addSection(collapse);
 		UnorderedList right = menu.addSectionRight(collapse);
 
-		menu.addLink(main, LinkDefs.FORST.getLink(),
-				"Wasserentnahmestellen (Landesbetrieb Forst)", false);
-		menu.addLink(main, LinkDefs.OSM.getLink(),
-				"Wasserentnahmestellen (OpenStreetMap)", false);
+		// menu.addLink(main, LinkDefs.FORST.getLink(),
+		// "Wasserentnahmestellen (Landesbetrieb Forst)", false);
+		// menu.addLink(main, LinkDefs.OSM.getLink(),
+		// "Wasserentnahmestellen (OpenStreetMap)", false);
 		// addLogin(menu, right, resolver);
 
 		menu.addLink(right, LinkDefs.ABOUT.getLink(), "Über", false);

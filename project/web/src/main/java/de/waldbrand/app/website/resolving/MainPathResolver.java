@@ -28,7 +28,9 @@ import de.waldbrand.app.website.pages.login.LoginGenerator;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
+import de.waldbrand.app.website.pages.other.EditorLandingPage;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
+import de.waldbrand.app.website.pages.other.WesLandingPage;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
 
 public class MainPathResolver
@@ -66,6 +68,11 @@ public class MainPathResolver
 
 		map(LinkDefs.MAP, (path, output, request,
 				data) -> new WesDynamicMapAllGenerator(path));
+
+		map(LinkDefs.LANDING_EDITOR,
+				(path, output, request, data) -> new EditorLandingPage(path));
+		map(LinkDefs.LANDING_WES,
+				(path, output, request, data) -> new WesLandingPage(path));
 	}
 
 }

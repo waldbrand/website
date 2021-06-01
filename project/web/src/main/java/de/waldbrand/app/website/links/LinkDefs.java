@@ -29,6 +29,11 @@ public class LinkDefs
 	public static PathDef0 RELOAD_DATA = new PathDef0(
 			new PathSpec("reload-data"));
 
+	public static PathDef0 LANDING_EDITOR = new PathDef0(
+			new PathSpec("wes", "editor"));
+
+	public static PathDef0 LANDING_WES = new PathDef0(new PathSpec("wes"));
+
 	public static PathDef0 MAP = new PathDef0(
 			new PathSpec("wes", "map", "osm-forst"));
 
@@ -39,68 +44,71 @@ public class LinkDefs
 	 * OSM
 	 */
 
-	public static PathDef0 OSM = new PathDef0(new PathSpec("osm"));
+	public static PathDef0 OSM = new PathDef0(new PathSpec("wes", "osm"));
 	public static PathDef0 OSM_STATS = new PathDef0(
-			new PathSpec("osm", "stats"));
+			new PathSpec("wes", "osm", "stats"));
 	public static PathDef0 OSM_MAPPING = new PathDef0(
-			new PathSpec("osm", "mapping"));
+			new PathSpec("wes", "osm", "mapping"));
 	public static PathDef0 OSM_MAP_ALL = new PathDef0(
-			new PathSpec("osm", "map", "alles"));
+			new PathSpec("wes", "osm", "map", "alles"));
 
 	public static PathDef1<Long> OSM_NODE = new PathDef1<>(
-			new PathSpec("osm", "node", ":id:"), new LongMapper());
+			new PathSpec("wes", "osm", "node", ":id:"), new LongMapper());
 
 	public static PathDef1<Long> OSM_WAY = new PathDef1<>(
-			new PathSpec("osm", "way", ":id:"), new LongMapper());
+			new PathSpec("wes", "osm", "way", ":id:"), new LongMapper());
 
 	public static PathDef1<Long> OSM_RELATION = new PathDef1<>(
-			new PathSpec("osm", "relation", ":id:"), new LongMapper());
+			new PathSpec("wes", "osm", "relation", ":id:"), new LongMapper());
 
 	public static PathDef1<PoiType> OSM_MAP = new PathDef1<>(
-			new PathSpec("osm", "map", ":type:"), new PoiTypeMapper());
+			new PathSpec("wes", "osm", "map", ":type:"), new PoiTypeMapper());
 
 	public static PathDef1<PoiType> OSM_TYPE_STATS = new PathDef1<>(
-			new PathSpec("osm", "type-stats", ":type:"), new PoiTypeMapper());
+			new PathSpec("wes", "osm", "type-stats", ":type:"),
+			new PoiTypeMapper());
 
 	public static PathDef2<PoiType, String> OSM_TYPE_STATS_KEY = new PathDef2<>(
-			new PathSpec("osm", "type-stats", ":type:", "key", ":key:"),
+			new PathSpec("wes", "osm", "type-stats", ":type:", "key", ":key:"),
 			new PoiTypeMapper(), new StringMapper());
 
 	/*
 	 * Forst
 	 */
 
-	public static PathDef0 FORST = new PathDef0(new PathSpec("wes"));
-	public static PathDef0 FORST_MAP = new PathDef0(new PathSpec("wes", "map"));
+	public static PathDef0 FORST = new PathDef0(new PathSpec("wes", "forst"));
+	public static PathDef0 FORST_MAP = new PathDef0(
+			new PathSpec("wes", "forst", "map"));
 
 	public static PathDef0 FORST_MAP_FILTER_LANDKREIS_SELECT = new PathDef0(
-			new PathSpec("wes", "map", "filter-landkreis-select"));
+			new PathSpec("wes", "forst", "map", "filter-landkreis-select"));
 
 	public static PathDef1<String> FORST_MAP_LANDKREIS = new PathDef1<>(
-			new PathSpec("wes", "map", "landkreis", ":kreis:"),
+			new PathSpec("wes", "forst", "map", "landkreis", ":kreis:"),
 			new StringMapper());
 
 	public static PathDef0 FORST_MAP_FILTER_OART_SELECT = new PathDef0(
-			new PathSpec("wes", "map", "filter-oart-select"));
+			new PathSpec("wes", "forst", "map", "filter-oart-select"));
 
 	public static PathDef1<Integer> FORST_MAP_OART = new PathDef1<>(
-			new PathSpec("wes", "map", "oart", ":oart:"), new IntMapper());
+			new PathSpec("wes", "forst", "map", "oart", ":oart:"),
+			new IntMapper());
 
 	public static PathDef1<Integer> FORST_POI = new PathDef1<>(
-			new PathSpec("poi", ":id:"), new IntMapper());
+			new PathSpec("wes", "forst", "poi", ":id:"), new IntMapper());
 
 	public static PathDef0 FORST_STATS_OART = new PathDef0(
-			new PathSpec("wes", "stats", "oart"));
+			new PathSpec("wes", "forst", "stats", "oart"));
 	public static PathDef0 FORST_STATS_BAUJAHR = new PathDef0(
-			new PathSpec("wes", "stats", "baujahr"));
+			new PathSpec("wes", "forst", "stats", "baujahr"));
 	public static PathDef0 FORST_STATS_FSTATUS = new PathDef0(
-			new PathSpec("wes", "stats", "fstatus"));
+			new PathSpec("wes", "forst", "stats", "fstatus"));
 	public static PathDef0 FORST_STATS_FKT_FAEHIG = new PathDef0(
-			new PathSpec("wes", "stats", "fkt_faehig"));
+			new PathSpec("wes", "forst", "stats", "fkt_faehig"));
 	public static PathDef0 FORST_STATS_MENGE = new PathDef0(
-			new PathSpec("wes", "stats", "menge"));
+			new PathSpec("wes", "forst", "stats", "menge"));
 
 	public static PathDef0 FORST_ADD = new PathDef0(
-			new PathSpec("wes", "eintragen"));
+			new PathSpec("wes", "forst", "eintragen"));
 
 }
