@@ -7,8 +7,8 @@ Feuerwehr bei der Vervollständigung und Aktualisierung zu unterstützen!
 
 ###### Wer wir sind
 Im Rahmen des BMBF Förderprogramms "Prototype-Fund" entwickeln wir im Zeitraum März bis September 2021 die Waldbrand-App. 
-Wir arbeiten in Kooperation mit dem OK Lab Bad Belzig, regionalen Feuerwehren aus Brandenburg und nutzen für unsere Software
- Tools wie MapComplete der gemeinnützigen OpenStreetMap.
+Wir arbeiten zusammen unter fachlicher Beratung von Brandoberinspektor Sebastian Erdmann und in Kooperation mit dem OK Lab Bad Belzig und regionalen Feuerwehren aus Brandenburg. Wir nutzen für unsere Software
+ außerdem freie Tools wie MapComplete der gemeinnützigen OpenStreetMap.
 
 ###### Was wir suchen
 Wir suchen Feuerwehrleute aus Brandenburg, die mitmachen möchten ihre lokalen Wasserentnahmestellen auf die Webseite und 
