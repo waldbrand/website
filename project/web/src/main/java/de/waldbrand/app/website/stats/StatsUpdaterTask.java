@@ -53,6 +53,7 @@ public class StatsUpdaterTask extends SchedulerTask
 		try {
 			AggregatedStats stats = statsFetcher.fetch();
 			Website.INSTANCE.setStats(stats);
+			logger.info("success");
 		} catch (UnsupportedOperationException | IOException e) {
 			logger.warn("Error while fetching stats", e);
 		}
