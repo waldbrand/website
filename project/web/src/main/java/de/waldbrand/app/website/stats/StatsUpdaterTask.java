@@ -15,37 +15,47 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.stats;
 
-import de.topobyte.webgun.scheduler.Scheduler;
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.lbforst.model.Data;
+import de.waldbrand.app.website.Config;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.stats.model.AggregatedStats;
-import lombok.Getter;
-import lombok.Setter;
 
-public class Website
+public class StatsUpdaterTask extends SchedulerTask
 {
 
-	public static final String TITLE = "Waldbrand-App";
-	public static final String CONTACT = "team@waldbrand-app.de";
+	final static Logger logger = LoggerFactory
+			.getLogger(StatsUpdaterTask.class);
 
-	public static final Website INSTANCE = new Website();
+	public StatsUpdaterTask()
+	{
+		super("Update stats");
+	}
 
-	@Getter
-	@Setter
-	private CacheBuster cacheBuster;
+	@Override
+	public void run()
+	{
+		logger.info("updating stats...");
+		tryUpdate();
+	}
 
-	@Getter
-	@Setter
-	private Data data;
+	private void tryUpdate()
+	{
+		StatsFetcher statsFetcher = new StatsFetcher(
+				Config.INSTANCE.getOsmChaToken());
 
-	@Getter
-	@Setter
-	private Scheduler<SchedulerTask> scheduler;
-
-	@Getter
-	@Setter
-	private AggregatedStats stats;
+		try {
+			AggregatedStats stats = statsFetcher.fetch();
+			Website.INSTANCE.setStats(stats);
+		} catch (UnsupportedOperationException | IOException e) {
+			logger.warn("Error while fetching stats", e);
+		}
+	}
 
 }

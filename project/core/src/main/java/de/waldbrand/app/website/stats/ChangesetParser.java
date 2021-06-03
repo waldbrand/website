@@ -15,37 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.stats;
 
-import de.topobyte.webgun.scheduler.Scheduler;
-import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.stats.model.AggregatedStats;
-import lombok.Getter;
-import lombok.Setter;
+import org.locationtech.jts.geom.Geometry;
 
-public class Website
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+
+import de.waldbrand.app.website.stats.model.osmcha.Changesets;
+import de.waldbrand.app.website.stats.model.osmcha.GeometryDeserializer;
+
+public class ChangesetParser
 {
 
-	public static final String TITLE = "Waldbrand-App";
-	public static final String CONTACT = "team@waldbrand-app.de";
+	private Gson gson = new GsonBuilder()
+			.registerTypeAdapter(Geometry.class, new GeometryDeserializer())
+			.create();
 
-	public static final Website INSTANCE = new Website();
-
-	@Getter
-	@Setter
-	private CacheBuster cacheBuster;
-
-	@Getter
-	@Setter
-	private Data data;
-
-	@Getter
-	@Setter
-	private Scheduler<SchedulerTask> scheduler;
-
-	@Getter
-	@Setter
-	private AggregatedStats stats;
+	public Changesets parse(JsonElement json)
+	{
+		return gson.fromJson(json, Changesets.class);
+	}
 
 }

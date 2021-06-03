@@ -37,6 +37,18 @@ import de.topobyte.webgun.exceptions.InternalServerErrorException;
 public class Cards
 {
 
+	public static Div emptyCard(Div deck, String title)
+	{
+		Div col = deck
+				.ac(HTML.div("col-12 col-md-6 d-flex align-items-stretch"));
+		Div card = col.ac(HTML.div("card mb-4 w-100"));
+		Div body = card.ac(HTML.div("card-body"));
+		if (title != null) {
+			body.ac(HTML.h5(title)).addClass("card-title");
+		}
+		return body;
+	}
+
 	public static void card(Div deck, String resource)
 	{
 		card(deck, resource, Arrays.asList());
@@ -63,9 +75,7 @@ public class Cards
 		} catch (IOException e) {
 			throw new InternalServerErrorException(e);
 		}
-		for (A link : links) {
-			body.ac(link).addClass("card-link");
-		}
+		links(body, links);
 	}
 
 	public static void card(Div deck, String image, String imageLink,
@@ -86,6 +96,11 @@ public class Cards
 		}
 		P p = body.ac(HTML.p());
 		p.appendText(text);
+		links(body, links);
+	}
+
+	public static void links(Div body, List<A> links)
+	{
 		for (A link : links) {
 			body.ac(link).addClass("card-link");
 		}

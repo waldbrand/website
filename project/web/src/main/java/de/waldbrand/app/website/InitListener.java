@@ -23,6 +23,8 @@ import java.nio.file.Paths;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -41,6 +43,10 @@ import de.topobyte.ioutils.ShellPaths;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.shiro.AuthInfo;
+import de.topobyte.webgun.scheduler.HourlyInvocationTimeFactory;
+import de.topobyte.webgun.scheduler.InSecondsInvocationTimeFactory;
+import de.topobyte.webgun.scheduler.Scheduler;
+import de.topobyte.webgun.scheduler.SchedulerTask;
 import de.topobyte.weblogin.realm.DbRealm;
 import de.topobyte.weblogin.realm.Root;
 import de.topobyte.weblogin.realm.UserInfo;
@@ -48,6 +54,7 @@ import de.waldbrand.app.website.config.MapPosition;
 import de.waldbrand.app.website.db.ConnectionUtil;
 import de.waldbrand.app.website.db.DatabasePoolDatabaseFactory;
 import de.waldbrand.app.website.db.DbCreator;
+import de.waldbrand.app.website.stats.StatsUpdaterTask;
 
 @WebListener
 public class InitListener implements ServletContextListener
@@ -77,14 +84,6 @@ public class InitListener implements ServletContextListener
 			logger.error("Unable to load configuration", e);
 		}
 
-		logger.info("loading secure configuration...");
-		Properties secureConfig = new Properties();
-		try (InputStream input = Resources.stream("secure.properties")) {
-			secureConfig.load(input);
-		} catch (Throwable e) {
-			logger.error("Unable to load secure configuration", e);
-		}
-
 		String defaultMapPosition = config.getProperty("default.map.position");
 		String[] parts = defaultMapPosition.split(",");
 		double lat = Double.parseDouble(parts[0]);
@@ -107,7 +106,20 @@ public class InitListener implements ServletContextListener
 				.resolve(config.getProperty("database.path"));
 		Config.INSTANCE.setDatabase(databasePath);
 
-		WebsiteData.load();
+		logger.info("loading secure configuration...");
+		Properties secureConfig = new Properties();
+		try (InputStream input = Resources.stream("secure.properties")) {
+			secureConfig.load(input);
+		} catch (Throwable e) {
+			logger.error("Unable to load secure configuration", e);
+		}
+
+		String osmChaToken = secureConfig.getProperty("osmcha.token");
+		if (osmChaToken == null) {
+			throw new RuntimeException("Make sure property 'osmcha.token'"
+					+ " is set in secure.properties");
+		}
+		Config.INSTANCE.setOsmChaToken(osmChaToken);
 
 		logger.info("creating database if necessary");
 		try {
@@ -132,6 +144,22 @@ public class InitListener implements ServletContextListener
 		DbRealm.ROOT_USER_INFO = new UserInfo(new Root(),
 				new AuthInfo(rootLoginHash, rootLoginSalt));
 
+		WebsiteData.load();
+
+		logger.info("starting scheduler daemon");
+		Scheduler<SchedulerTask> scheduler = new Scheduler<>();
+		Website.INSTANCE.setScheduler(scheduler);
+		HourlyInvocationTimeFactory timer = new HourlyInvocationTimeFactory(0,
+				0);
+		StatsUpdaterTask statsUpdater = new StatsUpdaterTask();
+		if (LocalDateTime.now().until(timer.getNext(),
+				ChronoUnit.SECONDS) > 60) {
+			scheduler.schedule(new InSecondsInvocationTimeFactory(10),
+					statsUpdater);
+		}
+		scheduler.schedule(timer, statsUpdater);
+		scheduler.start();
+
 		long stop = System.currentTimeMillis();
 
 		logger.info("done");
@@ -143,6 +171,9 @@ public class InitListener implements ServletContextListener
 	public void contextDestroyed(ServletContextEvent sce)
 	{
 		logger.info("context destroyed");
+
+		logger.info("shutting down scheduler");
+		Website.INSTANCE.getScheduler().stop();
 
 		logger.info("shutting down GeoTools weak collection cleaner");
 		WeakCollectionCleaner.DEFAULT.exit();

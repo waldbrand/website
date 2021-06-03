@@ -51,4 +51,8 @@ public class Config
 	@Setter
 	private Path database;
 
+	@Getter
+	@Setter
+	private String osmChaToken;
+
 }

@@ -15,37 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.stats;
 
-import de.topobyte.webgun.scheduler.Scheduler;
-import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.stats.model.AggregatedStats;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class Website
+import de.topobyte.webgun.urls.LinkBuilder;
+
+public class OsmCha
 {
 
-	public static final String TITLE = "Waldbrand-App";
-	public static final String CONTACT = "team@waldbrand-app.de";
-
-	public static final Website INSTANCE = new Website();
-
-	@Getter
-	@Setter
-	private CacheBuster cacheBuster;
-
-	@Getter
-	@Setter
-	private Data data;
-
-	@Getter
-	@Setter
-	private Scheduler<SchedulerTask> scheduler;
-
-	@Getter
-	@Setter
-	private AggregatedStats stats;
+	public static String link(LocalDateTime time)
+	{
+		LinkBuilder lb = new LinkBuilder(
+				"https://osmcha.org/api/v1/changesets/");
+		lb.addParameter("date__gte", "2021-01-01");
+		DateTimeFormatter pattern = DateTimeFormatter
+				.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String date = pattern.format(time);
+		lb.addParameter("date__lte", date);
+		lb.addParameter("editor", "mapcomplete");
+		lb.addParameter("metadata", "theme=waldbrand");
+		lb.addParameter("page", "1");
+		lb.addParameter("page_size", "1000");
+		return lb.toString();
+	}
 
 }

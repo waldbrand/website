@@ -18,16 +18,20 @@
 package de.waldbrand.app.website.pages.other;
 
 import static de.waldbrand.app.website.widgets.Cards.card;
+import static de.waldbrand.app.website.widgets.Cards.emptyCard;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.stats.model.AggregatedStats;
 
 public class EditorLandingPage extends SimpleBaseGenerator
 {
@@ -52,7 +56,24 @@ public class EditorLandingPage extends SimpleBaseGenerator
 		card(deck, "/" + CacheBusting.resolve("images/editor.png"), linkEditor,
 				null, Arrays.asList(), "So sieht der Editor in Benutzung aus.");
 
+		AggregatedStats stats = Website.INSTANCE.getStats();
+		if (stats != null) {
+			stats(deck, stats);
+		}
+
 		MiscContent.rowSponsors(content);
+	}
+
+	private void stats(Div deck, AggregatedStats stats)
+	{
+		Div body = emptyCard(deck, "Statistiken");
+		DateTimeFormatter pattern = DateTimeFormatter
+				.ofPattern("dd.MM.yyyy, HH:mm 'Uhr'");
+		body.ac(HTML.p()).at(String.format(
+				"Bis heute (Stand %s) haben mit dem Editor %d Nutzer:innen %d Einträge"
+						+ " hinzugefügt und %d Ergänzungen oder Änderungen vorgenommen",
+				pattern.format(stats.getTime()), stats.getUsers().size(),
+				stats.getCreated(), stats.getModified()));
 	}
 
 }

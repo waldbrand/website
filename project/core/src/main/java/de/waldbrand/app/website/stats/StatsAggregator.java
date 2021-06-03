@@ -15,37 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.stats;
 
-import de.topobyte.webgun.scheduler.Scheduler;
-import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.lbforst.model.Data;
+import java.time.LocalDateTime;
+
 import de.waldbrand.app.website.stats.model.AggregatedStats;
+import de.waldbrand.app.website.stats.model.User;
+import de.waldbrand.app.website.stats.model.osmcha.Changeset;
+import de.waldbrand.app.website.stats.model.osmcha.Changesets;
 import lombok.Getter;
-import lombok.Setter;
 
-public class Website
+public class StatsAggregator
 {
 
-	public static final String TITLE = "Waldbrand-App";
-	public static final String CONTACT = "team@waldbrand-app.de";
-
-	public static final Website INSTANCE = new Website();
-
 	@Getter
-	@Setter
-	private CacheBuster cacheBuster;
-
-	@Getter
-	@Setter
-	private Data data;
-
-	@Getter
-	@Setter
-	private Scheduler<SchedulerTask> scheduler;
-
-	@Getter
-	@Setter
 	private AggregatedStats stats;
+
+	public StatsAggregator(LocalDateTime time)
+	{
+		stats = new AggregatedStats(time);
+	}
+
+	public void aggregate(Changesets changesets)
+	{
+		for (Changeset cs : changesets.getFeatures()) {
+			stats.getUsers().add(new User(cs.getProperties().getUid(),
+					cs.getProperties().getUser()));
+			stats.setCreated(
+					stats.getCreated() + cs.getProperties().getCreate());
+			stats.setModified(
+					stats.getModified() + cs.getProperties().getModify());
+			stats.setDeleted(
+					stats.getDeleted() + cs.getProperties().getDelete());
+		}
+	}
 
 }

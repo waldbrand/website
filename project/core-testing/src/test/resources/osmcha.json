@@ -1,0 +1,988 @@
+{
+  "type": "FeatureCollection",
+  "count": 15,
+  "next": null,
+  "previous": null,
+  "features": [
+    {
+      "id": 105438725,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8190627,
+              51.810254
+            ],
+            [
+              13.8203734,
+              51.810254
+            ],
+            [
+              13.8203734,
+              51.8122863
+            ],
+            [
+              13.8190627,
+              51.8122863
+            ],
+            [
+              13.8190627,
+              51.810254
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Marvin Geisler",
+        "uid": "13424339",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-27T16:49:44Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 2,
+        "delete": 0,
+        "area": 2.6637356099939e-06,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105429893,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.7904162,
+              51.8111198
+            ],
+            [
+              13.8217482,
+              51.8111198
+            ],
+            [
+              13.8217482,
+              51.8228518
+            ],
+            [
+              13.7904162,
+              51.8228518
+            ],
+            [
+              13.7904162,
+              51.8111198
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Marvin Geisler",
+        "uid": "13424339",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-27T13:34:43Z",
+        "reviewed_features": [],
+        "create": 3,
+        "modify": 3,
+        "delete": 0,
+        "area": 0.000367587024000074,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105415408,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              14.1477031,
+              52.3448603
+            ],
+            [
+              14.1477031,
+              52.3448603
+            ],
+            [
+              14.1477031,
+              52.3448603
+            ],
+            [
+              14.1477031,
+              52.3448603
+            ],
+            [
+              14.1477031,
+              52.3448603
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [],
+        "tags": [],
+        "features": [],
+        "user": "mozita",
+        "uid": "8934185",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-27T09:53:17Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 0,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": false,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105410749,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.7054202,
+              52.2386216
+            ],
+            [
+              13.7225622,
+              52.2386216
+            ],
+            [
+              13.7225622,
+              52.2459828
+            ],
+            [
+              13.7054202,
+              52.2459828
+            ],
+            [
+              13.7054202,
+              52.2386216
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "paytv",
+        "uid": "13422838",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-27T09:07:53Z",
+        "reviewed_features": [],
+        "create": 6,
+        "modify": 9,
+        "delete": 0,
+        "area": 0.000126185690399969,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105308266,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.7623636,
+              52.1835731
+            ],
+            [
+              12.7623636,
+              52.1835731
+            ],
+            [
+              12.7623636,
+              52.1835731
+            ],
+            [
+              12.7623636,
+              52.1835731
+            ],
+            [
+              12.7623636,
+              52.1835731
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Tom Schneider @FFWBrück",
+        "uid": "13382854",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-25T17:39:13Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 0,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105292377,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.7659196,
+              52.8398904
+            ],
+            [
+              13.7665987,
+              52.8398904
+            ],
+            [
+              13.7665987,
+              52.8401774
+            ],
+            [
+              13.7659196,
+              52.8401774
+            ],
+            [
+              13.7659196,
+              52.8398904
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "survey",
+        "imagery_used": "Not reported",
+        "date": "2021-05-25T12:31:10Z",
+        "reviewed_features": [],
+        "create": 2,
+        "modify": 6,
+        "delete": 0,
+        "area": 1.9490169999989e-07,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105171605,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.7498699,
+              52.177831
+            ],
+            [
+              12.7636001,
+              52.177831
+            ],
+            [
+              12.7636001,
+              52.1848205
+            ],
+            [
+              12.7498699,
+              52.1848205
+            ],
+            [
+              12.7498699,
+              52.177831
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "MOTTE123",
+        "uid": "13382854",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-23T15:16:49Z",
+        "reviewed_features": [],
+        "create": 5,
+        "modify": 9,
+        "delete": 0,
+        "area": 9.59672329000387e-05,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105105662,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "MOTTE123",
+        "uid": "13382854",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-21T18:31:10Z",
+        "reviewed_features": [],
+        "create": 0,
+        "modify": 3,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105089211,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ],
+            [
+              12.7625809,
+              52.183676
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "MOTTE123",
+        "uid": "13382854",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-21T12:15:01Z",
+        "reviewed_features": [],
+        "create": 0,
+        "modify": 1,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105062544,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8147658,
+              53.1617286
+            ],
+            [
+              13.8147658,
+              53.1617286
+            ],
+            [
+              13.8147658,
+              53.1617286
+            ],
+            [
+              13.8147658,
+              53.1617286
+            ],
+            [
+              13.8147658,
+              53.1617286
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "survey",
+        "imagery_used": "Not reported",
+        "date": "2021-05-21T05:17:26Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 0,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105036015,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "survey",
+        "imagery_used": "Not reported",
+        "date": "2021-05-20T14:47:48Z",
+        "reviewed_features": [],
+        "create": 0,
+        "modify": 1,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105025981,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8380367,
+              53.1226703
+            ],
+            [
+              13.8692549,
+              53.1226703
+            ],
+            [
+              13.8692549,
+              53.1356141
+            ],
+            [
+              13.8380367,
+              53.1356141
+            ],
+            [
+              13.8380367,
+              53.1226703
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "survey",
+        "imagery_used": "Not reported",
+        "date": "2021-05-20T11:43:11Z",
+        "reviewed_features": [],
+        "create": 0,
+        "modify": 13,
+        "delete": 0,
+        "area": 0.000404082137159841,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 105014411,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.7963319,
+              53.1290517
+            ],
+            [
+              13.7963319,
+              53.1290517
+            ],
+            [
+              13.7963319,
+              53.1290517
+            ],
+            [
+              13.7963319,
+              53.1290517
+            ],
+            [
+              13.7963319,
+              53.1290517
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-20T09:08:15Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 1,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "EsriWorldImagery",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 104940762,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8035086,
+              53.1055968
+            ],
+            [
+              13.886995,
+              53.1055968
+            ],
+            [
+              13.886995,
+              53.1613523
+            ],
+            [
+              13.8035086,
+              53.1613523
+            ],
+            [
+              13.8035086,
+              53.1055968
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [
+          {
+            "id": 40,
+            "name": "New mapper"
+          }
+        ],
+        "tags": [],
+        "features": [],
+        "user": "Brandoberinspektor Erdmann",
+        "uid": "13364061",
+        "editor": "MapComplete 0.7.2l",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-19T08:16:05Z",
+        "reviewed_features": [],
+        "create": 16,
+        "modify": 6,
+        "delete": 0,
+        "area": 0.00465482597519971,
+        "is_suspect": true,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "de",
+          "theme-creator": "Sebastian Kürten"
+        }
+      }
+    },
+    {
+      "id": 104434320,
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ],
+            [
+              13.8549909,
+              53.1356141
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "check_user": null,
+        "reasons": [],
+        "tags": [],
+        "features": [],
+        "user": "sebkur",
+        "uid": "22917",
+        "editor": "MapComplete 0.7.0c",
+        "comment": "Adding data with #MapComplete for theme #waldbrand",
+        "comments_count": 0,
+        "source": "Not reported",
+        "imagery_used": "Not reported",
+        "date": "2021-05-10T08:34:04Z",
+        "reviewed_features": [],
+        "create": 1,
+        "modify": 1,
+        "delete": 0,
+        "area": 0,
+        "is_suspect": false,
+        "harmful": null,
+        "checked": false,
+        "check_date": null,
+        "metadata": {
+          "host": "waldbrand-app.de",
+          "theme": "waldbrand",
+          "imagery": "osm",
+          "language": "en",
+          "theme-creator": "Erwin Olario"
+        }
+      }
+    }
+  ]
+}

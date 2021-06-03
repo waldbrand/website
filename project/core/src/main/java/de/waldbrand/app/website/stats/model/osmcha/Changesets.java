@@ -15,37 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website;
+package de.waldbrand.app.website.stats.model.osmcha;
 
-import de.topobyte.webgun.scheduler.Scheduler;
-import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.stats.model.AggregatedStats;
+import java.util.List;
+
 import lombok.Getter;
-import lombok.Setter;
 
-public class Website
+public class Changesets
 {
 
-	public static final String TITLE = "Waldbrand-App";
-	public static final String CONTACT = "team@waldbrand-app.de";
-
-	public static final Website INSTANCE = new Website();
+	@Getter
+	private int count;
 
 	@Getter
-	@Setter
-	private CacheBuster cacheBuster;
+	private String next;
 
 	@Getter
-	@Setter
-	private Data data;
-
-	@Getter
-	@Setter
-	private Scheduler<SchedulerTask> scheduler;
-
-	@Getter
-	@Setter
-	private AggregatedStats stats;
+	private List<Changeset> features;
 
 }
