@@ -77,6 +77,14 @@ public class InitListener implements ServletContextListener
 			logger.error("Unable to load configuration", e);
 		}
 
+		logger.info("loading secure configuration...");
+		Properties secureConfig = new Properties();
+		try (InputStream input = Resources.stream("secure.properties")) {
+			secureConfig.load(input);
+		} catch (Throwable e) {
+			logger.error("Unable to load secure configuration", e);
+		}
+
 		String defaultMapPosition = config.getProperty("default.map.position");
 		String[] parts = defaultMapPosition.split(",");
 		double lat = Double.parseDouble(parts[0]);
@@ -100,14 +108,6 @@ public class InitListener implements ServletContextListener
 		Config.INSTANCE.setDatabase(databasePath);
 
 		WebsiteData.load();
-
-		logger.info("loading secure configuration...");
-		Properties secureConfig = new Properties();
-		try (InputStream input = Resources.stream("secure.properties")) {
-			secureConfig.load(input);
-		} catch (Throwable e) {
-			logger.error("Unable to load secure configuration", e);
-		}
 
 		logger.info("creating database if necessary");
 		try {
