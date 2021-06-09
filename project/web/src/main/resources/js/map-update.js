@@ -34,6 +34,13 @@ function updatePois(data) {
       });
       markers.get(iconId).addLayer(marker);
       marker.bindPopup(item.popup);
+
+      L.circle([item.lat, item.lon], {
+        radius: 300,
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.1,
+      }).addTo(map);
     });
   });
 }
