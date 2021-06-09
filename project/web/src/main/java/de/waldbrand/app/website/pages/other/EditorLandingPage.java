@@ -71,7 +71,8 @@ public class EditorLandingPage extends SimpleBaseGenerator
 				.ofPattern("dd.MM.yyyy, HH:mm 'Uhr'");
 		body.ac(HTML.p()).at(String.format(
 				"Bis heute (Stand %s) haben mit dem Editor %d Nutzer:innen %d Einträge"
-						+ " hinzugefügt und %d Ergänzungen oder Änderungen vorgenommen",
+						+ " hinzugefügt und %d Ergänzungen oder Änderungen vorgenommen."
+						+ " 💪 Vielen Dank an alle, die schon mitgearbeitet haben! 💖",
 				pattern.format(stats.getTime()), stats.getUsers().size(),
 				stats.getCreated(), stats.getModified()));
 	}
