@@ -24,6 +24,9 @@ import static de.topobyte.osm4j.core.model.util.OsmModelUtil.getTagsAsMap;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.slimjars.dist.gnu.trove.list.TLongList;
@@ -31,6 +34,7 @@ import com.slimjars.dist.gnu.trove.set.TLongSet;
 import com.slimjars.dist.gnu.trove.set.hash.TLongHashSet;
 
 import de.topobyte.melon.io.StreamUtil;
+import de.topobyte.osm4j.core.access.OsmIterator;
 import de.topobyte.osm4j.core.access.OsmIteratorInput;
 import de.topobyte.osm4j.core.access.OsmOutputStream;
 import de.topobyte.osm4j.core.model.iface.EntityContainer;
@@ -43,6 +47,7 @@ import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.osm4j.utils.OsmIoUtils;
 import de.topobyte.osm4j.utils.OsmOutputConfig;
+import de.topobyte.osm4j.utils.merge.sorted.SortedMerge;
 
 public class ExtractOsmData
 {
@@ -60,6 +65,7 @@ public class ExtractOsmData
 		Path fileInput = dir.resolve("Brandenburg.tbo");
 		Path fileOutput = dir.resolve("emergency.tbo");
 		Path fileWayNodes = dir.resolve("emergency-waynodes.tbo");
+		Path fileMerged = dir.resolve("emergency-merged.tbo");
 		System.out.println("input: " + fileInput);
 		System.out.println("emergency: " + fileOutput);
 		System.out.println("emergency waynodes: " + fileWayNodes);
@@ -69,6 +75,8 @@ public class ExtractOsmData
 		filter(inputFile, fileOutput);
 		System.out.println("collecting waynodes...");
 		collectNodes(inputFile, fileWayNodes);
+		System.out.println("merging files...");
+		mergeFiles(fileOutput, fileWayNodes, fileMerged);
 		System.out.println("done");
 	}
 
@@ -129,6 +137,23 @@ public class ExtractOsmData
 			osmOutput.write((OsmRelation) entity);
 			break;
 		}
+	}
+
+	private void mergeFiles(Path fileOutput, Path fileWayNodes, Path fileMerged)
+			throws IOException
+	{
+		OutputStream out = StreamUtil.bufferedOutputStream(fileMerged);
+		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
+				new OsmOutputConfig(FileFormat.TBO, false));
+
+		List<OsmIterator> iterators = new ArrayList<>();
+		for (Path file : Arrays.asList(fileOutput, fileWayNodes)) {
+			OsmFileInput input = new OsmFileInput(file, FileFormat.TBO);
+			iterators.add(input.createIterator(true, false).getIterator());
+		}
+
+		SortedMerge task = new SortedMerge(osmOutput, iterators);
+		task.run();
 	}
 
 }
