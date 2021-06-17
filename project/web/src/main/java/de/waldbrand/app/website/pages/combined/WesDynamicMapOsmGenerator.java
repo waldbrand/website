@@ -33,13 +33,12 @@ import de.waldbrand.app.website.icons.Icons;
 import de.waldbrand.app.website.icons.LeafletIcon;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
-import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
+public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
 {
 
-	public WesDynamicMapAllGenerator(WebPath path)
+	public WesDynamicMapOsmGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -52,7 +51,7 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Quelle: OpenStreetMap + Landesbetrieb Forst");
+		p.appendText("Quelle: OpenStreetMap");
 
 		Div container = content.ac(HTML.div());
 		container.attr("style", "position:relative");
@@ -85,14 +84,13 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		script(content, code);
 
 		code = new StringBuilder();
-		code.append("var poiType = 'all';");
+		code.append("var poiType = 'osm';");
 		script(content, code);
 
 		script(content, Resources.loadString("js/map-history.js"));
 		script(content, Resources.loadString("js/map-update.js"));
 
 		OsmAttributionUtil.attribution(content);
-		WesAttributionUtil.attribution(content);
 	}
 
 	private void script(Element<?> content, String code)

@@ -8,7 +8,7 @@ function reloadPois() {
     $("#overlay").show();
   } else {
     $("#overlay").hide();
-    $.getJSON("/pois?bbox=" + map.getBounds().toBBoxString(), function(data) {
+    $.getJSON("/pois?bbox=" + map.getBounds().toBBoxString() + "&type=" + poiType, function(data) {
       updatePois(data);
     }).fail(function(d, textStatus, error) {
       console.error("getJSON failed, status: " + textStatus + ", error: " + error)

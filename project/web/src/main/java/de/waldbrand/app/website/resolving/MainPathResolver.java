@@ -24,14 +24,15 @@ import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.combined.WesDynamicMapAllGenerator;
+import de.waldbrand.app.website.pages.combined.WesDynamicMapOsmGenerator;
 import de.waldbrand.app.website.pages.login.LoginGenerator;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
 import de.waldbrand.app.website.pages.other.EditorLandingPage;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
-import de.waldbrand.app.website.pages.other.WesLandingPage;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
+import de.waldbrand.app.website.pages.other.WesLandingPage;
 
 public class MainPathResolver
 		extends SmartPathSpecResolver<ContentGeneratable, Void>
@@ -68,6 +69,8 @@ public class MainPathResolver
 
 		map(LinkDefs.MAP, (path, output, request,
 				data) -> new WesDynamicMapAllGenerator(path));
+		map(LinkDefs.MAP_OSM, (path, output, request,
+				data) -> new WesDynamicMapOsmGenerator(path));
 
 		map(LinkDefs.LANDING_EDITOR,
 				(path, output, request, data) -> new EditorLandingPage(path));
