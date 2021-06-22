@@ -61,6 +61,10 @@ public class EditorLandingPage extends SimpleBaseGenerator
 			stats(deck, stats);
 		}
 
+		card(deck, "markdown/de/landing-editor-testversion.md",
+				Arrays.asList(HTML.a(LinkDefs.EDITOR_TEST.getLink(),
+						"Zur Testversion des Editors")));
+
 		MiscContent.rowSponsors(content);
 	}
 

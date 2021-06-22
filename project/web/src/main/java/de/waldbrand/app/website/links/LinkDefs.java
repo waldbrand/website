@@ -59,6 +59,10 @@ public class LinkDefs
 	public static PathDef0 EDITOR = new PathDef0(
 			new PathSpec("mapcomplete", "waldbrand.html#start"));
 
+	public static PathDef0 EDITOR_TEST = new PathDef0(new PathSpec(
+			"mapcomplete",
+			"waldbrand.html?z=15&lat=53.13066&lon=13.85354&test=true#start"));
+
 	/*
 	 * OSM
 	 */
