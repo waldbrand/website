@@ -57,7 +57,7 @@ public class LinkDefs
 			new PathSpec("wes", "map", "osm"));
 
 	public static PathDef0 EDITOR = new PathDef0(
-			new PathSpec("mapcomplete", "waldbrand.html"));
+			new PathSpec("mapcomplete", "waldbrand.html#start"));
 
 	/*
 	 * OSM
