@@ -6,4 +6,4 @@ Die App enthält neben einer Basiskarte auch Ebenen für Hydranten, Brunnen, Was
 und Saugstellen.
 
 Aus der App heraus kann auch der Editor geöffnet werden um bereits bestehende
-Daten zu vervollständigen.on euch oder anderen vollständig sichtbar sind.
+Daten zu vervollständigen oder neue Wasserentnahmestellen einzutragen.
