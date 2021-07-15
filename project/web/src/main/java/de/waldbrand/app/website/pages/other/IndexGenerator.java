@@ -55,9 +55,6 @@ public class IndexGenerator extends SimpleBaseGenerator
 				HTML.a(LinkDefs.LANDING_EDITOR.getLink(), "Mehr erfahren"),
 				HTML.a(LinkDefs.EDITOR.getLink(), "Direkt zum Editor")));
 
-		card(deck, "markdown/de/intro-karte.md",
-				Arrays.asList(HTML.a(LinkDefs.MAP_OSM.getLink(), "Zur Karte")));
-
 		card(deck, "markdown/de/intro-wer.md");
 
 		card(deck, "markdown/de/intro-was.md");
