@@ -49,7 +49,7 @@ public class AppLandingPage extends SimpleBaseGenerator
 		card(deck, "markdown/de/landing-app.md", Arrays
 				.asList(HTML.a(LinkDefs.GOOGLE_PLAY, "Jetzt herunterladen")));
 
-		card(deck, "/" + CacheBusting.resolve("images/editor.png"), linkEditor,
+		card(deck, "/" + CacheBusting.resolve("images/app.png"), linkEditor,
 				null, Arrays.asList(), "So sieht die App in Benutzung aus.");
 
 		MiscContent.rowSponsors(content);
