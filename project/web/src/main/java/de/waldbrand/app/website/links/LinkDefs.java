@@ -29,6 +29,8 @@ import de.waldbrand.app.website.osm.PoiType;
 public class LinkDefs
 {
 
+	public static final String GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=de.waldbrandapp.brandenburg";
+
 	/*
 	 * Allgemein
 	 */
@@ -45,6 +47,9 @@ public class LinkDefs
 
 	public static PathDef0 RELOAD_DATA = new PathDef0(
 			new PathSpec("reload-data"));
+
+	public static PathDef0 LANDING_APP = new PathDef0(
+			new PathSpec("android-app"));
 
 	public static PathDef0 LANDING_EDITOR = new PathDef0(
 			new PathSpec("wes", "editor"));

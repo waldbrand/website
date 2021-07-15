@@ -21,6 +21,7 @@ import static de.waldbrand.app.website.widgets.Cards.card;
 
 import java.util.Arrays;
 
+import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.webpaths.WebPath;
@@ -28,10 +29,10 @@ import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 
-public class IndexGenerator extends SimpleBaseGenerator
+public class AppLandingPage extends SimpleBaseGenerator
 {
 
-	public IndexGenerator(WebPath path)
+	public AppLandingPage(WebPath path)
 	{
 		super(path);
 	}
@@ -39,35 +40,17 @@ public class IndexGenerator extends SimpleBaseGenerator
 	@Override
 	protected void content()
 	{
-		content.ac(HTML.h1("Die Waldbrand-App für Brandenburg"));
+		content.ac(HTML.h1("Android-App"));
 
-		// P p = content.ac(HTML.p());
-		// p.appendText(
-		// "Im Rahmen des Prototype Fund entwickeln wir einen Baukasten zum"
-		// + " Erstellen von offline-fähigen Waldbrand-Apps zur"
-		// + " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
-
-		// "Finde deine Wasserentnahmestellen"
+		String linkEditor = LinkDefs.EDITOR.getLink();
 
 		Div deck = content.ac(HTML.div("row"));
 
-		card(deck, "markdown/de/intro-editor.md", Arrays.asList(
-				HTML.a(LinkDefs.LANDING_EDITOR.getLink(), "Mehr erfahren"),
-				HTML.a(LinkDefs.EDITOR.getLink(), "Direkt zum Editor")));
+		card(deck, "markdown/de/landing-app.md", Arrays
+				.asList(HTML.a(LinkDefs.GOOGLE_PLAY, "Jetzt herunterladen")));
 
-		card(deck, "markdown/de/intro-app.md",
-				Arrays.asList(
-						HTML.a(LinkDefs.LANDING_APP.getLink(), "Mehr erfahren"),
-						HTML.a(LinkDefs.GOOGLE_PLAY, "Jetzt runterladen")));
-
-		card(deck, "markdown/de/intro-wer.md");
-
-		card(deck, "markdown/de/intro-was.md");
-
-		card(deck, "markdown/de/intro-suche.md");
-
-		card(deck, "markdown/de/intro-wes.md", Arrays.asList(
-				HTML.a(LinkDefs.LANDING_WES.getLink(), "Mehr erfahren")));
+		card(deck, "/" + CacheBusting.resolve("images/editor.png"), linkEditor,
+				null, Arrays.asList(), "So sieht die App in Benutzung aus.");
 
 		MiscContent.rowSponsors(content);
 	}
