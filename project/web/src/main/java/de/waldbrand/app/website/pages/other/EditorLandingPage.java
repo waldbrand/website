@@ -20,21 +20,31 @@ package de.waldbrand.app.website.pages.other;
 import static de.waldbrand.app.website.widgets.Cards.card;
 import static de.waldbrand.app.website.widgets.Cards.emptyCard;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.slimjars.dist.gnu.trove.set.TLongSet;
+import com.slimjars.dist.gnu.trove.set.hash.TLongHashSet;
 
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
+import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.webpaths.WebPath;
-import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
-import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.stats.model.AggregatedStats;
+import de.waldbrand.app.website.pages.base.DatabaseBaseGenerator;
+import de.waldbrand.app.website.stats.continuous.StatsDao;
+import de.waldbrand.app.website.stats.continuous.model.DbChangeset;
 
-public class EditorLandingPage extends SimpleBaseGenerator
+public class EditorLandingPage extends DatabaseBaseGenerator
 {
+
+	final static Logger logger = LoggerFactory
+			.getLogger(EditorLandingPage.class);
 
 	public EditorLandingPage(WebPath path)
 	{
@@ -56,9 +66,10 @@ public class EditorLandingPage extends SimpleBaseGenerator
 		card(deck, "/" + CacheBusting.resolve("images/editor.png"), linkEditor,
 				null, Arrays.asList(), "So sieht der Editor in Benutzung aus.");
 
-		AggregatedStats stats = Website.INSTANCE.getStats();
-		if (stats != null) {
-			stats(deck, stats);
+		try {
+			stats(deck);
+		} catch (QueryException e) {
+			logger.error("Error while fetching stats from database", e);
 		}
 
 		card(deck, "markdown/de/landing-editor-testversion.md",
@@ -68,17 +79,26 @@ public class EditorLandingPage extends SimpleBaseGenerator
 		MiscContent.rowSponsors(content);
 	}
 
-	private void stats(Div deck, AggregatedStats stats)
+	private void stats(Div deck) throws QueryException
 	{
+		StatsDao statsDao = new StatsDao(db.getConnection());
+		List<DbChangeset> changesets = statsDao.getChangesets();
+		int totalChanges = 0;
+		TLongSet users = new TLongHashSet();
+		for (DbChangeset changeset : changesets) {
+			if (changeset.isOpen()) {
+				continue;
+			}
+			totalChanges += changeset.getNumChanges();
+			users.add(changeset.getUserId());
+		}
+
 		Div body = emptyCard(deck, "Statistiken");
-		DateTimeFormatter pattern = DateTimeFormatter
-				.ofPattern("dd.MM.yyyy, HH:mm 'Uhr'");
 		body.ac(HTML.p()).at(String.format(
-				"Bis heute (Stand %s) haben mit dem Editor %d Nutzer:innen %d Einträge"
-						+ " hinzugefügt und %d Ergänzungen oder Änderungen vorgenommen."
+				"Bis heute haben mit dem Editor %d Nutzer:innen %d Einträge"
+						+ " hinzugefügt oder Änderungen vorgenommen."
 						+ " 💪 Vielen Dank an alle, die schon mitgearbeitet haben! 💖",
-				pattern.format(stats.getTime()), stats.getUsers().size(),
-				stats.getCreated(), stats.getModified()));
+				users.size(), totalChanges));
 	}
 
 }
