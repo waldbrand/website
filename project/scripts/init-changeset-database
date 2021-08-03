@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+CMD="$DIR/waldbrand-website.sh"
+CLASS="de.waldbrand.app.website.RunInitializeChangesetDatabase"
+
+exec "$CMD" "$CLASS" "$@"
