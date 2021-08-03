@@ -27,7 +27,7 @@ public class StatusTable extends Table
 
 	public StatusTable()
 	{
-		super("status");
+		super("changesets_status");
 		addColumn(ColumnClass.LONG, COLNAME_REPLICATION_SEQUENCE);
 	}
 
