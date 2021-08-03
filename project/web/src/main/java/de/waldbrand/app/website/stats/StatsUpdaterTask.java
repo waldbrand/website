@@ -18,14 +18,18 @@
 package de.waldbrand.app.website.stats;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.topobyte.luqe.iface.QueryException;
+import de.topobyte.luqe.jdbc.database.Database;
+import de.topobyte.osm4j.core.access.OsmInputException;
 import de.topobyte.webgun.scheduler.SchedulerTask;
-import de.waldbrand.app.website.Config;
-import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.stats.model.AggregatedStats;
+import de.waldbrand.app.website.db.DatabasePool;
+import de.waldbrand.app.website.stats.continuous.ChangesetDatabaseUpdater;
 
 public class StatsUpdaterTask extends SchedulerTask
 {
@@ -42,21 +46,22 @@ public class StatsUpdaterTask extends SchedulerTask
 	public void run()
 	{
 		logger.info("updating stats...");
-		tryUpdate();
+		try {
+			tryUpdate();
+			logger.info("done");
+		} catch (SQLException | IOException | OsmInputException
+				| QueryException e) {
+			logger.error("error while updating changesets database", e);
+		}
 	}
 
-	private void tryUpdate()
+	private void tryUpdate() throws SQLException, MalformedURLException,
+			IOException, OsmInputException, QueryException
 	{
-		StatsFetcher statsFetcher = new StatsFetcher(
-				Config.INSTANCE.getOsmChaToken());
-
-		try {
-			AggregatedStats stats = statsFetcher.fetch();
-			Website.INSTANCE.setStats(stats);
-			logger.info("success");
-		} catch (UnsupportedOperationException | IOException e) {
-			logger.warn("Error while fetching stats", e);
-		}
+		Database database = DatabasePool.getDatabase();
+		ChangesetDatabaseUpdater updater = new ChangesetDatabaseUpdater(
+				database);
+		updater.updateDatabase();
 	}
 
 }

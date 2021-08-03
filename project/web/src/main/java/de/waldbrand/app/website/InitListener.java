@@ -23,8 +23,6 @@ import java.nio.file.Paths;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -43,8 +41,7 @@ import de.topobyte.ioutils.ShellPaths;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.shiro.AuthInfo;
-import de.topobyte.webgun.scheduler.HourlyInvocationTimeFactory;
-import de.topobyte.webgun.scheduler.InSecondsInvocationTimeFactory;
+import de.topobyte.webgun.scheduler.MinutelyInvocationTimeFactory;
 import de.topobyte.webgun.scheduler.Scheduler;
 import de.topobyte.webgun.scheduler.SchedulerTask;
 import de.topobyte.weblogin.realm.DbRealm;
@@ -149,14 +146,9 @@ public class InitListener implements ServletContextListener
 		logger.info("starting scheduler daemon");
 		Scheduler<SchedulerTask> scheduler = new Scheduler<>();
 		Website.INSTANCE.setScheduler(scheduler);
-		HourlyInvocationTimeFactory timer = new HourlyInvocationTimeFactory(0,
+		MinutelyInvocationTimeFactory timer = new MinutelyInvocationTimeFactory(
 				0);
 		StatsUpdaterTask statsUpdater = new StatsUpdaterTask();
-		if (LocalDateTime.now().until(timer.getNext(),
-				ChronoUnit.SECONDS) > 60) {
-			scheduler.schedule(new InSecondsInvocationTimeFactory(10),
-					statsUpdater);
-		}
 		scheduler.schedule(timer, statsUpdater);
 		scheduler.start();
 

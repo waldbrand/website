@@ -17,43 +17,27 @@
 
 package de.waldbrand.app.website;
 
-import static java.time.LocalDateTime.ofEpochSecond;
 import static org.joda.time.DateTimeZone.UTC;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.sql.SQLException;
-import java.time.ZoneOffset;
-import java.util.Map;
 
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
-import de.topobyte.osm4j.changeset.ChangesetUtil;
-import de.topobyte.osm4j.changeset.OsmChangeset;
-import de.topobyte.osm4j.changeset.dynsax.OsmChangesetsHandler;
-import de.topobyte.osm4j.changeset.dynsax.OsmChangesetsReader;
 import de.topobyte.osm4j.core.access.OsmInputException;
-import de.topobyte.osm4j.replication.ReplicationFiles;
 import de.topobyte.osm4j.replication.ReplicationInfo;
 import de.topobyte.osm4j.replication.ReplicationUtil;
+import de.waldbrand.app.website.stats.continuous.ChangesetDatabaseUpdater;
 import de.waldbrand.app.website.stats.continuous.DatabaseCreator;
 import de.waldbrand.app.website.stats.continuous.StatsDao;
-import de.waldbrand.app.website.stats.continuous.model.DbChangeset;
 
-public class InitializeChangesetDatabase implements OsmChangesetsHandler
+public class InitializeChangesetDatabase
 {
 
 	final static Logger logger = LoggerFactory
@@ -61,7 +45,6 @@ public class InitializeChangesetDatabase implements OsmChangesetsHandler
 
 	private Path file;
 
-	private CloseableHttpClient httpclient = HttpClients.createDefault();
 	private DateTime earliestDate = new DateTime(2021, 05, 19, 8, 16, 0, UTC);
 
 	public InitializeChangesetDatabase(Path file)
@@ -78,7 +61,9 @@ public class InitializeChangesetDatabase implements OsmChangesetsHandler
 		database = new SqliteDatabase(file);
 		dao = new StatsDao(database.getConnection());
 		initDatabase();
-		updateDatabase();
+		ChangesetDatabaseUpdater updater = new ChangesetDatabaseUpdater(
+				database);
+		updater.updateDatabase();
 	}
 
 	private void initDatabase() throws QueryException, SQLException,
@@ -98,89 +83,6 @@ public class InitializeChangesetDatabase implements OsmChangesetsHandler
 			dao.insertSequence(start - 1);
 			database.getJdbcConnection().commit();
 		}
-	}
-
-	private void updateDatabase() throws MalformedURLException, IOException,
-			OsmInputException, QueryException, SQLException
-	{
-		StatsDao dao = new StatsDao(database.getConnection());
-		long last = dao.getSequence();
-		long start = last + 1;
-		System.out.println("start sequence number: " + start);
-
-		ReplicationUtil util = new ReplicationUtil();
-		ReplicationInfo changesetInfo = util.getChangesetInfo();
-		long max = changesetInfo.getSequenceNumber();
-		System.out.println("last sequence number: " + max);
-
-		long todo = max - start;
-		System.out.println("files to process: " + todo);
-
-		for (long i = start; i <= changesetInfo.getSequenceNumber(); i++) {
-			fetchAndParse(i);
-			dao.updateSequence(i);
-			database.getJdbcConnection().commit();
-		}
-	}
-
-	private long sequence;
-
-	private void fetchAndParse(long sequence)
-			throws ClientProtocolException, IOException, OsmInputException
-	{
-		this.sequence = sequence;
-		String url = ReplicationFiles.changesets(sequence);
-		HttpGet get = new HttpGet(url);
-		CloseableHttpResponse response = httpclient.execute(get);
-		HttpEntity entity = response.getEntity();
-
-		InputStream cinput = entity.getContent();
-		InputStream input = new GzipCompressorInputStream(cinput);
-
-		OsmChangesetsReader reader = new OsmChangesetsReader(input);
-		reader.setHandler(this);
-		reader.read();
-	}
-
-	@Override
-	public void handle(OsmChangeset changeset) throws IOException
-	{
-		Map<String, String> tags = ChangesetUtil.getTagsAsMap(changeset);
-		String createdBy = tags.get("created_by");
-		if (createdBy == null) {
-			return;
-		}
-		if (createdBy.startsWith("MapComplete")) {
-			String theme = tags.get("theme");
-			if (!"waldbrand".equals(theme)) {
-				return;
-			}
-			long id = changeset.getId();
-			long createdAt = changeset.getCreatedAt();
-			long closedAt = changeset.getClosedAt();
-			String user = changeset.getUser();
-			long uid = changeset.getUid();
-			int numChanges = changeset.getNumChanges();
-			boolean open = changeset.isOpen();
-			System.out.println(String.format(
-					"%d: %d open? %b %s - %s %s (%d) %s %d changes", sequence,
-					id, open,
-					ofEpochSecond(createdAt / 1000, 0, ZoneOffset.UTC),
-					ofEpochSecond(closedAt / 1000, 0, ZoneOffset.UTC), user,
-					uid, theme, numChanges));
-			try {
-				dao.insertChangeset(new DbChangeset(id, createdAt, closedAt,
-						open, user, uid, numChanges, numChanges));
-			} catch (QueryException e) {
-				logger.error("Error while inserting changeset", e);
-			}
-		}
-	}
-
-	@Override
-	public void complete() throws IOException
-	{
-		// do nothing
 	}
 
 }
