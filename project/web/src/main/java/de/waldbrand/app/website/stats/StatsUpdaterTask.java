@@ -62,6 +62,7 @@ public class StatsUpdaterTask extends SchedulerTask
 		ChangesetDatabaseUpdater updater = new ChangesetDatabaseUpdater(
 				database);
 		updater.updateDatabase();
+		database.closeConnection(true);
 	}
 
 }
