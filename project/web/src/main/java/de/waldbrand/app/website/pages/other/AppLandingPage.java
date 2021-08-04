@@ -42,15 +42,15 @@ public class AppLandingPage extends SimpleBaseGenerator
 	{
 		content.ac(HTML.h1("Android-App"));
 
-		String linkEditor = LinkDefs.EDITOR.getLink();
+		String linkApp = LinkDefs.GOOGLE_PLAY;
 
 		Div deck = content.ac(HTML.div("row"));
 
-		card(deck, "markdown/de/landing-app.md", Arrays
-				.asList(HTML.a(LinkDefs.GOOGLE_PLAY, "Jetzt herunterladen")));
+		card(deck, "markdown/de/landing-app.md",
+				Arrays.asList(HTML.a(linkApp, "Jetzt herunterladen")));
 
-		card(deck, "/" + CacheBusting.resolve("images/app.png"), linkEditor,
-				null, Arrays.asList(), "So sieht die App in Benutzung aus.");
+		card(deck, "/" + CacheBusting.resolve("images/app.png"), linkApp, null,
+				Arrays.asList(), "So sieht die App in Benutzung aus.");
 
 		MiscContent.rowSponsors(content);
 	}
