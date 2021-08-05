@@ -23,6 +23,8 @@ import static de.waldbrand.app.website.widgets.Cards.emptyCard;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +56,7 @@ public class EditorLandingPage extends DatabaseBaseGenerator
 	@Override
 	protected void content()
 	{
+
 		content.ac(HTML.h1("Editor für Wasserentnahmestellen"));
 
 		String linkEditor = LinkDefs.EDITOR.getLink();
@@ -99,6 +102,13 @@ public class EditorLandingPage extends DatabaseBaseGenerator
 						+ " hinzugefügt oder Änderungen vorgenommen."
 						+ " 💪 Vielen Dank an alle, die schon mitgearbeitet haben! 💖",
 				users.size(), totalChanges));
+
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.isAuthenticated()) {
+			body.ac(HTML.p())
+					.ac(HTML.a(LinkDefs.OSM_CONTRIBUTIONS.getLink(),
+							"Details zu unseren Beiträgen zu OSM"));
+		}
 	}
 
 }

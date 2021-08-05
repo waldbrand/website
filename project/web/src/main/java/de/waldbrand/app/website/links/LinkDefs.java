@@ -69,6 +69,13 @@ public class LinkDefs
 			"waldbrand.html?z=15&lat=53.13066&lon=13.85354&test=true#start"));
 
 	/*
+	 * Editor-Statistiken
+	 */
+
+	public static PathDef0 OSM_CONTRIBUTIONS = new PathDef0(
+			new PathSpec("internal", "osm", "contributions"));
+
+	/*
 	 * OSM
 	 */
 

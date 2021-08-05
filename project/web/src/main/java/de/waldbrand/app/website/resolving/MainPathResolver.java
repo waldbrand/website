@@ -25,6 +25,7 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.combined.WesDynamicMapAllGenerator;
 import de.waldbrand.app.website.pages.combined.WesDynamicMapOsmGenerator;
+import de.waldbrand.app.website.pages.internal.OsmContributionsPage;
 import de.waldbrand.app.website.pages.login.LoginGenerator;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
@@ -79,6 +80,9 @@ public class MainPathResolver
 				(path, output, request, data) -> new WesLandingPage(path));
 		map(LinkDefs.LANDING_APP,
 				(path, output, request, data) -> new AppLandingPage(path));
+
+		map(LinkDefs.OSM_CONTRIBUTIONS,
+				(path, output, request, data) -> new OsmContributionsPage(path));
 	}
 
 }
