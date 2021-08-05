@@ -66,6 +66,9 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		headrow.cell("Änderungen");
 		headrow.cell("Kommentare");
 		for (DbChangeset changeset : changesets) {
+			if (changeset.isOpen()) {
+				continue;
+			}
 			TableRow row = table.row();
 			LocalDateTime createdAt = LocalDateTime.ofEpochSecond(
 					changeset.getCreatedAt() / 1000, 0, ZoneOffset.UTC);
