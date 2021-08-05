@@ -31,8 +31,8 @@ public class RunInitializeChangesetDatabase
 	public static void main(String[] args)
 			throws IOException, OsmInputException, QueryException, SQLException
 	{
-		Path dir = SystemPaths.HOME.resolve("github/waldbrand/osm-data");
-		Path file = dir.resolve("changesets.sqlite");
+		Path dir = SystemPaths.HOME.resolve("webdata");
+		Path file = dir.resolve("waldbrand.sqlite");
 
 		InitializeChangesetDatabase task = new InitializeChangesetDatabase(
 				file);
