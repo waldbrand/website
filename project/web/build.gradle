@@ -40,6 +40,8 @@ dependencies {
     implementation 'com.vladsch.flexmark:flexmark-ext-tables:0.28.18'
     implementation 'com.vladsch.flexmark:flexmark-ext-wikilink:0.28.18'
 
+    implementation 'de.westnordost:osmapi-user:2.0'
+
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'org.apache.commons:commons-dbcp2:2.6.0'

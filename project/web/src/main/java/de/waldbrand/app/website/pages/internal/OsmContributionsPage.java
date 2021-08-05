@@ -25,6 +25,7 @@ import de.topobyte.jsoup.components.Table;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.webpaths.WebPath;
+import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.DatabaseBaseGenerator;
 import de.waldbrand.app.website.stats.continuous.StatsDao;
 import de.waldbrand.app.website.stats.continuous.model.DbChangeset;
@@ -82,8 +83,8 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 
 	private A linkUser(DbChangeset changeset)
 	{
-		return a(String.format("https://www.openstreetmap.org/user/%s",
-				changeset.getUser()), changeset.getUser());
+		return a(LinkDefs.OSM_USER_FORWARD.getLink(changeset.getUserId()),
+				changeset.getUser());
 	}
 
 	private A linkChangeset(long id)

@@ -75,6 +75,9 @@ public class LinkDefs
 	public static PathDef0 OSM_CONTRIBUTIONS = new PathDef0(
 			new PathSpec("internal", "osm", "contributions"));
 
+	public static PathDef1<Long> OSM_USER_FORWARD = new PathDef1<>(
+			new PathSpec("internal", "osm", "user", ":id:"), new LongMapper());
+
 	/*
 	 * OSM
 	 */
