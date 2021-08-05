@@ -19,12 +19,13 @@ package de.waldbrand.app.website;
 
 import de.topobyte.webgun.scheduler.Scheduler;
 import de.topobyte.webgun.scheduler.SchedulerTask;
+import de.topobyte.weblogin.WebsiteInfo;
 import de.waldbrand.app.website.lbforst.model.Data;
 import de.waldbrand.app.website.stats.model.AggregatedStats;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Website
+public class Website implements WebsiteInfo
 {
 
 	public static final String TITLE = "Waldbrand-App";
@@ -47,5 +48,17 @@ public class Website
 	@Getter
 	@Setter
 	private AggregatedStats stats;
+
+	@Override
+	public String getName()
+	{
+		return TITLE;
+	}
+
+	@Override
+	public String getAdminContactEmail()
+	{
+		return CONTACT;
+	}
 
 }

@@ -24,6 +24,7 @@ dependencies {
     implementation 'de.topobyte:webgun-resolving:1.3.0'
     implementation 'de.topobyte:webgun-scheduler:1.3.0'
     implementation 'de.topobyte:weblogin-web:0.1.0'
+    implementation 'de.topobyte:weblogin-pages-bootstrap4:0.2.0'
     implementation 'de.topobyte:jsoup-bootstrap4:1.1.2'
     implementation 'de.topobyte:jsoup-servlet:0.2.0'
     implementation 'de.topobyte:jsoup-jquery:0.1.0'

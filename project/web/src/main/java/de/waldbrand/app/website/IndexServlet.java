@@ -36,8 +36,11 @@ import de.topobyte.webgun.resolving.PathResolver;
 import de.topobyte.webgun.resolving.Redirecter;
 import de.topobyte.webgun.resolving.pathspec.PathSpec;
 import de.topobyte.webgun.resolving.pathspec.PathSpecOutput;
+import de.topobyte.weblogin.resolving.AdminPathResolver;
+import de.topobyte.weblogin.resolving.UserPathResolver;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
+import de.waldbrand.app.website.pages.base.WebloginContentGeneratorFactory;
 import de.waldbrand.app.website.pages.login.LoginFailureGenerator;
 import de.waldbrand.app.website.resolving.ApiPathResolver;
 import de.waldbrand.app.website.resolving.MainPathResolver;
@@ -56,6 +59,11 @@ public class IndexServlet extends HttpServlet
 		resolvers.add(new MainPathResolver());
 		resolvers.add(new WesForstPathResolver());
 		resolvers.add(new WesOsmPathResolver());
+
+		resolvers.add(
+				new AdminPathResolver(new WebloginContentGeneratorFactory()));
+		resolvers.add(
+				new UserPathResolver(new WebloginContentGeneratorFactory()));
 	}
 
 	static List<PathResolver<ApiEndpoint, Void>> apiResolvers = new ArrayList<>();
