@@ -125,6 +125,7 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 			String user = changeset.getUser();
 			long uid = changeset.getUid();
 			int numChanges = changeset.getNumChanges();
+			int numComments = changeset.getCommentsCount();
 			boolean open = changeset.isOpen();
 			logger.info(String.format(
 					"%d: %d open? %b %s - %s %s (%d) %s %d changes", sequence,
@@ -134,7 +135,7 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 					uid, theme, numChanges));
 			try {
 				dao.insertChangeset(new DbChangeset(id, createdAt, closedAt,
-						open, user, uid, numChanges, numChanges));
+						open, user, uid, numChanges, numComments));
 			} catch (QueryException e) {
 				logger.error("Error while inserting changeset", e);
 			}
