@@ -70,7 +70,7 @@ public class MainMenu
 		// "Wasserentnahmestellen (Landesbetrieb Forst)", false);
 		// menu.addLink(main, LinkDefs.OSM.getLink(),
 		// "Wasserentnahmestellen (OpenStreetMap)", false);
-		// addLogin(menu, right, resolver);
+		addLogin(menu, right, resolver);
 
 		menu.addLink(right, LinkDefs.ABOUT.getLink(), "Über", false);
 
@@ -93,7 +93,7 @@ public class MainMenu
 			menu.addLink(section, "/user/preferences", "Einstellungen", false);
 			menu.addLink(section, "/logout", "Ausloggen", false);
 		} else {
-			menu.addLink(section, "/login", "Login", false);
+			menu.addLink(section, "/login", "Team-Login", false);
 		}
 	}
 

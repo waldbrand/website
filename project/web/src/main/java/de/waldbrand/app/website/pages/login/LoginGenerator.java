@@ -45,6 +45,10 @@ public class LoginGenerator extends DatabaseBaseGenerator
 	{
 		content.ac(HTML.h1(String.format("Bei %s einloggen", Website.TITLE)));
 
+		P p = content.ac(HTML.p());
+		p.at("Der Login dient zur Administration und zum Abruf interner Informationen und ist"
+				+ " nur für Mitglieder des Teams hinter der App und engagierte Mitstreiter gedacht.");
+
 		content.ac(JQuery.focusById("username"));
 
 		Form form = content.ac(HTML.form());
@@ -62,12 +66,6 @@ public class LoginGenerator extends DatabaseBaseGenerator
 		inputPassword.getInput().setType(Type.PASSWORD);
 
 		forms.addSubmit(form, "einloggen");
-
-		content.ac(HTML.h2("Neu hier?"));
-		P p = content.ac(HTML.p());
-		p.at("Du hast noch keinen Account? Jetzt ");
-		p.ac(HTML.a("/signup", "registrieren"));
-		p.at(".");
 	}
 
 }
