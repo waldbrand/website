@@ -29,10 +29,11 @@ import java.util.Map;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 	final static Logger logger = LoggerFactory
 			.getLogger(ChangesetDatabaseUpdater.class);
 
-	private CloseableHttpClient httpclient = HttpClients.createDefault();
+	private CloseableHttpClient httpclient;
 
 	private StatsDao dao;
 	private Database database;
@@ -63,6 +64,14 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 	{
 		this.database = database;
 		dao = new StatsDao(database.getConnection());
+
+		int timeout = 10;
+		RequestConfig config = RequestConfig.custom()
+				.setConnectTimeout(timeout * 1000)
+				.setConnectionRequestTimeout(timeout * 1000)
+				.setSocketTimeout(timeout * 1000).build();
+		httpclient = HttpClientBuilder.create().setDefaultRequestConfig(config)
+				.build();
 	}
 
 	public void updateDatabase() throws MalformedURLException, IOException,
@@ -72,7 +81,7 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 		long start = last + 1;
 		logger.info("start sequence number: " + start);
 
-		ReplicationUtil util = new ReplicationUtil();
+		ReplicationUtil util = new ReplicationUtil(httpclient);
 		ReplicationInfo changesetInfo = util.getChangesetInfo();
 		long max = changesetInfo.getSequenceNumber();
 		logger.info("last sequence number: " + max);
