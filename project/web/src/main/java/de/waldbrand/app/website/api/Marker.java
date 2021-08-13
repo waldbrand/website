@@ -19,7 +19,7 @@ package de.waldbrand.app.website.api;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 import de.waldbrand.app.website.pages.osm.maps.OsmMapUtil;
@@ -39,7 +39,7 @@ public class Marker
 		popup = OsmMapUtil.content(poi, type);
 	}
 
-	public Marker(Poi poi)
+	public Marker(WesPoi poi)
 	{
 		Coordinate c = poi.getCoordinate();
 		lon = c.getX();

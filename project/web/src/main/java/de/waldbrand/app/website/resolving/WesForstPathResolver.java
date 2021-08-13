@@ -19,7 +19,7 @@ package de.waldbrand.app.website.resolving;
 
 import de.topobyte.jsoup.ContentGeneratable;
 import de.topobyte.webgun.resolving.smart.SmartPathSpecResolver;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.wes.WesAddGenerator;
 import de.waldbrand.app.website.pages.wes.WesDetailGenerator;
@@ -57,22 +57,22 @@ public class WesForstPathResolver
 		map(LinkDefs.FORST_STATS_BAUJAHR,
 				(path, output, request, data) -> new WesStatsGenerator(path,
 						"Baujahr", "Baujahre der Wasserentnahmestellen",
-						Poi::getBaujahr));
+						WesPoi::getBaujahr));
 		map(LinkDefs.FORST_STATS_FSTATUS,
 				(path, output, request, data) -> new WesStatsGenerator(path,
 						"Status",
 						"Status der Wasserentnahmestellen (was heißt das?)",
-						Poi::getFstatus));
+						WesPoi::getFstatus));
 		map(LinkDefs.FORST_STATS_FKT_FAEHIG,
 				(path, output, request, data) -> new WesStatsGenerator(path,
 						"Funktionsfähigkeit",
 						"Funktionsfähigkeit der Wasserentnahmestellen (was heißt das?)",
-						Poi::getFktFaehig));
+						WesPoi::getFktFaehig));
 
 		map(LinkDefs.FORST_STATS_MENGE,
 				(path, output, request, data) -> new WesStatsGenerator(path,
 						"Menge", "Menge (maximaler Durchfluss?)",
-						Poi::getMenge));
+						WesPoi::getMenge));
 
 		map(LinkDefs.FORST_ADD,
 				(path, output, request, data) -> new WesAddGenerator(path));

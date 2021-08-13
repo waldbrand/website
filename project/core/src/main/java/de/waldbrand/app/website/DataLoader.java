@@ -62,7 +62,8 @@ import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.osm.OsmUtil;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -76,10 +77,11 @@ public class DataLoader
 	@Getter
 	private Data data = new Data();
 
-	public void loadData(Path fileWes, Path fileOsm, Path fileWaynodes)
-			throws IOException, QueryException
+	public void loadData(Path fileWes, Path fileRettungspunkte, Path fileOsm,
+			Path fileWaynodes) throws IOException, QueryException
 	{
 		loadWesData(fileWes);
+		loadRettungspunkteData(fileRettungspunkte);
 		loadOsmData(fileOsm, fileWaynodes);
 		loadKreise();
 
@@ -91,11 +93,26 @@ public class DataLoader
 		SqliteDatabase db = new SqliteDatabase(file);
 
 		Dao dao = new Dao(db.getConnection());
-		List<Poi> pois = dao.getEntries();
-		data.setPois(pois);
+		List<WesPoi> pois = dao.getWesEntries();
+		data.setWesPois(pois);
 
-		for (Poi poi : pois) {
-			data.getIdToPoi().put(poi.getId(), poi);
+		for (WesPoi poi : pois) {
+			data.getIdToWesPoi().put(poi.getId(), poi);
+		}
+
+		db.closeConnection(false);
+	}
+
+	private void loadRettungspunkteData(Path file) throws QueryException
+	{
+		SqliteDatabase db = new SqliteDatabase(file);
+
+		Dao dao = new Dao(db.getConnection());
+		List<RettungspunktPoi> pois = dao.getRettungspunkteEntries();
+		data.setRettungspunktePois(pois);
+
+		for (RettungspunktPoi poi : pois) {
+			data.getIdToRettungspunktPoi().put(poi.getId(), poi);
 		}
 
 		db.closeConnection(false);
@@ -190,7 +207,7 @@ public class DataLoader
 			tesselation.add(entry.getValue().getGeometry(), entry.getKey());
 		}
 		GeometryFactory gf = new GeometryFactory();
-		for (Poi poi : data.getPois()) {
+		for (WesPoi poi : data.getWesPois()) {
 			Point point = gf.createPoint(poi.getCoordinate());
 			Set<String> kreise = tesselation.covering(point);
 			if (kreise.isEmpty()) {

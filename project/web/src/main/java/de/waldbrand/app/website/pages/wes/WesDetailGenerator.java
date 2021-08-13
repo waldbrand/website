@@ -32,7 +32,7 @@ import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.lbforst.NameUtil;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.maps.WesMapUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -52,7 +52,7 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 	@Override
 	protected void content()
 	{
-		Poi poi = Website.INSTANCE.getData().getIdToPoi().get(id);
+		WesPoi poi = Website.INSTANCE.getData().getIdToWesPoi().get(id);
 		if (poi == null) {
 			throw new PageNotFoundException();
 		}
@@ -89,7 +89,7 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		WesAttributionUtil.attribution(content);
 	}
 
-	private void data(Div container, Poi poi)
+	private void data(Div container, WesPoi poi)
 	{
 		Table table = container.ac(HTML.table());
 		table.addClass("table");
@@ -126,7 +126,7 @@ public class WesDetailGenerator extends SimpleBaseGenerator
 		row(table, val1, Long.toString(val2));
 	}
 
-	private void map(Div container, Poi poi)
+	private void map(Div container, WesPoi poi)
 	{
 		Head head = builder.getHead();
 		MapUtil.head(head);

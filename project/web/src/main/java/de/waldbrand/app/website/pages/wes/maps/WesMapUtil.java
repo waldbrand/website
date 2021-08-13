@@ -22,13 +22,13 @@ import org.locationtech.jts.geom.Coordinate;
 
 import de.waldbrand.app.website.lbforst.NameUtil;
 import de.waldbrand.app.website.lbforst.PoiLinks;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.util.MapUtil;
 
 public class WesMapUtil
 {
 
-	public static void marker(StringBuilder code, Poi poi, boolean withLink,
+	public static void marker(StringBuilder code, WesPoi poi, boolean withLink,
 			String markerId, String markers)
 	{
 		String content = content(poi, withLink);
@@ -36,7 +36,7 @@ public class WesMapUtil
 		MapUtil.addMarker(code, c.getY(), c.getX(), content, markerId, markers);
 	}
 
-	public static String content(Poi poi, boolean withLink)
+	public static String content(WesPoi poi, boolean withLink)
 	{
 		String name = NameUtil.getName(poi);
 

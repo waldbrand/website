@@ -32,7 +32,7 @@ import de.topobyte.jsoup.components.Script;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.osm.OsmTypes;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -59,7 +59,8 @@ public class OsmWesMapOsmForstGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		List<String> names = OsmTypes.multiNames(Arrays.asList(PoiType.values()));
+		List<String> names = OsmTypes
+				.multiNames(Arrays.asList(PoiType.values()));
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
@@ -92,7 +93,7 @@ public class OsmWesMapOsmForstGenerator extends SimpleBaseGenerator
 
 		code = new StringBuilder();
 		MapUtil.markerStart(code, "forst");
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+		for (WesPoi poi : Website.INSTANCE.getData().getWesPois()) {
 			WesMapUtil.marker(code, poi, true, "forst", "markers.get('forst')");
 		}
 		MapUtil.markerEnd(code, "forst");

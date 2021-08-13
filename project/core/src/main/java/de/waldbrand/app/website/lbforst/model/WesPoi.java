@@ -24,7 +24,7 @@ import org.opengis.referencing.operation.TransformException;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Poi
+public class WesPoi
 {
 
 	@Getter
@@ -51,7 +51,7 @@ public class Poi
 	@Setter
 	private String kreis;
 
-	public Poi(int id, int fstatus, long akz, int baujahr, int fktFaehig,
+	public WesPoi(int id, int fstatus, long akz, int baujahr, int fktFaehig,
 			String bemerkung, int oart, int menge, int hochW, int rechtsW)
 	{
 		this.id = id;

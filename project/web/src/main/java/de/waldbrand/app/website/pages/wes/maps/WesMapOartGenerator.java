@@ -32,7 +32,7 @@ import de.topobyte.webgun.exceptions.PageNotFoundException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.lbforst.NameUtil;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -73,7 +73,7 @@ public class WesMapOartGenerator extends SimpleBaseGenerator
 		StringBuilder code = new StringBuilder();
 
 		MapUtil.markerStart(code);
-		for (Poi poi : only(Website.INSTANCE.getData().getPois(), oart)) {
+		for (WesPoi poi : only(Website.INSTANCE.getData().getWesPois(), oart)) {
 			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
 					"markers");
 		}

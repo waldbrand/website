@@ -19,17 +19,17 @@ package de.waldbrand.app.website.lbforst;
 
 import com.google.common.collect.Iterables;
 
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 
 public class PoiUtil
 {
 
-	public static Iterable<Poi> not(Iterable<Poi> pois, int oart)
+	public static Iterable<WesPoi> not(Iterable<WesPoi> pois, int oart)
 	{
 		return Iterables.filter(pois, p -> p.getOart() != oart);
 	}
 
-	public static Iterable<Poi> only(Iterable<Poi> pois, int oart)
+	public static Iterable<WesPoi> only(Iterable<WesPoi> pois, int oart)
 	{
 		return Iterables.filter(pois, p -> p.getOart() == oart);
 	}

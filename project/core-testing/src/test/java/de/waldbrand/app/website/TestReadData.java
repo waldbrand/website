@@ -26,7 +26,8 @@ import org.locationtech.jts.geom.Coordinate;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.system.utils.SystemPaths;
 import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 
 public class TestReadData
 {
@@ -35,20 +36,35 @@ public class TestReadData
 	{
 		Path fileWes = SystemPaths.HOME.resolve(
 				"github/waldbrand/wasserentnahmestellen/WES/daten/wes.gpkg");
+		Path fileRettungspunkte = SystemPaths.HOME.resolve(
+				"github/waldbrand/rettungspunkte/daten/rettungspunkte.gpkg");
 		Path fileOsm = SystemPaths.HOME
 				.resolve("github/waldbrand/osm-data/emergency.tbo");
 		Path fileWaynodes = SystemPaths.HOME
 				.resolve("github/waldbrand/osm-data/emergency-waynodes.tbo");
 
 		DataLoader dataLoader = new DataLoader();
-		dataLoader.loadData(fileWes, fileOsm, fileWaynodes);
+		dataLoader.loadData(fileWes, fileRettungspunkte, fileOsm, fileWaynodes);
 
 		Data data = dataLoader.getData();
-		List<Poi> pois = data.getPois();
-		System.out.println("WES count: " + pois.size());
+
+		List<WesPoi> wesPois = data.getWesPois();
+		System.out.println("WES count: " + wesPois.size());
 
 		for (int i = 0; i < 3; i++) {
-			Poi poi = pois.get(i);
+			WesPoi poi = wesPois.get(i);
+			Coordinate c = poi.getCoordinate();
+			System.out.println(String.format("%d: %d,%d, %f,%f", poi.getId(),
+					poi.getRechtsW(), poi.getHochW(), c.getX(), c.getY()));
+		}
+
+		List<RettungspunktPoi> rettungspunktePois = data
+				.getRettungspunktePois();
+		System.out
+				.println("Rettungspunkte count: " + rettungspunktePois.size());
+
+		for (int i = 0; i < 3; i++) {
+			RettungspunktPoi poi = rettungspunktePois.get(i);
 			Coordinate c = poi.getCoordinate();
 			System.out.println(String.format("%d: %d,%d, %f,%f", poi.getId(),
 					poi.getRechtsW(), poi.getHochW(), c.getX(), c.getY()));

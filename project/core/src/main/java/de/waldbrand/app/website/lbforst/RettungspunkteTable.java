@@ -17,19 +17,23 @@
 
 package de.waldbrand.app.website.lbforst;
 
-import java.util.Comparator;
+import de.topobyte.jsqltables.table.ColumnClass;
+import de.topobyte.jsqltables.table.Table;
 
-import de.waldbrand.app.website.lbforst.model.WesPoi;
-
-public class PoiByNameComparator implements Comparator<WesPoi>
+public class RettungspunkteTable extends Table
 {
 
-	@Override
-	public int compare(WesPoi o1, WesPoi o2)
+	public static String COLNAME_ID = "fid";
+	public static String COLNAME_RECHTS_W = "rechts_w";
+	public static String COLNAME_HOCH_W = "hoch_w";
+
+	public RettungspunkteTable()
 	{
-		String n1 = NameUtil.getName(o1);
-		String n2 = NameUtil.getName(o2);
-		return n1.compareTo(n2);
+		super("rettungspunkte");
+
+		addColumn(ColumnClass.LONG, COLNAME_ID);
+		addColumn(ColumnClass.LONG, COLNAME_RECHTS_W);
+		addColumn(ColumnClass.LONG, COLNAME_HOCH_W);
 	}
 
 }

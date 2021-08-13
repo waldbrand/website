@@ -42,7 +42,7 @@ import de.waldbrand.app.website.icons.Icon;
 import de.waldbrand.app.website.icons.IconMapping;
 import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
 
@@ -94,7 +94,7 @@ public class PoisGenerator implements ApiEndpoint
 				}
 				Icon icon = IconMapping.get(type);
 				markers.add("forst-" + type.getId(), icon.getName(), filterLbf(
-						only(data.getPois(), type.getId()), envelope));
+						only(data.getWesPois(), type.getId()), envelope));
 			}
 		}
 
@@ -104,10 +104,10 @@ public class PoisGenerator implements ApiEndpoint
 		response.getWriter().write(gson.toJson(markers));
 	}
 
-	private Iterable<Poi> filterLbf(Iterable<Poi> pois, Envelope envelope)
+	private Iterable<WesPoi> filterLbf(Iterable<WesPoi> pois, Envelope envelope)
 	{
-		List<Poi> results = new ArrayList<>();
-		for (Poi poi : pois) {
+		List<WesPoi> results = new ArrayList<>();
+		for (WesPoi poi : pois) {
 			if (envelope.contains(poi.getCoordinate())) {
 				results.add(poi);
 			}

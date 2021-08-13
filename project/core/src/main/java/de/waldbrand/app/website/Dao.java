@@ -32,7 +32,8 @@ import de.topobyte.luqe.iface.IResultSet;
 import de.topobyte.luqe.iface.QueryException;
 import de.waldbrand.app.website.lbforst.Tables;
 import de.waldbrand.app.website.lbforst.WesTable;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import lombok.Getter;
 
 public class Dao
@@ -51,13 +52,19 @@ public class Dao
 		this.connection = connection;
 	}
 
+	private void column(Select select, String colname)
+	{
+		select.addSelectColumn(
+				new NormalColumn(select.getMainTable(), colname));
+	}
+
 	/*
 	 * Get
 	 */
 
-	public List<Poi> getEntries() throws QueryException
+	public List<WesPoi> getWesEntries() throws QueryException
 	{
-		List<Poi> list = new ArrayList<>();
+		List<WesPoi> list = new ArrayList<>();
 
 		Table table = Tables.WES;
 		Select select = new Select(table);
@@ -76,7 +83,7 @@ public class Dao
 				.prepareStatement(select.sql())) {
 			try (IResultSet results = stmt.executeQuery()) {
 				while (results.next()) {
-					list.add(entry(results));
+					list.add(wesEntry(results));
 				}
 			}
 		}
@@ -84,13 +91,7 @@ public class Dao
 		return list;
 	}
 
-	private void column(Select select, String colname)
-	{
-		select.addSelectColumn(
-				new NormalColumn(select.getMainTable(), colname));
-	}
-
-	private Poi entry(IResultSet results) throws QueryException
+	private WesPoi wesEntry(IResultSet results) throws QueryException
 	{
 		int c = 1;
 		int id = results.getInt(c++);
@@ -103,8 +104,41 @@ public class Dao
 		int menge = results.getInt(c++);
 		int hochW = results.getInt(c++);
 		int rechtsW = results.getInt(c++);
-		return new Poi(id, fstatus, akz, baujahr, fktFaehig, bemerkung, oart,
+		return new WesPoi(id, fstatus, akz, baujahr, fktFaehig, bemerkung, oart,
 				menge, hochW, rechtsW);
+	}
+
+	public List<RettungspunktPoi> getRettungspunkteEntries()
+			throws QueryException
+	{
+		List<RettungspunktPoi> list = new ArrayList<>();
+
+		Table table = Tables.RETTUNGSPUNKTE;
+		Select select = new Select(table);
+		column(select, WesTable.COLNAME_ID);
+		column(select, WesTable.COLNAME_HOCH_W);
+		column(select, WesTable.COLNAME_RECHTS_W);
+
+		try (IPreparedStatement stmt = connection
+				.prepareStatement(select.sql())) {
+			try (IResultSet results = stmt.executeQuery()) {
+				while (results.next()) {
+					list.add(rettungspunktEntry(results));
+				}
+			}
+		}
+
+		return list;
+	}
+
+	private RettungspunktPoi rettungspunktEntry(IResultSet results)
+			throws QueryException
+	{
+		int c = 1;
+		int id = results.getInt(c++);
+		int hochW = results.getInt(c++);
+		int rechtsW = results.getInt(c++);
+		return new RettungspunktPoi(id, hochW, rechtsW);
 	}
 
 }

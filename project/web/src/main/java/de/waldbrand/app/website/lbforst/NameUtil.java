@@ -24,12 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 import de.waldbrand.app.website.Config;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 
 public class NameUtil
 {
 
-	public static String getName(Poi poi)
+	public static String getName(WesPoi poi)
 	{
 		String name = String.format("%s %d", typeName(poi.getOart()),
 				poi.getId());

@@ -32,7 +32,7 @@ import de.topobyte.jsoup.components.TableHead;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -42,10 +42,10 @@ public class WesStatsGenerator extends SimpleBaseGenerator
 
 	private String colTitle1;
 	private String description;
-	private Function<Poi, Integer> dataGetter;
+	private Function<WesPoi, Integer> dataGetter;
 
 	public WesStatsGenerator(WebPath path, String colTitle1, String description,
-			Function<Poi, Integer> dataGetter)
+			Function<WesPoi, Integer> dataGetter)
 	{
 		super(path);
 		this.colTitle1 = colTitle1;
@@ -64,7 +64,7 @@ public class WesStatsGenerator extends SimpleBaseGenerator
 		p.appendText(description);
 
 		Multiset<Integer> histogram = TreeMultiset.create();
-		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
+		for (WesPoi poi : Website.INSTANCE.getData().getIdToWesPoi().values()) {
 			histogram.add(dataGetter.apply(poi));
 		}
 

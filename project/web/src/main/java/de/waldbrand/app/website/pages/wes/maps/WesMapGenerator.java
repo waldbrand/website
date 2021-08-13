@@ -31,7 +31,7 @@ import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.lbforst.WesType;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -64,7 +64,7 @@ public class WesMapGenerator extends SimpleBaseGenerator
 		StringBuilder code = new StringBuilder();
 
 		MapUtil.markerStart(code);
-		for (Poi poi : not(Website.INSTANCE.getData().getPois(),
+		for (WesPoi poi : not(Website.INSTANCE.getData().getWesPois(),
 				WesType.GEPLANT.getId())) {
 			WesMapUtil.marker(code, poi, true, MapUtil.getDefaultMarkerId(),
 					"markers");

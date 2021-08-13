@@ -34,9 +34,10 @@ public class WebsiteData
 		logger.info("loading data...");
 		try {
 			DataLoader dataLoader = new DataLoader();
-			dataLoader.loadData(Config.INSTANCE.getFileWesData(),
-					Config.INSTANCE.getFileOsmData(),
-					Config.INSTANCE.getFileOsmWaynodes());
+			Config config = Config.INSTANCE;
+			dataLoader.loadData(config.getFileWesData(),
+					config.getFileRettungspunkteData(), config.getFileOsmData(),
+					config.getFileOsmWaynodes());
 			Website.INSTANCE.setData(dataLoader.getData());
 		} catch (QueryException | IOException e) {
 			logger.error("Error while loading data", e);

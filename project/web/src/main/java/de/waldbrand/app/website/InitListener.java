@@ -94,6 +94,10 @@ public class InitListener implements ServletContextListener
 		Path fileWesData = Paths.get(config.getProperty("wes.data"));
 		Config.INSTANCE.setFileWesData(fileWesData);
 
+		Path fileRettungspunkteData = Paths
+				.get(config.getProperty("rettungspunkte.data"));
+		Config.INSTANCE.setFileRettungspunkteData(fileRettungspunkteData);
+
 		Path fileOsmData = Paths.get(config.getProperty("osm.data"));
 		Config.INSTANCE.setFileOsmData(fileOsmData);
 		Path fileOsmWaynodes = Paths.get(config.getProperty("osm.waynodes"));

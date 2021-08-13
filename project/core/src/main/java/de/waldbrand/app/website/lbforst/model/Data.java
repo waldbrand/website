@@ -37,10 +37,17 @@ public class Data
 
 	@Getter
 	@Setter
-	private List<Poi> pois = new ArrayList<>();
+	private List<WesPoi> wesPois = new ArrayList<>();
 
 	@Getter
-	private Map<Integer, Poi> idToPoi = new HashMap<>();
+	@Setter
+	private List<RettungspunktPoi> rettungspunktePois = new ArrayList<>();
+
+	@Getter
+	private Map<Integer, WesPoi> idToWesPoi = new HashMap<>();
+
+	@Getter
+	private Map<Integer, RettungspunktPoi> idToRettungspunktPoi = new HashMap<>();
 
 	@Getter
 	private Map<String, EntityFile> idToEntity = new TreeMap<>();

@@ -17,9 +17,12 @@
 
 package de.waldbrand.app.website.lbforst;
 
+import de.topobyte.jsqltables.table.Table;
+
 public class Tables
 {
 
-	public static WesTable WES = new WesTable();
+	public static Table WES = new WesTable();
+	public static Table RETTUNGSPUNKTE = new RettungspunkteTable();
 
 }

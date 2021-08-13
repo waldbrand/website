@@ -40,7 +40,7 @@ import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.lbforst.NameUtil;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.util.MapUtil;
 import de.waldbrand.app.website.util.MarkerShape;
@@ -127,7 +127,7 @@ public class WesAddGenerator extends SimpleBaseGenerator
 	{
 		List<String> names = new ArrayList<>();
 		List<String> values = new ArrayList<>();
-		addValues(names, values, Poi::getFstatus);
+		addValues(names, values, WesPoi::getFstatus);
 		return forms.addSelect(form, "fstatus", "fstatus", names, values);
 	}
 
@@ -135,7 +135,7 @@ public class WesAddGenerator extends SimpleBaseGenerator
 	{
 		List<String> names = new ArrayList<>();
 		List<String> values = new ArrayList<>();
-		addValues(names, values, Poi::getFktFaehig);
+		addValues(names, values, WesPoi::getFktFaehig);
 		return forms.addSelect(form, "fkt_faehig", "fkt_faehig", names, values);
 	}
 
@@ -143,15 +143,15 @@ public class WesAddGenerator extends SimpleBaseGenerator
 	{
 		List<String> names = new ArrayList<>();
 		List<String> values = new ArrayList<>();
-		addValues(names, values, Poi::getMenge);
+		addValues(names, values, WesPoi::getMenge);
 		return forms.addSelect(form, "menge", "Menge", names, values);
 	}
 
 	private void addValues(List<String> names, List<String> values,
-			Function<Poi, Integer> dataGetter)
+			Function<WesPoi, Integer> dataGetter)
 	{
 		Set<Integer> possible = new TreeSet<>();
-		for (Poi poi : Website.INSTANCE.getData().getPois()) {
+		for (WesPoi poi : Website.INSTANCE.getData().getWesPois()) {
 			possible.add(dataGetter.apply(poi));
 		}
 

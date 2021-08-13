@@ -36,7 +36,7 @@ import de.waldbrand.app.website.icons.IconMapping;
 import de.waldbrand.app.website.icons.IconUtil;
 import de.waldbrand.app.website.lbforst.NameUtil;
 import de.waldbrand.app.website.lbforst.WesUtil;
-import de.waldbrand.app.website.lbforst.model.Poi;
+import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
 import de.waldbrand.app.website.pages.wes.WesAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
@@ -60,7 +60,7 @@ public class WesStatsOartGenerator extends SimpleBaseGenerator
 		p.appendText("Sorten von Entnahmestellen");
 
 		Multiset<Integer> histogram = TreeMultiset.create();
-		for (Poi poi : Website.INSTANCE.getData().getIdToPoi().values()) {
+		for (WesPoi poi : Website.INSTANCE.getData().getIdToWesPoi().values()) {
 			histogram.add(poi.getOart());
 		}
 
