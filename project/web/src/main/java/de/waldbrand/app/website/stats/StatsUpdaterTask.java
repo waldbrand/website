@@ -18,7 +18,6 @@
 package de.waldbrand.app.website.stats;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -55,14 +54,22 @@ public class StatsUpdaterTask extends SchedulerTask
 		}
 	}
 
-	private void tryUpdate() throws SQLException, MalformedURLException,
-			IOException, OsmInputException, QueryException
+	private void tryUpdate()
+			throws SQLException, IOException, OsmInputException, QueryException
 	{
 		Database database = DatabasePool.getDatabase();
 		ChangesetDatabaseUpdater updater = new ChangesetDatabaseUpdater(
 				database);
-		updater.updateDatabase();
-		database.closeConnection(true);
+		try {
+			updater.updateDatabase();
+		} catch (IOException | OsmInputException | QueryException
+				| SQLException e) {
+			throw e;
+		} finally {
+			if (database != null) {
+				database.closeConnection(true);
+			}
+		}
 	}
 
 }
