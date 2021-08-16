@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
 import de.waldbrand.app.website.lbforst.model.WesPoi;
 import de.waldbrand.app.website.osm.PoiType;
 import de.waldbrand.app.website.osm.model.OsmPoi;
@@ -42,11 +43,21 @@ public class PoiMarkers
 		}
 	}
 
-	public void add(String type, String iconId, Iterable<WesPoi> pois)
+	public void addWes(String type, String iconId, Iterable<WesPoi> pois)
 	{
 		List<Marker> list = new ArrayList<>();
 		markers.put(type.toString(), new MarkerList(iconId, list));
 		for (WesPoi poi : pois) {
+			list.add(new Marker(poi));
+		}
+	}
+
+	public void addRettungspunkte(String type, String iconId,
+			Iterable<RettungspunktPoi> pois)
+	{
+		List<Marker> list = new ArrayList<>();
+		markers.put(type.toString(), new MarkerList(iconId, list));
+		for (RettungspunktPoi poi : pois) {
 			list.add(new Marker(poi));
 		}
 	}

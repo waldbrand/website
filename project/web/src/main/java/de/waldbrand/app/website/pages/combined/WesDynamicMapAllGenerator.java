@@ -89,7 +89,7 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 		script(content, code);
 
 		script(content, Resources.loadString("js/map-history.js"));
-		script(content, Resources.loadString("js/map-update.js"));
+		script(content, Resources.loadString("js/map-update-wes.js"));
 
 		OsmAttributionUtil.attribution(content);
 		WesAttributionUtil.attribution(content);

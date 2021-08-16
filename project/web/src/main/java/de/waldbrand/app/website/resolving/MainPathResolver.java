@@ -36,6 +36,8 @@ import de.waldbrand.app.website.pages.other.EditorLandingPage;
 import de.waldbrand.app.website.pages.other.IndexGenerator;
 import de.waldbrand.app.website.pages.other.RefreshGenerator;
 import de.waldbrand.app.website.pages.other.WesLandingPage;
+import de.waldbrand.app.website.pages.rettungspunkte.RettungspunkteDynamicMapGenerator;
+import de.waldbrand.app.website.pages.rettungspunkte.RettungspunkteLandingPage;
 
 public class MainPathResolver
 		extends SmartPathSpecResolver<ContentGeneratable, Void>
@@ -74,6 +76,8 @@ public class MainPathResolver
 				data) -> new WesDynamicMapAllGenerator(path));
 		map(LinkDefs.MAP_OSM, (path, output, request,
 				data) -> new WesDynamicMapOsmGenerator(path));
+		map(LinkDefs.MAP_RETTUNGSPUNKTE, (path, output, request,
+				data) -> new RettungspunkteDynamicMapGenerator(path));
 
 		map(LinkDefs.LANDING_EDITOR,
 				(path, output, request, data) -> new EditorLandingPage(path));
@@ -81,6 +85,8 @@ public class MainPathResolver
 				(path, output, request, data) -> new WesLandingPage(path));
 		map(LinkDefs.LANDING_APP,
 				(path, output, request, data) -> new AppLandingPage(path));
+		map(LinkDefs.LANDING_RETTUNGSPUNKTE, (path, output, request,
+				data) -> new RettungspunkteLandingPage(path));
 
 		map(LinkDefs.OSM_CONTRIBUTIONS, (path, output, request,
 				data) -> new OsmContributionsPage(path));

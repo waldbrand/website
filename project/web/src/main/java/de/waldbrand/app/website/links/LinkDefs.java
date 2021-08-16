@@ -43,7 +43,10 @@ public class LinkDefs
 
 	public static PathDef0 LOGIN = new PathDef0(new PathSpec("login"));
 
-	public static PathDef0 API_POIS = new PathDef0(new PathSpec("pois"));
+	public static PathDef0 API_POIS_WES = new PathDef0(
+			new PathSpec("api", "pois", "wes"));
+	public static PathDef0 API_POIS_RETTUNGSPUNKTE = new PathDef0(
+			new PathSpec("api", "pois", "rettungspunkte"));
 
 	public static PathDef0 RELOAD_DATA = new PathDef0(
 			new PathSpec("reload-data"));
@@ -148,5 +151,14 @@ public class LinkDefs
 
 	public static PathDef0 FORST_ADD = new PathDef0(
 			new PathSpec("wes", "forst", "eintragen"));
+
+	/*
+	 * Rettungspunkte
+	 */
+
+	public static PathDef0 LANDING_RETTUNGSPUNKTE = new PathDef0(
+			new PathSpec("rettungspunkte"));
+	public static PathDef0 MAP_RETTUNGSPUNKTE = new PathDef0(
+			new PathSpec("rettungspunkte", "map"));
 
 }

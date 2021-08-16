@@ -28,7 +28,8 @@ public enum Icon {
 	SPEICHER("speicher.svg", 100, 85),
 	TIEFBRUNNEN("tiefbrunnen.svg", 100, 85),
 	TIEFBRUNNEN_E("tiefbrunnen-e.svg", 100, 85),
-	TIEFBRUNNEN_T("tiefbrunnen-t.svg", 100, 85);
+	TIEFBRUNNEN_T("tiefbrunnen-t.svg", 100, 85),
+	RETTUNGSPUNKT("rettungspunkt.svg", 100, 100);
 
 	@Getter
 	private String filename;

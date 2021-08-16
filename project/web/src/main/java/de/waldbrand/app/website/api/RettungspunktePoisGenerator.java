@@ -17,8 +17,6 @@
 
 package de.waldbrand.app.website.api;
 
-import static de.waldbrand.app.website.lbforst.PoiUtil.only;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,19 +37,15 @@ import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.ApiEndpoint;
 import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.icons.Icon;
-import de.waldbrand.app.website.icons.IconMapping;
-import de.waldbrand.app.website.lbforst.WesType;
 import de.waldbrand.app.website.lbforst.model.Data;
-import de.waldbrand.app.website.lbforst.model.WesPoi;
-import de.waldbrand.app.website.osm.PoiType;
-import de.waldbrand.app.website.osm.model.OsmPoi;
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
 
-public class PoisGenerator implements ApiEndpoint
+public class RettungspunktePoisGenerator implements ApiEndpoint
 {
 
 	private HttpServletRequest request;
 
-	public PoisGenerator(HttpServletRequest request)
+	public RettungspunktePoisGenerator(HttpServletRequest request)
 	{
 		this.request = request;
 	}
@@ -61,15 +55,6 @@ public class PoisGenerator implements ApiEndpoint
 			Map<String, String[]> parameters) throws IOException
 	{
 		String bbox = ParameterUtil.get(parameters, "bbox");
-		String argType = ParameterUtil.get(parameters, "type");
-
-		boolean useOsm = true;
-		boolean useForst = true;
-		if ("osm".equals(argType)) {
-			useForst = false;
-		} else if ("forst".equals(argType)) {
-			useOsm = false;
-		}
 
 		BBox box = BBoxString.parse(bbox).toBbox();
 		Envelope envelope = box.toEnvelope();
@@ -78,25 +63,9 @@ public class PoisGenerator implements ApiEndpoint
 
 		Data data = Website.INSTANCE.getData();
 
-		if (useOsm) {
-			for (PoiType type : PoiType.values()) {
-				Icon icon = IconMapping.get(type);
-				List<OsmPoi> pois = filterOsm(data.getTypeToPois().get(type),
-						envelope);
-				markers.add(type, icon.getName(), pois);
-			}
-		}
-
-		if (useForst) {
-			for (WesType type : WesType.values()) {
-				if (type == WesType.GEPLANT) {
-					continue;
-				}
-				Icon icon = IconMapping.get(type);
-				markers.add("forst-" + type.getId(), icon.getName(), filterLbf(
-						only(data.getWesPois(), type.getId()), envelope));
-			}
-		}
+		markers.addRettungspunkte("forst-rettungspunkt",
+				Icon.RETTUNGSPUNKT.getName(),
+				filter(data.getRettungspunktePois(), envelope));
 
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.setPrettyPrinting().create();
@@ -104,22 +73,12 @@ public class PoisGenerator implements ApiEndpoint
 		response.getWriter().write(gson.toJson(markers));
 	}
 
-	private Iterable<WesPoi> filterLbf(Iterable<WesPoi> pois, Envelope envelope)
+	private Iterable<RettungspunktPoi> filter(Iterable<RettungspunktPoi> pois,
+			Envelope envelope)
 	{
-		List<WesPoi> results = new ArrayList<>();
-		for (WesPoi poi : pois) {
+		List<RettungspunktPoi> results = new ArrayList<>();
+		for (RettungspunktPoi poi : pois) {
 			if (envelope.contains(poi.getCoordinate())) {
-				results.add(poi);
-			}
-		}
-		return results;
-	}
-
-	private List<OsmPoi> filterOsm(Iterable<OsmPoi> pois, Envelope envelope)
-	{
-		List<OsmPoi> results = new ArrayList<>();
-		for (OsmPoi poi : pois) {
-			if (envelope.contains(poi.getLon(), poi.getLat())) {
 				results.add(poi);
 			}
 		}

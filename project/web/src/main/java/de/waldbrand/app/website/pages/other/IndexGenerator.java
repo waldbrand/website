@@ -69,6 +69,10 @@ public class IndexGenerator extends SimpleBaseGenerator
 		card(deck, "markdown/de/intro-wes.md", Arrays.asList(
 				HTML.a(LinkDefs.LANDING_WES.getLink(), "Mehr erfahren")));
 
+		card(deck, "markdown/de/intro-rettungspunkte.md",
+				Arrays.asList(HTML.a(LinkDefs.LANDING_RETTUNGSPUNKTE.getLink(),
+						"Mehr erfahren")));
+
 		MiscContent.rowSponsors(content);
 	}
 

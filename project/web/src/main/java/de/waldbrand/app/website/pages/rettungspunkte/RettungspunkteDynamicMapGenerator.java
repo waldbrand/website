@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.website.pages.combined;
+package de.waldbrand.app.website.pages.rettungspunkte;
 
 import java.io.IOException;
 
@@ -32,13 +32,12 @@ import de.waldbrand.app.website.icons.Icon;
 import de.waldbrand.app.website.icons.Icons;
 import de.waldbrand.app.website.icons.LeafletIcon;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
-import de.waldbrand.app.website.pages.osm.OsmAttributionUtil;
 import de.waldbrand.app.website.util.MapUtil;
 
-public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
+public class RettungspunkteDynamicMapGenerator extends SimpleBaseGenerator
 {
 
-	public WesDynamicMapOsmGenerator(WebPath path)
+	public RettungspunkteDynamicMapGenerator(WebPath path)
 	{
 		super(path);
 	}
@@ -49,9 +48,9 @@ public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
 		Head head = builder.getHead();
 		MapUtil.head(head);
 
-		content.ac(HTML.h2("Wasserentnahmestellen"));
+		content.ac(HTML.h2("Rettungspunkte"));
 		P p = content.ac(HTML.p());
-		p.appendText("Quelle: OpenStreetMap");
+		p.appendText("Quelle: Landesbetrieb Forst");
 
 		Div container = content.ac(HTML.div());
 		container.attr("style", "position:relative");
@@ -63,7 +62,7 @@ public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
 		MapUtil.addMap(container);
 
 		overlay.ac(HTML.span()).at(
-				"Bitte Karte weiter vergrößern, um Wasserentnahmestellen anzuzeigen");
+				"Bitte Karte weiter vergrößern, um Rettungspunkte anzuzeigen");
 
 		StringBuilder code = new StringBuilder();
 		code.append("var icons = new Map();");
@@ -84,13 +83,14 @@ public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
 		script(content, code);
 
 		code = new StringBuilder();
-		code.append("var poiType = 'osm';");
+		code.append("var poiType = 'all';");
 		script(content, code);
 
 		script(content, Resources.loadString("js/map-history.js"));
-		script(content, Resources.loadString("js/map-update-wes.js"));
+		script(content,
+				Resources.loadString("js/map-update-rettungspunkte.js"));
 
-		OsmAttributionUtil.attribution(content);
+		RettungspunkteAttributionUtil.attribution(content);
 	}
 
 	private void script(Element<?> content, String code)
