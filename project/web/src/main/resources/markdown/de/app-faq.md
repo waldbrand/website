@@ -10,7 +10,7 @@ Eventuell musst du einfach näher heranzoomen. Die Wasserentnahmestellen
 erscheinen erst ab einem bestimmten Zoomlevel.
 
 Es kann aber auch sein, dass du (versehentlich) die Hydranten-Ebene abgeschaltet
-hast. Um das zu überprüfen, öffne die Ebenen-Auswahl durch Klick auf die das
+hast. Um das zu überprüfen, öffne die Ebenen-Auswahl durch Klick auf das
 Symbol mit den drei horizontalen Linien oben links in der App-Leiste. Klappe
 die Ebenenkategorie "Waldbrand" auf und stelle sicher, dass dort alle gewünschten
 Ebenen mit einem blauen Häkchen versehen sind.
