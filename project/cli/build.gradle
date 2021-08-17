@@ -1,6 +1,8 @@
 dependencies {
     implementation project(':waldbrand-website-core')
 
+    implementation 'de.topobyte:osm4j-incubating:1.2.0'
+    implementation 'de.topobyte:mapocado-mapfile-creation:0.3.0'
     implementation 'de.topobyte:system-utils:0.0.1'
 
     implementation 'org.slf4j:slf4j-api:1.7.25'

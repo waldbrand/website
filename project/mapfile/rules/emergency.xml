@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rules>
+    <rule e="node" k="*" v="*" zoom-min="15">
+        <rule e="node" k="emergency" v="fire_hydrant">
+            <rule e="node" k="fire_hydrant:type" v="pillar">
+                <class id="hydrant-pillar">
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+            <rule e="node" k="fire_hydrant:type" v="underground">
+                <class id="hydrant-underground">
+                    <keep key="fire_hydrant:diameter"/>
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+            <rule e="node" k="fire_hydrant:type" v="pipe">
+                <class id="hydrant-pipe">
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+        </rule>
+        <rule e="node" k="emergency" v="water_tank">
+            <class id="water-tank">
+                <keep key="water_tank:volume"/>
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+        <rule e="node" k="emergency" v="fire_water_pond">
+            <class id="fire-water-pond">
+                <keep key="water_tank:volume"/>
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+        <rule e="node" k="emergency" v="suction_point">
+            <class id="suction-point">
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+    </rule>
+    <rule e="way" k="*" v="*" zoom-min="15">
+        <rule e="way" k="emergency" v="fire_hydrant">
+            <rule e="way" k="fire_hydrant:type" v="pillar">
+                <class id="hydrant-pillar2" simplify="node">
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+            <rule e="way" k="fire_hydrant:type" v="underground">
+                <class id="hydrant-underground2" simplify="node">
+                    <keep key="fire_hydrant:diameter"/>
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+            <rule e="way" k="fire_hydrant:type" v="pipe">
+                <class id="hydrant-pipe2" simplify="node">
+                    <keep key="note"/>
+                    <keep key="fixme"/>
+                </class>
+            </rule>
+        </rule>
+        <rule e="way" k="emergency" v="water_tank">
+            <class id="water-tank2" simplify="node">
+                <keep key="water_tank:volume"/>
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+        <rule e="way" k="emergency" v="fire_water_pond">
+            <class id="fire-water-pond2" simplify="node">
+                <keep key="water_tank:volume"/>
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+        <rule e="way" k="emergency" v="suction_point">
+            <class id="suction-point2" simplify="node">
+                <keep key="note"/>
+                <keep key="fixme"/>
+            </class>
+        </rule>
+    </rule>
+</rules>

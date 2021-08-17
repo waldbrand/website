@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<classes map-background="#f8f8f8" map-overlay-inner="#000000" map-overlay-outer="#eeeeee"
+	map-overlay-gps-inner="#600000ff" map-overlay-gps-outer="#ff0000ff">
+    <class id="hydrant-pillar" zoom-min="14">
+        <circle fill="#ff0000" r="1.4" scale-radius="true"/>
+    </class>
+    <class id="hydrant-underground" zoom-min="14">
+        <circle fill="#00ff00" r="1.4" scale-radius="true"/>
+    </class>
+    <class id="water-tank" zoom-min="14">
+        <circle fill="#0000ff" r="1.4" scale-radius="true"/>
+    </class>
+    <class id="fire-water-pond" zoom-min="14">
+        <circle fill="#0000ff" r="1.4" scale-radius="true"/>
+    </class>
+</classes>
