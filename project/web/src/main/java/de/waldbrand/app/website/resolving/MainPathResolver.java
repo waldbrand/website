@@ -30,6 +30,7 @@ import de.waldbrand.app.website.pages.internal.OsmUserForwardPage;
 import de.waldbrand.app.website.pages.login.LoginGenerator;
 import de.waldbrand.app.website.pages.markdown.MarkdownResourceGenerator;
 import de.waldbrand.app.website.pages.other.AboutGenerator;
+import de.waldbrand.app.website.pages.other.AppFaqPage;
 import de.waldbrand.app.website.pages.other.AppLandingPage;
 import de.waldbrand.app.website.pages.other.ContactGenerator;
 import de.waldbrand.app.website.pages.other.EditorLandingPage;
@@ -92,6 +93,9 @@ public class MainPathResolver
 				data) -> new OsmContributionsPage(path));
 		map(LinkDefs.OSM_USER_FORWARD, (path, output, request, data,
 				id) -> new OsmUserForwardPage(path, id));
+
+		map(LinkDefs.APP_FAQ,
+				(path, output, request, data) -> new AppFaqPage(path));
 	}
 
 }

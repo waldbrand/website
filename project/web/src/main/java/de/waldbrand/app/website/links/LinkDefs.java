@@ -53,6 +53,8 @@ public class LinkDefs
 
 	public static PathDef0 LANDING_APP = new PathDef0(
 			new PathSpec("android-app"));
+	public static PathDef0 APP_FAQ = new PathDef0(
+			new PathSpec("android-app", "faq"));
 
 	public static PathDef0 LANDING_EDITOR = new PathDef0(
 			new PathSpec("wes", "editor"));
