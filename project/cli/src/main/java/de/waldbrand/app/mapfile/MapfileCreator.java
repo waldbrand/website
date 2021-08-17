@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.mapocado.styles.rules.RuleFileReader;
 import de.topobyte.mapocado.styles.rules.RuleSet;
 import de.topobyte.osm4j.diskstorage.nodedb.NodeDB;
@@ -57,8 +58,9 @@ public class MapfileCreator
 	public static MapfileCreator setup(Geometry boundary, Path nodesIndex,
 			Path nodesData, Path waysIndex, Path waysData,
 			OsmFileInput nodesFile, OsmFileInput waysFile,
-			OsmFileInput relationsFile, Path outputFile, Path configDir,
-			Path logsDir, Path landGeometryFile, String limitsNodesString,
+			OsmFileInput relationsFile, Path fileRettungspunkte,
+			Path outputFile, Path configDir, Path logsDir,
+			Path landGeometryFile, String limitsNodesString,
 			String limitsWaysString, String limitsRelationsString)
 	{
 		Geometry landGeometry = null;
@@ -123,8 +125,8 @@ public class MapfileCreator
 
 		MapfileCreator creator = new MapfileCreator(outputFile, config,
 				nodesFile, waysFile, relationsFile, nodeDB, wayDB, boundary,
-				logsDir, landGeometry, limitsNodes, limitsWays,
-				limitsRelations);
+				logsDir, landGeometry, limitsNodes, limitsWays, limitsRelations,
+				fileRettungspunkte);
 		return creator;
 	}
 
@@ -145,17 +147,20 @@ public class MapfileCreator
 	private MapformatCreator create;
 	private ExecutableEntityProcessor processor;
 	private OsmFileInput nodesFile, waysFile, relationsFile;
+	private Path fileRettungspunkte;
 
 	public MapfileCreator(Path outputFile, RuleSet config,
 			OsmFileInput nodesFile, OsmFileInput waysFile,
 			OsmFileInput relationsFile, NodeDB nodeDB,
 			VarDB<WayRecordWithTags> wayDB, Geometry boundary, Path logsDir,
 			Geometry landGeometry, List<Integer> limitsNodes,
-			List<Integer> limitsWays, List<Integer> limitsRelations)
+			List<Integer> limitsWays, List<Integer> limitsRelations,
+			Path fileRettungspunkte)
 	{
 		this.nodesFile = nodesFile;
 		this.waysFile = waysFile;
 		this.relationsFile = relationsFile;
+		this.fileRettungspunkte = fileRettungspunkte;
 		File fileLogsDir = logsDir == null ? null : logsDir.toFile();
 		create = new MapformatCreator(outputFile.toFile(), config, nodesFile,
 				waysFile, relationsFile, nodeDB, boundary, fileLogsDir,
@@ -164,12 +169,13 @@ public class MapfileCreator
 				boundary, logsDir, new DefaultEntityFilter());
 	}
 
-	public void execute() throws IOException
+	public void execute() throws IOException, QueryException
 	{
 		processor.prepare();
 		create.prepare();
 
 		processor.execute(nodesFile, waysFile, relationsFile);
+		create.processRettungspunkte(fileRettungspunkte);
 
 		create.createFile();
 	}

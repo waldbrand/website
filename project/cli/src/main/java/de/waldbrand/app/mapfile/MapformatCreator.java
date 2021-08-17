@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
@@ -44,6 +46,8 @@ import org.slf4j.LoggerFactory;
 
 import de.topobyte.jts.utils.polygons.split.PolygonSplitUtil;
 import de.topobyte.jts.utils.polygons.split.SplitMode;
+import de.topobyte.luqe.iface.QueryException;
+import de.topobyte.luqe.jdbc.database.SqliteDatabase;
 import de.topobyte.mapocado.mapformat.SegmentationHelper;
 import de.topobyte.mapocado.mapformat.geom.Coordinate;
 import de.topobyte.mapocado.mapformat.geom.GeometryConverter;
@@ -81,6 +85,8 @@ import de.topobyte.osm4j.geometry.OsmEntityGeometryHandler;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.xml.SmxFileWriter;
+import de.waldbrand.app.website.Dao;
+import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
 
 /**
  * @author Sebastian Kuerten (sebastian.kuerten@fu-berlin.de)
@@ -90,6 +96,8 @@ class MapformatCreator implements OsmEntityGeometryHandler
 
 	static final Logger logger = LoggerFactory
 			.getLogger(MapformatCreator.class);
+
+	private final static String RETTUNGSPUNKT_ID = "rettungspunkt-id";
 
 	private File outputFile;
 	private RuleSet config;
@@ -169,6 +177,7 @@ class MapformatCreator implements OsmEntityGeometryHandler
 		refPool = classHistogramBuilder.createClassStringPool();
 
 		keepPool = Metadata.buildKeepKeyPool(config.getObjectClassRefs());
+		keepPool.add(RETTUNGSPUNKT_ID);
 
 		classLookup = new ObjectClassLookup(config.getObjectClassRefs(),
 				refPool);
@@ -363,6 +372,28 @@ class MapformatCreator implements OsmEntityGeometryHandler
 		int minZoom = SegmentationHelper.getMinimumZoomLevel(mapNode,
 				classLookup);
 		intervalTreeNodes.getObject(minZoom).add(rect, mapNode);
+	}
+
+	public void processRettungspunkte(Path fileRettungspunkte)
+			throws QueryException
+	{
+		int idRettungspunktId = keepPool.getId(RETTUNGSPUNKT_ID);
+
+		SqliteDatabase db = new SqliteDatabase(fileRettungspunkte);
+		Dao dao = new Dao(db.getConnection());
+		GeometryFactory gf = new GeometryFactory();
+		for (RettungspunktPoi poi : dao.getRettungspunkteEntries()) {
+			Map<Integer, String> itags = new HashMap<>();
+			itags.put(idRettungspunktId, Integer.toString(poi.getId()));
+			Point point = gf.createPoint(poi.getCoordinate());
+			Coordinate coordinate = GeometryConverter.convert(point);
+			Node mapNode = new Node(itags, coordinate);
+			BoundingBox rect = new BoundingBox(point.getEnvelopeInternal(),
+					true);
+			int minZoom = SegmentationHelper.getMinimumZoomLevel(mapNode,
+					classLookup);
+			intervalTreeNodes.getObject(minZoom).add(rect, mapNode);
+		}
 	}
 
 	private boolean isHousenumber(Map<String, String> tags)

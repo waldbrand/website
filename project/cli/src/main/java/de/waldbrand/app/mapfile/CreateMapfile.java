@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.osm4j.diskstorage.DbExtensions;
 import de.topobyte.osm4j.diskstorage.EntityDbSetup;
@@ -41,6 +42,7 @@ import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.system.utils.SystemPaths;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 public class CreateMapfile
@@ -194,10 +196,16 @@ public class CreateMapfile
 			logger.error("unable to read geometry", e);
 		}
 
+		Path repoRettungspunkte = SystemPaths.HOME
+				.resolve("github/waldbrand/rettungspunkte");
+		Path fileRettungspunkte = repoRettungspunkte
+				.resolve("daten/rettungspunkte.gpkg");
+
 		MapfileCreator creator = MapfileCreator.setup(boundary, nodeIndex,
 				nodeData, wayIndex, wayData, inputNodes, inputWays,
-				inputRelations, pathOutput, pathRules, pathLogs, landFile,
-				limitsNodesString, limitsWaysString, limitsRelationsString);
+				inputRelations, fileRettungspunkte, pathOutput, pathRules,
+				pathLogs, landFile, limitsNodesString, limitsWaysString,
+				limitsRelationsString);
 
 		if (creator == null) {
 			logger.error("error while setting up creator instance");
@@ -206,7 +214,7 @@ public class CreateMapfile
 
 		try {
 			creator.execute();
-		} catch (IOException e) {
+		} catch (IOException | QueryException e) {
 			logger.error("error while creating file", e);
 			System.exit(1);
 		}
