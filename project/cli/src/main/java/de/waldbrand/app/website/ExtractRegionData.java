@@ -18,6 +18,7 @@
 package de.waldbrand.app.website;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,8 +61,10 @@ public class ExtractRegionData
 		OsmFileInput input = new OsmFileInput(fileInput, FileFormat.PBF);
 		OsmIteratorInput osmInput = input.createIterator(true, true);
 
-		EntityFile entity = SmxFileReader
-				.read(Resources.stream("Brandenburg.smx"));
+		EntityFile entity;
+		try (InputStream is = Resources.stream("Brandenburg.smx")) {
+			entity = SmxFileReader.read(is);
+		}
 
 		OutputStream os = Files.newOutputStream(fileOutput);
 		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(os,

@@ -18,21 +18,29 @@
 package de.waldbrand.app.mapfile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.locationtech.jts.geom.Geometry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
+import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.osm4j.diskstorage.DbExtensions;
 import de.topobyte.osm4j.diskstorage.EntityDbSetup;
 import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
+import de.topobyte.simplemapfile.core.EntityFile;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 public class CreateMapfile
@@ -51,7 +59,6 @@ public class CreateMapfile
 	private static final String OPTION_RELATIONS_FILE = "relations";
 	private static final String OPTION_RULES = "rules";
 	private static final String OPTION_OUTPUT = "output";
-	private static final String OPTION_BOUNDARY = "boundary";
 	private final static String OPTION_LOGS = "logs";
 	private static final String OPTION_LAND_GEOMETRY = "land-geometry";
 	private static final String OPTION_LIMITS_NODES = "limits-nodes";
@@ -76,7 +83,6 @@ public class CreateMapfile
 		OptionHelper.addL(options, OPTION_WAY_DB, true, false, "a way database");
 		OptionHelper.addL(options, OPTION_OUTPUT, true, true, "file", "a file to put results to");
 		OptionHelper.addL(options, OPTION_RULES, true, true, "directory", "where to look for rule definitions");
-		OptionHelper.addL(options, OPTION_BOUNDARY, true, true, "file", "a boundary file to cut objects with");
 		OptionHelper.addL(options, OPTION_LOGS, true, true, "directory", "where to dump debug information");
 		OptionHelper.addL(options, OPTION_LAND_GEOMETRY, true, false, "file", "a geometry representing the land to generate sea");
 		OptionHelper.addL(options, OPTION_LIMITS_NODES, true, false, "a comma separated list of integers");
@@ -101,7 +107,6 @@ public class CreateMapfile
 		}
 
 		// @formatter:off
-		String argBoundaryFile = line.getOptionValue(OPTION_BOUNDARY);
 		String argNodeDb = line.getOptionValue(OPTION_NODE_DB);
 		String argWayDb = line.getOptionValue(OPTION_WAY_DB);
 		String argInput = line.getOptionValue(OPTION_INPUT);
@@ -150,7 +155,6 @@ public class CreateMapfile
 		OsmFileInput inputRelations = new OsmFileInput(pathRelations,
 				inputFormat);
 
-		Path pathBoundaryFile = Paths.get(argBoundaryFile);
 		Path pathRules = Paths.get(argRules);
 		Path pathOutput = Paths.get(argOutput);
 
@@ -182,8 +186,16 @@ public class CreateMapfile
 		Path landFile = landGeometryFile == null ? null
 				: Paths.get(landGeometryFile);
 
-		MapfileCreator creator = MapfileCreator.setup(pathBoundaryFile,
-				nodeIndex, nodeData, wayIndex, wayData, inputNodes, inputWays,
+		Geometry boundary = null;
+		try (InputStream is = Resources.stream("Brandenburg.smx")) {
+			EntityFile entity = SmxFileReader.read(is);
+			boundary = entity.getGeometry();
+		} catch (IOException | ParserConfigurationException | SAXException e) {
+			logger.error("unable to read geometry", e);
+		}
+
+		MapfileCreator creator = MapfileCreator.setup(boundary, nodeIndex,
+				nodeData, wayIndex, wayData, inputNodes, inputWays,
 				inputRelations, pathOutput, pathRules, pathLogs, landFile,
 				limitsNodesString, limitsWaysString, limitsRelationsString);
 

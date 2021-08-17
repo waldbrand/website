@@ -6,11 +6,10 @@ CLASS="de.waldbrand.app.mapfile.CreateMapfile"
 
 REPO="$DIR/../.."
 TBO="$HOME/github/waldbrand/osm-data/emergency-merged.tbo"
-BOUNDARY="$REPO/project/core/src/main/resources/Brandenburg.smx"
 TMP="$REPO/tmp-waldbrand"
 RULES="$REPO/project/mapfile/rules"
 
 exec "$CMD" "$CLASS" \
-    --input "$TBO" --boundary "$BOUNDARY" \
+    --input "$TBO" \
     --node-db "$TMP/nodes" --way-db "$TMP/ways" \
     --rules "$RULES" --logs logs --output "$REPO/Brandenburg-waldbrand.xmap"

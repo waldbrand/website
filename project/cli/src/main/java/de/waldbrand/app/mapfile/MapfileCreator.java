@@ -54,32 +54,13 @@ public class MapfileCreator
 
 	static final Logger logger = LoggerFactory.getLogger(MapfileCreator.class);
 
-	public static MapfileCreator setup(Path boundaryFile, Path nodesIndex,
+	public static MapfileCreator setup(Geometry boundary, Path nodesIndex,
 			Path nodesData, Path waysIndex, Path waysData,
 			OsmFileInput nodesFile, OsmFileInput waysFile,
 			OsmFileInput relationsFile, Path outputFile, Path configDir,
 			Path logsDir, Path landGeometryFile, String limitsNodesString,
 			String limitsWaysString, String limitsRelationsString)
 	{
-		Geometry boundary = null;
-		try {
-			EntityFile entity = SmxFileReader.read(boundaryFile.toFile());
-			boundary = entity.getGeometry();
-		} catch (IOException e) {
-			logger.error(
-					"unable to read geometry, IOException: " + e.getMessage());
-			return null;
-		} catch (ParserConfigurationException e) {
-			logger.error(
-					"unable to read geometry, ParserConfigurationException: "
-							+ e.getMessage());
-			return null;
-		} catch (SAXException e) {
-			logger.error(
-					"unable to read geometry, SAXException: " + e.getMessage());
-			return null;
-		}
-
 		Geometry landGeometry = null;
 		if (landGeometryFile != null) {
 			try {
@@ -140,9 +121,10 @@ public class MapfileCreator
 			limitsRelations = parseLimits(limitsRelationsString);
 		}
 
-		MapfileCreator creator = new MapfileCreator(outputFile, config, nodesFile,
-				waysFile, relationsFile, nodeDB, wayDB, boundary, logsDir,
-				landGeometry, limitsNodes, limitsWays, limitsRelations);
+		MapfileCreator creator = new MapfileCreator(outputFile, config,
+				nodesFile, waysFile, relationsFile, nodeDB, wayDB, boundary,
+				logsDir, landGeometry, limitsNodes, limitsWays,
+				limitsRelations);
 		return creator;
 	}
 
