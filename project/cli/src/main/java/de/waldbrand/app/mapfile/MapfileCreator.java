@@ -33,8 +33,10 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import de.topobyte.luqe.iface.QueryException;
+import de.topobyte.mapocado.styles.classes.element.ObjectClassRef;
 import de.topobyte.mapocado.styles.rules.RuleFileReader;
 import de.topobyte.mapocado.styles.rules.RuleSet;
+import de.topobyte.mapocado.styles.rules.enums.Simplification;
 import de.topobyte.osm4j.diskstorage.nodedb.NodeDB;
 import de.topobyte.osm4j.diskstorage.vardb.VarDB;
 import de.topobyte.osm4j.diskstorage.waydb.WayRecordWithTags;
@@ -123,10 +125,18 @@ public class MapfileCreator
 			limitsRelations = parseLimits(limitsRelationsString);
 		}
 
+		ObjectClassRef classRettungspunkte = new ObjectClassRef(
+				WaldbrandMapfile.RETTUNGSPUNKT, Simplification.NONE);
+		classRettungspunkte.setMinZoom(14);
+		config.addObjectClass(classRettungspunkte);
+
+		WaldbrandMapfile waldbrandMapfile = new WaldbrandMapfile(
+				classRettungspunkte);
+
 		MapfileCreator creator = new MapfileCreator(outputFile, config,
-				nodesFile, waysFile, relationsFile, nodeDB, wayDB, boundary,
-				logsDir, landGeometry, limitsNodes, limitsWays, limitsRelations,
-				fileRettungspunkte);
+				waldbrandMapfile, nodesFile, waysFile, relationsFile, nodeDB,
+				wayDB, boundary, logsDir, landGeometry, limitsNodes, limitsWays,
+				limitsRelations, fileRettungspunkte);
 		return creator;
 	}
 
@@ -150,8 +160,8 @@ public class MapfileCreator
 	private Path fileRettungspunkte;
 
 	public MapfileCreator(Path outputFile, RuleSet config,
-			OsmFileInput nodesFile, OsmFileInput waysFile,
-			OsmFileInput relationsFile, NodeDB nodeDB,
+			WaldbrandMapfile waldbrandMapfile, OsmFileInput nodesFile,
+			OsmFileInput waysFile, OsmFileInput relationsFile, NodeDB nodeDB,
 			VarDB<WayRecordWithTags> wayDB, Geometry boundary, Path logsDir,
 			Geometry landGeometry, List<Integer> limitsNodes,
 			List<Integer> limitsWays, List<Integer> limitsRelations,
@@ -162,9 +172,10 @@ public class MapfileCreator
 		this.relationsFile = relationsFile;
 		this.fileRettungspunkte = fileRettungspunkte;
 		File fileLogsDir = logsDir == null ? null : logsDir.toFile();
-		create = new MapformatCreator(outputFile.toFile(), config, nodesFile,
-				waysFile, relationsFile, nodeDB, boundary, fileLogsDir,
-				landGeometry, limitsNodes, limitsWays, limitsRelations);
+		create = new MapformatCreator(outputFile.toFile(), config,
+				waldbrandMapfile, nodesFile, waysFile, relationsFile, nodeDB,
+				boundary, fileLogsDir, landGeometry, limitsNodes, limitsWays,
+				limitsRelations);
 		processor = new ExecutableEntityProcessor(create, nodeDB, wayDB,
 				boundary, logsDir, new DefaultEntityFilter());
 	}

@@ -97,10 +97,9 @@ class MapformatCreator implements OsmEntityGeometryHandler
 	static final Logger logger = LoggerFactory
 			.getLogger(MapformatCreator.class);
 
-	private final static String RETTUNGSPUNKT_ID = "rettungspunkt-id";
-
 	private File outputFile;
 	private RuleSet config;
+	private WaldbrandMapfile waldbrandMapfile;
 	private OsmFileInput nodesFile, waysFile, relationsFile;
 	private NodeDB nodeDB = null;
 
@@ -132,13 +131,15 @@ class MapformatCreator implements OsmEntityGeometryHandler
 	private int pointLimit = 1000;
 
 	public MapformatCreator(File outputFile, RuleSet config,
-			OsmFileInput nodesFile, OsmFileInput waysFile,
-			OsmFileInput relationsFile, NodeDB nodeDB, Geometry boundary,
-			File logsDir, Geometry landGeometry, List<Integer> limitsNodes,
-			List<Integer> limitsWays, List<Integer> limitsRelations)
+			WaldbrandMapfile waldbrandMapfile, OsmFileInput nodesFile,
+			OsmFileInput waysFile, OsmFileInput relationsFile, NodeDB nodeDB,
+			Geometry boundary, File logsDir, Geometry landGeometry,
+			List<Integer> limitsNodes, List<Integer> limitsWays,
+			List<Integer> limitsRelations)
 	{
 		this.outputFile = outputFile;
 		this.config = config;
+		this.waldbrandMapfile = waldbrandMapfile;
 		this.nodesFile = nodesFile;
 		this.waysFile = waysFile;
 		this.relationsFile = relationsFile;
@@ -177,7 +178,7 @@ class MapformatCreator implements OsmEntityGeometryHandler
 		refPool = classHistogramBuilder.createClassStringPool();
 
 		keepPool = Metadata.buildKeepKeyPool(config.getObjectClassRefs());
-		keepPool.add(RETTUNGSPUNKT_ID);
+		keepPool.add(WaldbrandMapfile.RETTUNGSPUNKT_ID);
 
 		classLookup = new ObjectClassLookup(config.getObjectClassRefs(),
 				refPool);
@@ -377,17 +378,26 @@ class MapformatCreator implements OsmEntityGeometryHandler
 	public void processRettungspunkte(Path fileRettungspunkte)
 			throws QueryException
 	{
-		int idRettungspunktId = keepPool.getId(RETTUNGSPUNKT_ID);
+		int idRettungspunktId = keepPool
+				.getId(WaldbrandMapfile.RETTUNGSPUNKT_ID);
 
 		SqliteDatabase db = new SqliteDatabase(fileRettungspunkte);
 		Dao dao = new Dao(db.getConnection());
 		GeometryFactory gf = new GeometryFactory();
 		for (RettungspunktPoi poi : dao.getRettungspunkteEntries()) {
-			Map<Integer, String> itags = new HashMap<>();
-			itags.put(idRettungspunktId, Integer.toString(poi.getId()));
 			Point point = gf.createPoint(poi.getCoordinate());
 			Coordinate coordinate = GeometryConverter.convert(point);
+
+			Map<Integer, String> itags = new HashMap<>();
+			itags.put(idRettungspunktId, Integer.toString(poi.getId()));
+
 			Node mapNode = new Node(itags, coordinate);
+
+			List<ObjectClassRef> elements = new ArrayList<>();
+			elements.add(waldbrandMapfile.getClassRettungspunkte());
+			mapNode.getClasses()
+					.add(ElementHelper.getReferenceIds(elements, refPool));
+
 			BoundingBox rect = new BoundingBox(point.getEnvelopeInternal(),
 					true);
 			int minZoom = SegmentationHelper.getMinimumZoomLevel(mapNode,
