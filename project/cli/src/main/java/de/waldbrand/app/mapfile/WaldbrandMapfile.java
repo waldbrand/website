@@ -7,7 +7,7 @@ public class WaldbrandMapfile
 {
 
 	public final static String RETTUNGSPUNKT = "rettungspunkt";
-	public final static String RETTUNGSPUNKT_ID = "rettungspunkt-id";
+	public final static String RETTUNGSPUNKT_NR = "rettungspunkt-nr";
 
 	@Getter
 	private ObjectClassRef classRettungspunkte;

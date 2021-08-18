@@ -178,7 +178,7 @@ class MapformatCreator implements OsmEntityGeometryHandler
 		refPool = classHistogramBuilder.createClassStringPool();
 
 		keepPool = Metadata.buildKeepKeyPool(config.getObjectClassRefs());
-		keepPool.add(WaldbrandMapfile.RETTUNGSPUNKT_ID);
+		keepPool.add(WaldbrandMapfile.RETTUNGSPUNKT_NR);
 
 		classLookup = new ObjectClassLookup(config.getObjectClassRefs(),
 				refPool);
@@ -379,7 +379,7 @@ class MapformatCreator implements OsmEntityGeometryHandler
 			throws QueryException
 	{
 		int idRettungspunktId = keepPool
-				.getId(WaldbrandMapfile.RETTUNGSPUNKT_ID);
+				.getId(WaldbrandMapfile.RETTUNGSPUNKT_NR);
 
 		SqliteDatabase db = new SqliteDatabase(fileRettungspunkte);
 		Dao dao = new Dao(db.getConnection());
