@@ -30,6 +30,7 @@ import de.topobyte.luqe.iface.IConnection;
 import de.topobyte.luqe.iface.IPreparedStatement;
 import de.topobyte.luqe.iface.IResultSet;
 import de.topobyte.luqe.iface.QueryException;
+import de.waldbrand.app.website.lbforst.RettungspunkteTable;
 import de.waldbrand.app.website.lbforst.Tables;
 import de.waldbrand.app.website.lbforst.WesTable;
 import de.waldbrand.app.website.lbforst.model.RettungspunktPoi;
@@ -115,9 +116,10 @@ public class Dao
 
 		Table table = Tables.RETTUNGSPUNKTE;
 		Select select = new Select(table);
-		column(select, WesTable.COLNAME_ID);
-		column(select, WesTable.COLNAME_HOCH_W);
-		column(select, WesTable.COLNAME_RECHTS_W);
+		column(select, RettungspunkteTable.COLNAME_ID);
+		column(select, RettungspunkteTable.COLNAME_RPNR);
+		column(select, RettungspunkteTable.COLNAME_HOCH_W);
+		column(select, RettungspunkteTable.COLNAME_RECHTS_W);
 
 		try (IPreparedStatement stmt = connection
 				.prepareStatement(select.sql())) {
@@ -136,9 +138,10 @@ public class Dao
 	{
 		int c = 1;
 		int id = results.getInt(c++);
+		int nr = results.getInt(c++);
 		int hochW = results.getInt(c++);
 		int rechtsW = results.getInt(c++);
-		return new RettungspunktPoi(id, hochW, rechtsW);
+		return new RettungspunktPoi(id, nr, hochW, rechtsW);
 	}
 
 }

@@ -24,6 +24,7 @@ public class RettungspunkteTable extends Table
 {
 
 	public static String COLNAME_ID = "fid";
+	public static String COLNAME_RPNR = "rpnr";
 	public static String COLNAME_RECHTS_W = "rechts_w";
 	public static String COLNAME_HOCH_W = "hoch_w";
 
@@ -32,6 +33,7 @@ public class RettungspunkteTable extends Table
 		super("rettungspunkte");
 
 		addColumn(ColumnClass.LONG, COLNAME_ID);
+		addColumn(ColumnClass.LONG, COLNAME_RPNR);
 		addColumn(ColumnClass.LONG, COLNAME_RECHTS_W);
 		addColumn(ColumnClass.LONG, COLNAME_HOCH_W);
 	}

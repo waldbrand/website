@@ -389,7 +389,7 @@ class MapformatCreator implements OsmEntityGeometryHandler
 			Coordinate coordinate = GeometryConverter.convert(point);
 
 			Map<Integer, String> itags = new HashMap<>();
-			itags.put(idRettungspunktId, Integer.toString(poi.getId()));
+			itags.put(idRettungspunktId, Integer.toString(poi.getNr()));
 
 			Node mapNode = new Node(itags, coordinate);
 

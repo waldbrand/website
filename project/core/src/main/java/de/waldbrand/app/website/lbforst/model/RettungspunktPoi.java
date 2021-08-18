@@ -29,13 +29,16 @@ public class RettungspunktPoi
 	@Getter
 	private int id;
 	@Getter
+	private int nr;
+	@Getter
 	private int hochW;
 	@Getter
 	private int rechtsW;
 
-	public RettungspunktPoi(int id, int hochW, int rechtsW)
+	public RettungspunktPoi(int id, int nr, int hochW, int rechtsW)
 	{
 		this.id = id;
+		this.nr = nr;
 		this.hochW = hochW;
 		this.rechtsW = rechtsW;
 	}

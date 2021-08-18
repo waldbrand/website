@@ -66,8 +66,9 @@ public class TestReadData
 		for (int i = 0; i < 3; i++) {
 			RettungspunktPoi poi = rettungspunktePois.get(i);
 			Coordinate c = poi.getCoordinate();
-			System.out.println(String.format("%d: %d,%d, %f,%f", poi.getId(),
-					poi.getRechtsW(), poi.getHochW(), c.getX(), c.getY()));
+			System.out.println(String.format("%d: %d %d,%d, %f,%f", poi.getId(),
+					poi.getNr(), poi.getRechtsW(), poi.getHochW(), c.getX(),
+					c.getY()));
 		}
 	}
 
