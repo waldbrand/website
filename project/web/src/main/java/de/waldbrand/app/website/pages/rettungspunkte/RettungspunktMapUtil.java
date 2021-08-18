@@ -24,7 +24,7 @@ public class RettungspunktMapUtil
 
 	public static String content(RettungspunktPoi poi)
 	{
-		String number = Integer.toString(poi.getId());
+		String number = Integer.toString(poi.getNr());
 		return number;
 	}
 
