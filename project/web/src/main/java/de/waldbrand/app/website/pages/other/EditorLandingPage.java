@@ -56,8 +56,8 @@ public class EditorLandingPage extends DatabaseBaseGenerator
 	@Override
 	protected void content()
 	{
-
-		content.ac(HTML.h1("Editor für Wasserentnahmestellen"));
+		content.ac(HTML.h1()
+				.append("Editor für Wasser&shy;ent&shy;nahme&shy;stellen"));
 
 		String linkEditor = LinkDefs.EDITOR.getLink();
 
@@ -105,9 +105,8 @@ public class EditorLandingPage extends DatabaseBaseGenerator
 
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.isAuthenticated()) {
-			body.ac(HTML.p())
-					.ac(HTML.a(LinkDefs.OSM_CONTRIBUTIONS.getLink(),
-							"Details zu unseren Beiträgen zu OSM"));
+			body.ac(HTML.p()).ac(HTML.a(LinkDefs.OSM_CONTRIBUTIONS.getLink(),
+					"Details zu unseren Beiträgen zu OSM"));
 		}
 	}
 
