@@ -28,6 +28,11 @@ Create assets for Android app and copy them to the app repository:
     ./scripts/create-mapfile-waldbrand
     ./scripts/copy-assets.sh
 
+To update the waldbrand data only, run this:
+
+    ./scripts/create-mapfile-waldbrand
+    ./scripts/copy-mapfile-waldbrand.sh
+
 ## Website deployment
 
 To upload a new version of the website, run this:
