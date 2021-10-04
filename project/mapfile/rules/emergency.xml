@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rules>
-    <rule e="node" k="*" v="*" zoom-min="15">
+    <rule e="node" k="*" v="*" zoom-min="11">
         <rule e="node" k="emergency" v="fire_hydrant">
             <rule e="node" k="fire_hydrant:type" v="pillar">
                 <class id="hydrant-pillar">
@@ -43,7 +43,7 @@
             </class>
         </rule>
     </rule>
-    <rule e="way" k="*" v="*" zoom-min="15">
+    <rule e="way" k="*" v="*" zoom-min="11">
         <rule e="way" k="emergency" v="fire_hydrant">
             <rule e="way" k="fire_hydrant:type" v="pillar">
                 <class id="hydrant-pillar2" simplify="node">
