@@ -127,7 +127,7 @@ public class MapfileCreator
 
 		ObjectClassRef classRettungspunkte = new ObjectClassRef(
 				WaldbrandMapfile.RETTUNGSPUNKT, Simplification.NONE);
-		classRettungspunkte.setMinZoom(14);
+		classRettungspunkte.setMinZoom(11);
 		config.addObjectClass(classRettungspunkte);
 
 		WaldbrandMapfile waldbrandMapfile = new WaldbrandMapfile(
