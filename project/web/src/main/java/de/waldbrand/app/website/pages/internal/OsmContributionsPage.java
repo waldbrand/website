@@ -33,14 +33,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.A;
 import de.topobyte.jsoup.components.Table;
+import de.topobyte.jsoup.components.TableCell;
 import de.topobyte.jsoup.components.TableRow;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.webpaths.WebPath;
@@ -69,12 +72,15 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		Collections.sort(changesets,
 				(a, b) -> Long.compare(a.getCreatedAt(), b.getCreatedAt()));
 
+		Set<Long> firstChangesets = new HashSet<>();
+
 		int rankCount = 0;
 		Map<Long, Integer> userToRank = new HashMap<>();
 		for (DbChangeset changeset : changesets) {
 			long userId = changeset.getUserId();
 			if (!userToRank.containsKey(userId)) {
 				userToRank.put(userId, ++rankCount);
+				firstChangesets.add(changeset.getId());
 			}
 		}
 
@@ -101,12 +107,16 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 			if (changeset.isOpen()) {
 				continue;
 			}
+			boolean first = firstChangesets.contains(changeset.getId());
 			int rank = userToRank.get(changeset.getUserId());
 			TableRow row = table.row();
 			LocalDateTime createdAt = LocalDateTime.ofEpochSecond(
 					changeset.getCreatedAt() / 1000, 0, ZoneOffset.UTC);
 			row.cell(formatter.format(createdAt));
-			row.cell().at(rank + ". ");
+			TableCell cr = row.cell().at(rank + ". ");
+			if (first) {
+				cr.attr("style", "font-weight: bold; color: #090");
+			}
 			row.cell().ac(linkUser(changeset));
 			row.cell().ac(linkChangeset(changeset.getId()));
 			row.cell(Integer.toString(changeset.getNumChanges()));
