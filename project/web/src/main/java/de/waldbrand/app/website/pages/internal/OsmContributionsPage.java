@@ -32,7 +32,9 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 
@@ -65,7 +67,18 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		List<DbChangeset> changesets = dao.getChangesets();
 
 		Collections.sort(changesets,
-				(a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()));
+				(a, b) -> Long.compare(a.getCreatedAt(), b.getCreatedAt()));
+
+		int rankCount = 0;
+		Map<Long, Integer> userToRank = new HashMap<>();
+		for (DbChangeset changeset : changesets) {
+			long userId = changeset.getUserId();
+			if (!userToRank.containsKey(userId)) {
+				userToRank.put(userId, ++rankCount);
+			}
+		}
+
+		Collections.reverse(changesets);
 
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				.appendValue(YEAR, 4).appendLiteral("-")
@@ -79,6 +92,7 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		table.addClass("table");
 		TableRow headrow = table.head().row();
 		headrow.cell("Datum");
+		headrow.cell("#");
 		headrow.cell("Nutzer");
 		headrow.cell("Changeset");
 		headrow.cell("Änderungen");
@@ -87,10 +101,12 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 			if (changeset.isOpen()) {
 				continue;
 			}
+			int rank = userToRank.get(changeset.getUserId());
 			TableRow row = table.row();
 			LocalDateTime createdAt = LocalDateTime.ofEpochSecond(
 					changeset.getCreatedAt() / 1000, 0, ZoneOffset.UTC);
 			row.cell(formatter.format(createdAt));
+			row.cell().at(rank + ". ");
 			row.cell().ac(linkUser(changeset));
 			row.cell().ac(linkChangeset(changeset.getId()));
 			row.cell(Integer.toString(changeset.getNumChanges()));
