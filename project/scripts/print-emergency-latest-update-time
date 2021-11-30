@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TBO="$HOME/github/waldbrand/osm-data/emergency-merged.tbo"
+
+OsmFindMostRecentTimestamp --input-format tbo --input "$TBO"

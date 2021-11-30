@@ -11,6 +11,7 @@ and run the following scripts in this order:
     ./scripts/download-osm-data
     ./scripts/extract-region-data
     ./scripts/extract-osm-data
+    ./scripts/print-emergency-latest-update-time
 
 Doing that will:
 
@@ -18,6 +19,7 @@ Doing that will:
   server to `~/github/waldbrand/osm-data`,
 * extract Brandenburg from the Berlin-Brandenburg file,
 * extract relevant OSM data from the Brandenburg file.
+* print info about when the emergency data has last been updated
 
 ## Data packaging
 
