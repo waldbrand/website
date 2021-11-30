@@ -85,8 +85,8 @@ public class ExtractOsmData
 	{
 		OutputStream out = StreamUtil.bufferedOutputStream(fileOutput);
 		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
-				new OsmOutputConfig(FileFormat.TBO, false));
-		OsmIteratorInput iterator = inputFile.createIterator(true, false);
+				new OsmOutputConfig(FileFormat.TBO, true));
+		OsmIteratorInput iterator = inputFile.createIterator(true, true);
 		for (EntityContainer container : iterator.getIterator()) {
 			OsmEntity entity = container.getEntity();
 			Map<String, String> tags = getTagsAsMap(entity);
@@ -101,8 +101,8 @@ public class ExtractOsmData
 	{
 		OutputStream out = StreamUtil.bufferedOutputStream(fileOutput);
 		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
-				new OsmOutputConfig(FileFormat.TBO, false));
-		OsmIteratorInput iterator = inputFile.createIterator(true, false);
+				new OsmOutputConfig(FileFormat.TBO, true));
+		OsmIteratorInput iterator = inputFile.createIterator(true, true);
 		for (EntityContainer container : iterator.getIterator()) {
 			OsmEntity entity = container.getEntity();
 			if (entity.getType() == Node) {
@@ -144,12 +144,12 @@ public class ExtractOsmData
 	{
 		OutputStream out = StreamUtil.bufferedOutputStream(fileMerged);
 		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
-				new OsmOutputConfig(FileFormat.TBO, false));
+				new OsmOutputConfig(FileFormat.TBO, true));
 
 		List<OsmIterator> iterators = new ArrayList<>();
 		for (Path file : Arrays.asList(fileOutput, fileWayNodes)) {
 			OsmFileInput input = new OsmFileInput(file, FileFormat.TBO);
-			iterators.add(input.createIterator(true, false).getIterator());
+			iterators.add(input.createIterator(true, true).getIterator());
 		}
 
 		SortedMerge task = new SortedMerge(osmOutput, iterators);
