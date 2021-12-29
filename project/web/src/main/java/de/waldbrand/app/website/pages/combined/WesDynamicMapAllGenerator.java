@@ -52,7 +52,7 @@ public class WesDynamicMapAllGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Quelle: OpenStreetMap + Landesbetrieb Forst");
+		p.at("Quelle: OpenStreetMap + Landesbetrieb Forst");
 
 		Div container = content.ac(HTML.div());
 		container.attr("style", "position:relative");

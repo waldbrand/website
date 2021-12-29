@@ -54,15 +54,15 @@ public class AboutGenerator extends SimpleBaseGenerator
 		image.attr("style", "width: 100%; padding: 15%");
 
 		P p = colRight.ac(HTML.p());
-		p.appendText(
+		p.at(
 				"Ein Projekt zur Unterstützung der Feuerwehr bei Waldbrandeinsätzen.");
 		p = colRight.ac(HTML.p());
-		p.appendText("Ein Projekt der Zielinski & Kürten GbR.");
+		p.at("Ein Projekt der Zielinski & Kürten GbR.");
 
 		p = colRight.ac(HTML.p());
-		p.appendText("Für Feedback bitte ");
+		p.at("Für Feedback bitte ");
 		p.ac(HTML.a(LinkDefs.CONTACT.getLink(), "hier"));
-		p.appendText(" vorbeischauen.");
+		p.at(" vorbeischauen.");
 
 		MiscContent.rowSponsors(content);
 		p = content.ac(HTML.p());

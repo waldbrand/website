@@ -95,7 +95,7 @@ public class Cards
 			body.ac(HTML.h5(title)).addClass("card-title");
 		}
 		P p = body.ac(HTML.p());
-		p.appendText(text);
+		p.at(text);
 		links(body, links);
 	}
 

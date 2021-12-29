@@ -50,7 +50,7 @@ public class WesMapLandkreisFilterGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 
 		P p = content.ac(HTML.p());
-		p.appendText("Landkreis auswählen:");
+		p.at("Landkreis auswählen:");
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 

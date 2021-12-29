@@ -64,7 +64,7 @@ public class WesMapKreisGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Filter: " + kreisId);
+		p.at("Filter: " + kreisId);
 
 		MapUtil.addMap(content,
 				kreis.getGeometry().getCentroid().getCoordinate(), 9);

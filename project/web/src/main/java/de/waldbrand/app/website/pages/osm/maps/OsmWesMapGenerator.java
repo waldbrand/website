@@ -53,7 +53,7 @@ public class OsmWesMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
-		p.appendText("Typ: " + type.getMultiple());
+		p.at("Typ: " + type.getMultiple());
 
 		MapUtil.addMap(content);
 

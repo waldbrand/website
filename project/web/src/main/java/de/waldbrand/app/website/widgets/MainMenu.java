@@ -57,7 +57,7 @@ public class MainMenu
 		image.attr("style", "padding-right:15px");
 		brand.ap(image);
 
-		brand.appendText(Website.TITLE);
+		brand.at(Website.TITLE);
 
 		menu.addBrand(brand);
 		menu.addToggleButton();

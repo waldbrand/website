@@ -51,7 +51,7 @@ public class WesDynamicMapOsmGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Quelle: OpenStreetMap");
+		p.at("Quelle: OpenStreetMap");
 
 		Div container = content.ac(HTML.div());
 		container.attr("style", "position:relative");

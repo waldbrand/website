@@ -69,7 +69,7 @@ public class WesAddGenerator extends SimpleBaseGenerator
 		// left hand side
 
 		P p = left.ac(HTML.p());
-		p.appendText(
+		p.at(
 				"Bitte wähle hier durch Verschieben der Karte den Standort aus:");
 
 		MapUtil.addMap(left);
@@ -88,7 +88,7 @@ public class WesAddGenerator extends SimpleBaseGenerator
 		// right hand side
 
 		p = right.ac(HTML.p());
-		p.appendText("Bitte ergänze hier die Infos zu Wasserentnahmestelle:");
+		p.at("Bitte ergänze hier die Infos zu Wasserentnahmestelle:");
 
 		BootstrapForms forms = new BootstrapForms();
 

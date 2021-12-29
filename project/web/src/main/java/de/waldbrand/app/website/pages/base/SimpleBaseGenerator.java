@@ -53,7 +53,7 @@ public abstract class SimpleBaseGenerator extends BaseGenerator
 			throw e;
 		} catch (Throwable e) {
 			P p = content.ac(HTML.p());
-			p.appendText("Error while generating content:");
+			p.at("Error while generating content:");
 			p.ac(HTML.br());
 			Exceptions.appendStackTrace(p, e);
 		}

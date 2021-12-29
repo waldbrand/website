@@ -49,7 +49,7 @@ public class WesMapOartFilterGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 
 		P p = content.ac(HTML.p());
-		p.appendText("Art auswählen:");
+		p.at("Art auswählen:");
 
 		ListGroupDiv list = content.ac(Bootstrap.listGroupDiv());
 

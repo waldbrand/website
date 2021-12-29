@@ -64,7 +64,7 @@ public class OsmWesMapOsmForstGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen (OpenStreetMap)"));
 		P p = content.ac(HTML.p());
-		p.appendText("Typen: " + Joiner.on(", ").join(names));
+		p.at("Typen: " + Joiner.on(", ").join(names));
 
 		MapUtil.addMap(content);
 

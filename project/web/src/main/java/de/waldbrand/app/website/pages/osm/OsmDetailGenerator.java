@@ -101,7 +101,7 @@ public class OsmDetailGenerator extends SimpleBaseGenerator
 		data(col2, entity);
 
 		P p = col2.ac(HTML.p());
-		p.appendText(
+		p.at(
 				"Angaben falsch, oder es fehlt was? Sag uns gerne bescheid: ");
 		p.ac(HTML.a(String.format(
 				"mailto:" + Website.CONTACT + "?subject=Feedback: %s id %d",

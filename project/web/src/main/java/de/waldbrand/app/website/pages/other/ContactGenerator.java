@@ -37,12 +37,12 @@ public class ContactGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h1("Feedback"));
 
 		P p = content.ac(HTML.p());
-		p.appendText("Falls du irgendein Feedback hast"
+		p.at("Falls du irgendein Feedback hast"
 				+ " melde dich bitte hier: ");
 		p.ac(HTML.a("mailto:" + Website.CONTACT, Website.CONTACT));
 
 		p = content.ac(HTML.p());
-		p.appendText("Danke! Sebastian und Mo");
+		p.at("Danke! Sebastian und Mo");
 	}
 
 }

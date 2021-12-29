@@ -61,7 +61,7 @@ public class WesStatsGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText(description);
+		p.at(description);
 
 		Multiset<Integer> histogram = TreeMultiset.create();
 		for (WesPoi poi : Website.INSTANCE.getData().getIdToWesPoi().values()) {

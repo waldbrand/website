@@ -39,7 +39,7 @@ public class RefreshGenerator extends SimpleBaseGenerator
 		WebsiteData.load();
 
 		P p = content.ac(HTML.p());
-		p.appendText("done");
+		p.at("done");
 	}
 
 }

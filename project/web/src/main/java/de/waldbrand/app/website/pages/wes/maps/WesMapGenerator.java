@@ -53,7 +53,7 @@ public class WesMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Wasserentnahmestellen"));
 		P p = content.ac(HTML.p());
-		p.appendText("Kein Filter – alle WES");
+		p.at("Kein Filter – alle WES");
 
 		MapUtil.addMap(content);
 

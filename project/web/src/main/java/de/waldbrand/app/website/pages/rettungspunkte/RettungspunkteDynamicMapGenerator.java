@@ -50,7 +50,7 @@ public class RettungspunkteDynamicMapGenerator extends SimpleBaseGenerator
 
 		content.ac(HTML.h2("Rettungspunkte"));
 		P p = content.ac(HTML.p());
-		p.appendText("Quelle: Landesbetrieb Forst");
+		p.at("Quelle: Landesbetrieb Forst");
 
 		Div container = content.ac(HTML.div());
 		container.attr("style", "position:relative");

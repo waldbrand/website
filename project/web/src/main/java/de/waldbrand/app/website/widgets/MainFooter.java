@@ -48,9 +48,9 @@ public class MainFooter extends Element<MainFooter>
 
 		P p = div.ac(p().addClass("text-muted"));
 
-		p.appendText("Made with ");
+		p.at("Made with ");
 		p.ac(Feather.heart("1em"));
-		p.appendText(" in Berlin-Brandenburg");
+		p.at(" in Berlin-Brandenburg");
 	}
 
 }

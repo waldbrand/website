@@ -42,7 +42,7 @@ public class IndexGenerator extends SimpleBaseGenerator
 		content.ac(HTML.h1("Die Waldbrand-App für Brandenburg"));
 
 		// P p = content.ac(HTML.p());
-		// p.appendText(
+		// p.at(
 		// "Im Rahmen des Prototype Fund entwickeln wir einen Baukasten zum"
 		// + " Erstellen von offline-fähigen Waldbrand-Apps zur"
 		// + " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
