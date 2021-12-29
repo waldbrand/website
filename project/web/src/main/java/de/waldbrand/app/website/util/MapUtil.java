@@ -17,18 +17,22 @@
 
 package de.waldbrand.app.website.util;
 
+import static de.topobyte.jsoup.ElementBuilder.script;
+import static de.topobyte.jsoup.ElementBuilder.styleSheet;
+
 import java.util.Locale;
 
 import org.jsoup.nodes.DataNode;
 import org.locationtech.jts.geom.Coordinate;
 
-import de.topobyte.jsoup.ElementBuilder;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.Script;
 import de.topobyte.jsoup.nodes.Element;
+import de.topobyte.webgun.util.CacheBuster;
 import de.waldbrand.app.website.Config;
+import de.waldbrand.app.website.Website;
 import de.waldbrand.app.website.config.MapPosition;
 
 public class MapUtil
@@ -43,20 +47,22 @@ public class MapUtil
 
 	public static void head(Head head)
 	{
-		head.ac(ElementBuilder.styleSheet("/client/leaflet/leaflet.css"));
-		head.ac(ElementBuilder.script("/client/leaflet/leaflet.js"));
-		head.ac(ElementBuilder
-				.styleSheet("/client/leaflet.markercluster/MarkerCluster.css"));
-		head.ac(ElementBuilder.styleSheet(
-				"/client/leaflet.markercluster/MarkerCluster.Default.css"));
-		head.ac(ElementBuilder.script(
-				"/client/leaflet.markercluster/leaflet.markercluster.js"));
-		head.ac(ElementBuilder.styleSheet(
+		CacheBuster cacheBuster = Website.INSTANCE.getCacheBuster();
+
+		head.ac(styleSheet(cacheBuster.resolve("client/leaflet/leaflet.css")));
+		head.ac(script(cacheBuster.resolve("client/leaflet/leaflet.js")));
+		head.ac(styleSheet(cacheBuster
+				.resolve("client/leaflet.markercluster/MarkerCluster.css")));
+		head.ac(styleSheet(cacheBuster.resolve(
+				"client/leaflet.markercluster/MarkerCluster.Default.css")));
+		head.ac(script(cacheBuster.resolve(
+				"client/leaflet.markercluster/leaflet.markercluster.js")));
+		head.ac(styleSheet(
 				"https://use.fontawesome.com/releases/v5.7.2/css/all.css"));
-		head.ac(ElementBuilder.styleSheet(
-				"/client/leaflet-extra-markers/css/leaflet.extra-markers.min.css"));
-		head.ac(ElementBuilder.script(
-				"/client/leaflet-extra-markers/js/leaflet.extra-markers.js"));
+		head.ac(styleSheet(cacheBuster.resolve(
+				"client/leaflet-extra-markers/css/leaflet.extra-markers.min.css")));
+		head.ac(script(cacheBuster.resolve(
+				"client/leaflet-extra-markers/js/leaflet.extra-markers.js")));
 	}
 
 	public static void addMap(Element<?> content)
