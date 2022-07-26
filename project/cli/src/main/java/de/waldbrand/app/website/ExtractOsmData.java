@@ -94,6 +94,7 @@ public class ExtractOsmData
 				store(osmOutput, entity);
 			}
 		}
+		osmOutput.complete();
 	}
 
 	private void collectNodes(OsmFileInput inputFile, Path fileOutput)
@@ -111,6 +112,7 @@ public class ExtractOsmData
 				}
 			}
 		}
+		osmOutput.complete();
 	}
 
 	private void store(OsmOutputStream osmOutput, OsmEntity entity)
