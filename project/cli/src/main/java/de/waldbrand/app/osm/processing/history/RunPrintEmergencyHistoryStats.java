@@ -33,7 +33,7 @@ public class RunPrintEmergencyHistoryStats
 			throws IOException, ParserConfigurationException, SAXException
 	{
 		Path input = SystemPaths.HOME.resolve(
-				"github/waldbrand/osm-data/brandenburg-internal-emergency.osh.pbf");
+				"github/waldbrand/osm-data/brandenburg-internal-emergency-merged.osh.pbf");
 
 		PrintEmergencyHistoryStats task = new PrintEmergencyHistoryStats(input);
 		task.execute();

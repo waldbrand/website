@@ -15,21 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with waldbrand-website. If not, see <http://www.gnu.org/licenses/>.
 
-package de.waldbrand.app.osm.processing.history;
+package de.waldbrand.app.osm.processing.history.merge;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Comparator;
 
-import de.topobyte.system.utils.SystemPaths;
+import de.topobyte.osm4j.core.model.iface.OsmEntity;
 
-public class RunFilterEmergencyHistory
+public class IdVersionComparator implements Comparator<OsmEntity>
 {
 
-	public static void main(String[] args) throws IOException
+	@Override
+	public int compare(OsmEntity o1, OsmEntity o2)
 	{
-		Path dir = SystemPaths.HOME.resolve("github/waldbrand/osm-data");
-		FilterEmergencyHistory task = new FilterEmergencyHistory(dir);
-		task.execute();
+		int cmpId = Long.compare(o1.getId(), o2.getId());
+		if (cmpId != 0) {
+			return cmpId;
+		}
+		return Long.compare(o1.getMetadata().getVersion(),
+				o2.getMetadata().getVersion());
 	}
 
 }

@@ -17,42 +17,70 @@
 
 package de.waldbrand.app.osm.processing.history;
 
+import static de.topobyte.osm4j.core.model.iface.EntityType.Node;
+import static de.topobyte.osm4j.core.model.iface.EntityType.Way;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.slimjars.dist.gnu.trove.list.TLongList;
+import com.slimjars.dist.gnu.trove.set.TLongSet;
+import com.slimjars.dist.gnu.trove.set.hash.TLongHashSet;
+
 import de.topobyte.melon.io.StreamUtil;
+import de.topobyte.osm4j.core.access.OsmIterator;
 import de.topobyte.osm4j.core.access.OsmIteratorInput;
 import de.topobyte.osm4j.core.access.OsmOutputStream;
+import de.topobyte.osm4j.core.model.iface.EntityContainer;
 import de.topobyte.osm4j.core.model.iface.OsmEntity;
+import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.osm4j.utils.OsmIoUtils;
 import de.topobyte.osm4j.utils.OsmOutputConfig;
 import de.waldbrand.app.osm.processing.Osm4jUtil;
+import de.waldbrand.app.osm.processing.history.merge.SortedMerge;
 
 public class FilterEmergencyHistory
 {
 
-	private Path fileInput;
-	private Path fileOutput;
+	private Path dir;
+	private TLongSet nodeIds = new TLongHashSet();
 
-	public FilterEmergencyHistory(Path fileInput, Path fileOutput)
+	public FilterEmergencyHistory(Path dir)
 	{
-		this.fileInput = fileInput;
-		this.fileOutput = fileOutput;
+		this.dir = dir;
 	}
 
 	public void execute() throws IOException
+	{
+		Path fileInput = dir.resolve("brandenburg-internal.osh.pbf");
+		Path fileOutput = dir.resolve("brandenburg-internal-emergency.osh.pbf");
+		Path fileOutputNodes = dir
+				.resolve("brandenburg-internal-emergency-waynodes.osh.pbf");
+		Path fileOutputMerged = dir
+				.resolve("brandenburg-internal-emergency-merged.osh.pbf");
+
+		OsmFileInput osmInput = new OsmFileInput(fileInput, FileFormat.PBF);
+
+		filter(osmInput, fileOutput);
+		collectNodes(osmInput, fileOutputNodes);
+		mergeFiles(fileOutput, fileOutputNodes, fileOutputMerged);
+	}
+
+	private void filter(OsmFileInput osmInput, Path fileOutput)
+			throws IOException
 	{
 		OutputStream out = StreamUtil.bufferedOutputStream(fileOutput);
 		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
 				new OsmOutputConfig(FileFormat.PBF, true));
 
-		OsmFileInput osmInput = new OsmFileInput(fileInput, FileFormat.PBF);
 		OsmIteratorInput iterator = osmInput.createIterator(true, true);
 		HistoryIterator historyIterator = new HistoryIterator(
 				iterator.getIterator());
@@ -62,10 +90,20 @@ public class FilterEmergencyHistory
 				continue;
 			}
 			for (OsmEntity entity : versions) {
-				Osm4jUtil.write(osmOutput, entity);
+				store(osmOutput, entity);
 			}
 		}
 		osmOutput.complete();
+	}
+
+	private void store(OsmOutputStream osmOutput, OsmEntity entity)
+			throws IOException
+	{
+		if (entity.getType() == Way) {
+			TLongList members = OsmModelUtil.nodesAsList((OsmWay) entity);
+			nodeIds.addAll(members);
+		}
+		Osm4jUtil.write(osmOutput, entity);
 	}
 
 	private static boolean anyMatches(List<OsmEntity> versions)
@@ -78,6 +116,41 @@ public class FilterEmergencyHistory
 			}
 		}
 		return false;
+	}
+
+	private void collectNodes(OsmFileInput osmInput, Path fileOutputNodes)
+			throws IOException
+	{
+		OutputStream out = StreamUtil.bufferedOutputStream(fileOutputNodes);
+		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
+				new OsmOutputConfig(FileFormat.PBF, true));
+		OsmIteratorInput iterator = osmInput.createIterator(true, true);
+		for (EntityContainer container : iterator.getIterator()) {
+			OsmEntity entity = container.getEntity();
+			if (entity.getType() == Node) {
+				if (nodeIds.contains(entity.getId())) {
+					Osm4jUtil.write(osmOutput, entity);
+				}
+			}
+		}
+		osmOutput.complete();
+	}
+
+	private void mergeFiles(Path fileOutput, Path fileWayNodes, Path fileMerged)
+			throws IOException
+	{
+		OutputStream out = StreamUtil.bufferedOutputStream(fileMerged);
+		OsmOutputStream osmOutput = OsmIoUtils.setupOsmOutput(out,
+				new OsmOutputConfig(FileFormat.PBF, true));
+
+		List<OsmIterator> iterators = new ArrayList<>();
+		for (Path file : Arrays.asList(fileOutput, fileWayNodes)) {
+			OsmFileInput input = new OsmFileInput(file, FileFormat.PBF);
+			iterators.add(input.createIterator(true, true).getIterator());
+		}
+
+		SortedMerge task = new SortedMerge(osmOutput, iterators);
+		task.run();
 	}
 
 }
