@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -49,8 +48,8 @@ import de.topobyte.simplemapfile.xml.SmxFileReader;
 public class PrintHydrantForestDistanceStats
 {
 
-	public static void main(String[] args) throws IOException,
-			ParserConfigurationException, SAXException, TransformerException
+	public static void main(String[] args)
+			throws IOException, ParserConfigurationException, SAXException
 	{
 		if (args.length != 2) {
 			System.out.println(

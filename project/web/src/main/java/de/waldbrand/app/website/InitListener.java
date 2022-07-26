@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.LoggerContext;
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.ioutils.ShellPaths;
-import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.melon.commons.io.Resources;
 import de.topobyte.shiro.AuthInfo;
 import de.topobyte.webgun.scheduler.MinutelyInvocationTimeFactory;
@@ -126,7 +125,7 @@ public class InitListener implements ServletContextListener
 		try {
 			DbCreator dbCreator = new DbCreator();
 			dbCreator.createDatabase();
-		} catch (SQLException | QueryException e) {
+		} catch (SQLException e) {
 			logger.warn("Error while creating database", e);
 		}
 

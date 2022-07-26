@@ -22,11 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.xml.sax.SAXException;
-
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
@@ -42,8 +37,7 @@ import de.topobyte.osm4j.utils.OsmFileInput;
 public class PrintEmergencyStats
 {
 
-	public static void main(String[] args) throws IOException,
-			ParserConfigurationException, SAXException, TransformerException
+	public static void main(String[] args) throws IOException
 	{
 		if (args.length != 1) {
 			System.out.println("usage: print-emergency-stats <osm-file.tbo>");

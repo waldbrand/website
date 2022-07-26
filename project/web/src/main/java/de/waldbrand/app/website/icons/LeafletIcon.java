@@ -17,8 +17,6 @@
 
 package de.waldbrand.app.website.icons;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +51,10 @@ public class LeafletIcon
 	@Override
 	public String toString()
 	{
-		try {
-			return string();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return string();
 	}
 
-	private String string() throws IOException
+	private String string()
 	{
 		StringBuilder strb = new StringBuilder();
 		strb.append(String.format("%s.set('%s', L.icon(", "icons", id));

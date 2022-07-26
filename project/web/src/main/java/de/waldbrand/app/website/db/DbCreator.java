@@ -39,7 +39,7 @@ public class DbCreator
 
 	final static Logger logger = LoggerFactory.getLogger(DbCreator.class);
 
-	public void createDatabase() throws SQLException, QueryException
+	public void createDatabase() throws SQLException
 	{
 		boolean dbExists = Files.exists(Config.INSTANCE.getDatabase());
 

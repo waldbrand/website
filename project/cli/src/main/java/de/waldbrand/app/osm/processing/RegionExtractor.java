@@ -77,8 +77,8 @@ public class RegionExtractor
 		this.useWays = useWays;
 	}
 
-	public void prepare() throws IOException, ParserConfigurationException,
-			SAXException, TransformerException
+	public void prepare()
+			throws IOException, ParserConfigurationException, SAXException
 	{
 		Path dir = Files.createTempDirectory("waldbrand-osm");
 		entityDbs = new EntityDbs(dir);
@@ -102,7 +102,7 @@ public class RegionExtractor
 
 	public void extract(Function<Map<String, String>, Boolean> selector,
 			Function<OsmEntity, String> namer) throws IOException,
-			ParserConfigurationException, SAXException, TransformerException
+			ParserConfigurationException, TransformerException
 	{
 		// setup output directory
 		for (Path dirOutput : mapping.values()) {

@@ -26,11 +26,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.xml.sax.SAXException;
-
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
@@ -52,8 +47,7 @@ public class PrintStats
 				"fire_water_pond", "water_tank"));
 	}
 
-	public static void main(String[] args) throws IOException,
-			ParserConfigurationException, SAXException, TransformerException
+	public static void main(String[] args) throws IOException
 	{
 		if (args.length != 1) {
 			System.out.println("usage: print-stats <osm-file.tbo>");
