@@ -38,6 +38,8 @@ import org.xml.sax.SAXException;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import com.slimjars.dist.gnu.trove.map.TLongObjectMap;
+import com.slimjars.dist.gnu.trove.map.hash.TLongObjectHashMap;
 
 import de.topobyte.collections.util.ListUtil;
 import de.topobyte.melon.commons.io.Resources;
@@ -46,8 +48,12 @@ import de.topobyte.osm4j.core.model.iface.EntityType;
 import de.topobyte.osm4j.core.model.iface.OsmEntity;
 import de.topobyte.osm4j.core.model.iface.OsmMetadata;
 import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.core.model.iface.OsmRelation;
 import de.topobyte.osm4j.core.model.iface.OsmTag;
+import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
+import de.topobyte.osm4j.core.resolve.EntityNotFoundException;
+import de.topobyte.osm4j.core.resolve.OsmEntityProvider;
 import de.topobyte.osm4j.geometry.GeometryBuilder;
 import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
@@ -69,6 +75,8 @@ public class PrintEmergencyHistoryStats
 	private List<LocalDate> dates = new ArrayList<>();
 	private Map<LocalDate, Multiset<OsmTag>> allCounts = new HashMap<>();
 	private PreparedGeometry boundary;
+
+	private TLongObjectMap<List<OsmNode>> nodeLookup = new TLongObjectHashMap<>();
 
 	public PrintEmergencyHistoryStats(Path input)
 	{
@@ -99,14 +107,37 @@ public class PrintEmergencyHistoryStats
 		boundary = new PreparedGeometryFactory().create(unpreparedBoundary);
 
 		OsmFileInput fileInput = new OsmFileInput(input, FileFormat.PBF);
+
+		buildNodeLookup(fileInput);
+		processData(fileInput);
+	}
+
+	private void buildNodeLookup(OsmFileInput fileInput) throws IOException
+	{
 		OsmIteratorInput iterator = fileInput.createIterator(true, true);
 		HistoryIterator historyIterator = new HistoryIterator(
 				iterator.getIterator());
 		for (List<OsmEntity> versions : historyIterator) {
 			OsmEntity first = versions.get(0);
 			if (first.getType() != EntityType.Node) {
-				break;
+				return;
 			}
+			OsmNode firstNode = (OsmNode) first;
+			long id = firstNode.getId();
+			List<OsmNode> nodes = new ArrayList<>();
+			for (OsmEntity entity : versions) {
+				nodes.add((OsmNode) entity);
+			}
+			nodeLookup.put(id, nodes);
+		}
+	}
+
+	private void processData(OsmFileInput fileInput) throws IOException
+	{
+		OsmIteratorInput iterator = fileInput.createIterator(true, true);
+		HistoryIterator historyIterator = new HistoryIterator(
+				iterator.getIterator());
+		for (List<OsmEntity> versions : historyIterator) {
 			processVersions(versions);
 		}
 
@@ -144,16 +175,28 @@ public class PrintEmergencyHistoryStats
 			OsmMetadata metadata = entity.getMetadata();
 			String emergency = tags.get("emergency");
 			if (emergency == null || !emergencyValues.contains(emergency)) {
-				return;
+				continue;
 			}
 			if (!metadata.isVisible()) {
-				return;
+				continue;
 			}
 			if (emergency != null) {
 				if (entity.getType() == EntityType.Node) {
 					OsmNode node = (OsmNode) entity;
 					if (!boundary.contains(builder.build(node))) {
-						return;
+						continue;
+					}
+				} else if (entity.getType() == EntityType.Way) {
+					OsmWay way = (OsmWay) entity;
+					EntityProviderHistory entityProvider = new EntityProviderHistory(
+							metadata.getTimestamp());
+					try {
+						if (!boundary
+								.contains(builder.build(way, entityProvider))) {
+							continue;
+						}
+					} catch (EntityNotFoundException e) {
+						continue;
 					}
 				}
 				Tag tag = new Tag("emergency", emergency);
@@ -161,6 +204,47 @@ public class PrintEmergencyHistoryStats
 				counts.add(tag);
 			}
 		}
+	}
+
+	private class EntityProviderHistory implements OsmEntityProvider
+	{
+
+		private long timestamp;
+
+		public EntityProviderHistory(long timestamp)
+		{
+			this.timestamp = timestamp;
+		}
+
+		@Override
+		public OsmNode getNode(long id) throws EntityNotFoundException
+		{
+			List<OsmNode> nodes = nodeLookup.get(id);
+			if (nodes == null) {
+				throw new EntityNotFoundException("not found");
+			}
+			OsmNode best = nodes.get(0);
+			for (int i = 1; i < nodes.size(); i++) {
+				OsmNode node = nodes.get(i);
+				if (node.getMetadata().getTimestamp() <= timestamp) {
+					best = node;
+				}
+			}
+			return best;
+		}
+
+		@Override
+		public OsmWay getWay(long id) throws EntityNotFoundException
+		{
+			throw new EntityNotFoundException("not found");
+		}
+
+		@Override
+		public OsmRelation getRelation(long id) throws EntityNotFoundException
+		{
+			throw new EntityNotFoundException("not found");
+		}
+
 	}
 
 }
