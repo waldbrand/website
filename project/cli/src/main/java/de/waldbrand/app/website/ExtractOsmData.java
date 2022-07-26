@@ -63,6 +63,7 @@ public class ExtractOsmData
 	public void execute() throws IOException
 	{
 		Path fileInput = dir.resolve("Brandenburg.tbo");
+		Path fileInputReferences = dir.resolve("Brandenburg-Berlin.pbf");
 		Path fileOutput = dir.resolve("emergency.tbo");
 		Path fileWayNodes = dir.resolve("emergency-waynodes.tbo");
 		Path fileMerged = dir.resolve("emergency-merged.tbo");
@@ -71,10 +72,12 @@ public class ExtractOsmData
 		System.out.println("emergency waynodes: " + fileWayNodes);
 
 		OsmFileInput inputFile = new OsmFileInput(fileInput, FileFormat.TBO);
+		OsmFileInput inputFileReferences = new OsmFileInput(fileInputReferences,
+				FileFormat.PBF);
 		System.out.println("extracting data...");
 		filter(inputFile, fileOutput);
 		System.out.println("collecting waynodes...");
-		collectNodes(inputFile, fileWayNodes);
+		collectNodes(inputFileReferences, fileWayNodes);
 		System.out.println("merging files...");
 		mergeFiles(fileOutput, fileWayNodes, fileMerged);
 		System.out.println("done");
