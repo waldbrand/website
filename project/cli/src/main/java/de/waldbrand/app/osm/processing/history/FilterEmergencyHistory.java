@@ -27,14 +27,12 @@ import de.topobyte.melon.io.StreamUtil;
 import de.topobyte.osm4j.core.access.OsmIteratorInput;
 import de.topobyte.osm4j.core.access.OsmOutputStream;
 import de.topobyte.osm4j.core.model.iface.OsmEntity;
-import de.topobyte.osm4j.core.model.iface.OsmNode;
-import de.topobyte.osm4j.core.model.iface.OsmRelation;
-import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.osm4j.utils.OsmIoUtils;
 import de.topobyte.osm4j.utils.OsmOutputConfig;
+import de.waldbrand.app.osm.processing.Osm4jUtil;
 
 public class FilterEmergencyHistory
 {
@@ -64,19 +62,7 @@ public class FilterEmergencyHistory
 				continue;
 			}
 			for (OsmEntity entity : versions) {
-				switch (entity.getType()) {
-				default:
-					break;
-				case Node:
-					osmOutput.write((OsmNode) entity);
-					break;
-				case Way:
-					osmOutput.write((OsmWay) entity);
-					break;
-				case Relation:
-					osmOutput.write((OsmRelation) entity);
-					break;
-				}
+				Osm4jUtil.write(osmOutput, entity);
 			}
 		}
 		osmOutput.complete();

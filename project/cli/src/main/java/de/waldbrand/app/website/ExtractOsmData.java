@@ -39,8 +39,6 @@ import de.topobyte.osm4j.core.access.OsmIteratorInput;
 import de.topobyte.osm4j.core.access.OsmOutputStream;
 import de.topobyte.osm4j.core.model.iface.EntityContainer;
 import de.topobyte.osm4j.core.model.iface.OsmEntity;
-import de.topobyte.osm4j.core.model.iface.OsmNode;
-import de.topobyte.osm4j.core.model.iface.OsmRelation;
 import de.topobyte.osm4j.core.model.iface.OsmWay;
 import de.topobyte.osm4j.core.model.util.OsmModelUtil;
 import de.topobyte.osm4j.utils.FileFormat;
@@ -48,6 +46,7 @@ import de.topobyte.osm4j.utils.OsmFileInput;
 import de.topobyte.osm4j.utils.OsmIoUtils;
 import de.topobyte.osm4j.utils.OsmOutputConfig;
 import de.topobyte.osm4j.utils.merge.sorted.SortedMerge;
+import de.waldbrand.app.osm.processing.Osm4jUtil;
 
 public class ExtractOsmData
 {
@@ -111,7 +110,7 @@ public class ExtractOsmData
 			OsmEntity entity = container.getEntity();
 			if (entity.getType() == Node) {
 				if (nodeIds.contains(entity.getId())) {
-					write(osmOutput, entity);
+					Osm4jUtil.write(osmOutput, entity);
 				}
 			}
 		}
@@ -125,23 +124,7 @@ public class ExtractOsmData
 			TLongList members = OsmModelUtil.nodesAsList((OsmWay) entity);
 			nodeIds.addAll(members);
 		}
-		write(osmOutput, entity);
-	}
-
-	private void write(OsmOutputStream osmOutput, OsmEntity entity)
-			throws IOException
-	{
-		switch (entity.getType()) {
-		case Node:
-			osmOutput.write((OsmNode) entity);
-			break;
-		case Way:
-			osmOutput.write((OsmWay) entity);
-			break;
-		case Relation:
-			osmOutput.write((OsmRelation) entity);
-			break;
-		}
+		Osm4jUtil.write(osmOutput, entity);
 	}
 
 	private void mergeFiles(Path fileOutput, Path fileWayNodes, Path fileMerged)
