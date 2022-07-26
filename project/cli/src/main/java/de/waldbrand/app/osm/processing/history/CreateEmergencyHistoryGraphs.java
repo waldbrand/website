@@ -17,6 +17,7 @@
 
 package de.waldbrand.app.osm.processing.history;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -37,6 +38,7 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -214,6 +216,12 @@ public class CreateEmergencyHistoryGraphs
 
 			String title = String.format("%s (emergency=%s)", names.get(value),
 					value);
+
+			CategoryMarker marker = new CategoryMarker(
+					LocalDate.of(2021, 4, 1));
+			marker.setPaint(Color.BLUE);
+			marker.setDrawAsLine(true);
+			plot.addDomainMarker(marker);
 
 			JFreeChart chart = new JFreeChart(title,
 					JFreeChart.DEFAULT_TITLE_FONT, plot, true);
