@@ -17,13 +17,22 @@
 
 package de.waldbrand.app.osm.processing.history;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.slimjars.dist.gnu.trove.map.TLongObjectMap;
+import com.slimjars.dist.gnu.trove.map.hash.TLongObjectHashMap;
+
+import de.topobyte.osm4j.core.access.OsmIteratorInput;
+import de.topobyte.osm4j.core.model.iface.EntityType;
 import de.topobyte.osm4j.core.model.iface.OsmEntity;
 import de.topobyte.osm4j.core.model.iface.OsmMetadata;
+import de.topobyte.osm4j.core.model.iface.OsmNode;
+import de.topobyte.osm4j.utils.OsmFileInput;
 
 public class HistoryUtils
 {
@@ -41,6 +50,31 @@ public class HistoryUtils
 			}
 		}
 		return null;
+	}
+
+	public static TLongObjectMap<List<OsmNode>> buildNodeLookup(
+			OsmFileInput fileInput) throws IOException
+	{
+		TLongObjectMap<List<OsmNode>> nodeLookup = new TLongObjectHashMap<>();
+
+		OsmIteratorInput iterator = fileInput.createIterator(true, true);
+		HistoryIterator historyIterator = new HistoryIterator(
+				iterator.getIterator());
+		for (List<OsmEntity> versions : historyIterator) {
+			OsmEntity first = versions.get(0);
+			if (first.getType() != EntityType.Node) {
+				break;
+			}
+			OsmNode firstNode = (OsmNode) first;
+			long id = firstNode.getId();
+			List<OsmNode> nodes = new ArrayList<>();
+			for (OsmEntity entity : versions) {
+				nodes.add((OsmNode) entity);
+			}
+			nodeLookup.put(id, nodes);
+		}
+
+		return nodeLookup;
 	}
 
 }
