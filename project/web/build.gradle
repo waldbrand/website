@@ -4,17 +4,14 @@ buildscript {
         maven { url 'https://mvn.topobyte.de' }
     }
     dependencies {
-        classpath 'de.topobyte:gradle-generate-favicons-plugin:0.0.2'
-        classpath 'de.topobyte:gradle-cache-busting-plugin:0.0.3'
+        classpath 'de.topobyte:gradle-generate-favicons-plugin:0.0.3'
+        classpath 'de.topobyte:gradle-cache-busting-plugin:0.0.5'
     }
-}
-
-plugins {
-    id 'com.craigburke.client-dependencies' version '1.4.0'
 }
 
 apply plugin: 'de.topobyte.generate-favicons-gradle-plugin'
 apply plugin: 'de.topobyte.cache-busting-gradle-plugin'
+apply plugin: 'com.magnetichq.client-dependencies'
 
 dependencies {
     implementation project(':waldbrand-website-core')
