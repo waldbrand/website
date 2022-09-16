@@ -51,14 +51,14 @@ public class IndexGenerator extends SimpleBaseGenerator
 
 		Div deck = content.ac(HTML.div("row"));
 
-		card(deck, "markdown/de/intro-editor.md", Arrays.asList(
-				HTML.a(LinkDefs.LANDING_EDITOR.getLink(), "Mehr erfahren"),
-				HTML.a(LinkDefs.EDITOR.getLink(), "Direkt zum Editor")));
-
 		card(deck, "markdown/de/intro-app.md",
 				Arrays.asList(
 						HTML.a(LinkDefs.LANDING_APP.getLink(), "Mehr erfahren"),
 						HTML.a(LinkDefs.GOOGLE_PLAY, "Jetzt runterladen")));
+
+		card(deck, "markdown/de/intro-editor.md", Arrays.asList(
+				HTML.a(LinkDefs.LANDING_EDITOR.getLink(), "Mehr erfahren"),
+				HTML.a(LinkDefs.EDITOR.getLink(), "Direkt zum Editor")));
 
 		card(deck, "markdown/de/intro-wer.md");
 
