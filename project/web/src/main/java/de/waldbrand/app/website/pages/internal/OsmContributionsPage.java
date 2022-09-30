@@ -97,12 +97,21 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		Table table = content.ac(HTML.table());
 		table.addClass("table");
 		TableRow headrow = table.head().row();
+		headrow.cell("#");
 		headrow.cell("Datum");
 		headrow.cell("#");
 		headrow.cell("Nutzer");
 		headrow.cell("Changeset");
 		headrow.cell("Änderungen");
 		headrow.cell("Kommentare");
+
+		int n = 0;
+		for (DbChangeset changeset : changesets) {
+			if (!changeset.isOpen()) {
+				n++;
+			}
+		}
+
 		for (DbChangeset changeset : changesets) {
 			if (changeset.isOpen()) {
 				continue;
@@ -110,6 +119,7 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 			boolean first = firstChangesets.contains(changeset.getId());
 			int rank = userToRank.get(changeset.getUserId());
 			TableRow row = table.row();
+			row.cell(Integer.toString(n--));
 			LocalDateTime createdAt = LocalDateTime.ofEpochSecond(
 					changeset.getCreatedAt() / 1000, 0, ZoneOffset.UTC);
 			row.cell(formatter.format(createdAt));
