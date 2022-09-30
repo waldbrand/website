@@ -127,7 +127,12 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 			if (first) {
 				cr.attr("style", "font-weight: bold; color: #090");
 			}
-			row.cell().ac(linkUser(changeset));
+			String user = changeset.getUser();
+			row.cell().ap(linkUser(changeset)).ap(HTML.br())
+					.ap(linkUserProfile(user).at("[p]").attr("title",
+							"Profile"))
+					.at(" ").ap(linkUserHistory(user).at("[h]").attr("title",
+							"History"));
 			row.cell().ac(linkChangeset(changeset.getId()));
 			row.cell(Integer.toString(changeset.getNumChanges()));
 			row.cell(Integer.toString(changeset.getNumComments()));
@@ -145,6 +150,18 @@ public class OsmContributionsPage extends DatabaseBaseGenerator
 		return a(
 				String.format("https://www.openstreetmap.org/changeset/%d", id),
 				Long.toString(id));
+	}
+
+	private A linkUserProfile(String username)
+	{
+		return a(String.format("https://www.openstreetmap.org/user/%s",
+				username));
+	}
+
+	private A linkUserHistory(String username)
+	{
+		return a(String.format("https://www.openstreetmap.org/user/%s/history",
+				username));
 	}
 
 }

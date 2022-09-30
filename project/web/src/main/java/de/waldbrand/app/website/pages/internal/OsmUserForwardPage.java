@@ -58,7 +58,12 @@ public class OsmUserForwardPage extends DatabaseBaseGenerator
 		p.at("Profil von ");
 		p.ac(HTML.a(String.format("https://www.openstreetmap.org/user/%s",
 				info.displayName), info.displayName));
-		p.at(" bei OpenStreetMap.");
+		p.at(" bei OpenStreetMap and their ");
+		p.ac(HTML.a(
+				String.format("https://www.openstreetmap.org/user/%s/history",
+						info.displayName),
+				"edit history"));
+		p.at(".");
 	}
 
 }
