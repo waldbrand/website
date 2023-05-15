@@ -66,9 +66,6 @@ public class IndexGenerator extends SimpleBaseGenerator
 
 		card(deck, "markdown/de/intro-suche.md");
 
-		card(deck, "markdown/de/intro-folgefinanzierung.md", Arrays.asList(
-				HTML.a("mailto:team@waldbrand-app.de", "Kontakt aufnehmen")));
-
 		card(deck, "markdown/de/intro-wes.md", Arrays.asList(
 				HTML.a(LinkDefs.LANDING_WES.getLink(), "Mehr erfahren")));
 
