@@ -1,5 +1,5 @@
 # Was wir machen
-Wir erforschen den Mehrwert von offenen Daten und freier Software für die Bekämpfung von Waldbranden.
+Wir erforschen den Mehrwert von offenen Daten und freier Software für die Bekämpfung von Waldbränden.
 Dazu haben wir eine offline-fähige App entwickelt, die relevante Informationen für die Brandenburger Feuerwehren zur Bekämpfung
 von Waldbränden verfügbar macht. Diese Webseite bietet zusätzlich eine Übersicht aller Wasserentnahmestellen in Brandenburg 
 und bietet gleichzeitig die Möglichkeit weitere Hydranten, Saugstellen und Co. hinzuzufügen. Unser Datensatz stammt aus dem 
