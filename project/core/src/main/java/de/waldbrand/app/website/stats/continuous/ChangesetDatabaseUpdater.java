@@ -74,25 +74,52 @@ public class ChangesetDatabaseUpdater implements OsmChangesetsHandler
 				.build();
 	}
 
+	private static Object sync = new Object();
+	private static boolean running = false;
+
 	public void updateDatabase() throws MalformedURLException, IOException,
 			OsmInputException, QueryException, SQLException
 	{
-		long last = dao.getSequence();
-		long start = last + 1;
-		logger.info("start sequence number: " + start);
+		synchronized (sync) {
+			if (running) {
+				logger.info(
+						"an updater is currently running already, doing nothing.");
+				return;
+			}
+			running = true;
+		}
+		try {
+			long last = dao.getSequence();
+			long start = last + 1;
+			logger.info("start sequence number: " + start);
 
-		ReplicationUtil util = new ReplicationUtil(httpclient);
-		ReplicationInfo changesetInfo = util.getChangesetInfo();
-		long max = changesetInfo.getSequenceNumber();
-		logger.info("last sequence number: " + max);
+			ReplicationUtil util = new ReplicationUtil(httpclient);
+			ReplicationInfo changesetInfo = util.getChangesetInfo();
+			long max = changesetInfo.getSequenceNumber();
+			logger.info("last sequence number: " + max);
 
-		long todo = max - start + 1;
-		logger.info("files to process: " + todo);
+			long todo = max - start + 1;
+			logger.info("files to process: " + todo);
 
-		for (long i = start; i <= changesetInfo.getSequenceNumber(); i++) {
-			fetchAndParse(i);
-			dao.updateSequence(i);
-			database.getJdbcConnection().commit();
+			int nDone = 0;
+			int percentDone = 0;
+
+			for (long i = start; i <= changesetInfo.getSequenceNumber(); i++) {
+				fetchAndParse(i);
+				dao.updateSequence(i);
+				database.getJdbcConnection().commit();
+				nDone++;
+				int percentDoneNow = (int) Math
+						.round(nDone / (double) todo * 100);
+				if (percentDoneNow > percentDone) {
+					percentDone = percentDoneNow;
+					logger.info(String.format("done: %d%%", percentDone));
+				}
+			}
+		} finally {
+			synchronized (sync) {
+				running = false;
+			}
 		}
 	}
 
