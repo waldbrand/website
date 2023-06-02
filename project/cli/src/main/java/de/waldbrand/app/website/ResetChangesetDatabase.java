@@ -30,24 +30,22 @@ import org.slf4j.LoggerFactory;
 
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.luqe.jdbc.database.SqliteDatabase;
-import de.topobyte.osm4j.core.access.OsmInputException;
 import de.topobyte.osm4j.replication.ReplicationInfo;
 import de.topobyte.osm4j.replication.ReplicationUtil;
-import de.waldbrand.app.website.stats.continuous.ChangesetDatabaseUpdater;
 import de.waldbrand.app.website.stats.continuous.DatabaseCreator;
 import de.waldbrand.app.website.stats.continuous.StatsDao;
 
-public class InitializeChangesetDatabase
+public class ResetChangesetDatabase
 {
 
 	final static Logger logger = LoggerFactory
-			.getLogger(InitializeChangesetDatabase.class);
+			.getLogger(ResetChangesetDatabase.class);
 
 	private Path file;
 
 	private DateTime earliestDate = new DateTime(2021, 05, 19, 8, 16, 0, UTC);
 
-	public InitializeChangesetDatabase(Path file)
+	public ResetChangesetDatabase(Path file)
 	{
 		this.file = file;
 	}
@@ -55,25 +53,20 @@ public class InitializeChangesetDatabase
 	private SqliteDatabase database;
 	private StatsDao dao;
 
-	public void execute(boolean dropTables) throws MalformedURLException,
-			IOException, OsmInputException, QueryException, SQLException
+	public void execute() throws MalformedURLException, IOException,
+			QueryException, SQLException
 	{
 		database = new SqliteDatabase(file);
 		dao = new StatsDao(database.getConnection());
-		initDatabase(dropTables);
-		ChangesetDatabaseUpdater updater = new ChangesetDatabaseUpdater(
-				database);
-		updater.updateDatabase();
+		initDatabase();
 	}
 
-	private void initDatabase(boolean dropTables) throws QueryException,
-			SQLException, MalformedURLException, IOException
+	private void initDatabase() throws QueryException, SQLException,
+			MalformedURLException, IOException
 	{
 		DatabaseCreator creator = new DatabaseCreator(database.getConnection(),
 				database.getJdbcConnection());
-		if (dropTables) {
-			creator.dropTables();
-		}
+		creator.dropTables();
 		creator.createTables();
 		creator.createIndexes();
 

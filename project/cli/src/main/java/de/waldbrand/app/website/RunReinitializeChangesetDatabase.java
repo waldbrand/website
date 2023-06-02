@@ -25,15 +25,15 @@ import java.sql.SQLException;
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.osm4j.core.access.OsmInputException;
 
-public class RunInitializeChangesetDatabase
+public class RunReinitializeChangesetDatabase
 {
 
 	public static void main(String[] args)
 			throws IOException, OsmInputException, QueryException, SQLException
 	{
 		if (args.length != 1) {
-			System.out
-					.println("Usage: init-changeset-database <database file>");
+			System.out.println(
+					"Usage: reinit-changeset-database <database file>");
 			System.exit(1);
 		}
 
@@ -41,7 +41,7 @@ public class RunInitializeChangesetDatabase
 
 		InitializeChangesetDatabase task = new InitializeChangesetDatabase(
 				file);
-		task.execute(false);
+		task.execute(true);
 	}
 
 }

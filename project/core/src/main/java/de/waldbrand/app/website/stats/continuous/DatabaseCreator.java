@@ -48,6 +48,20 @@ public class DatabaseCreator
 		this.jdbcConnection = jdbcConnection;
 	}
 
+	public void dropTables() throws QueryException, SQLException
+	{
+		List<Table> tables = Arrays.asList( //
+				Tables.STATUS, //
+				Tables.CHANGESETS //
+		);
+		for (Table table : tables) {
+			String dropStatement = String.format("drop table %s",
+					table.getName());
+			connection.execute(dropStatement);
+		}
+		jdbcConnection.commit();
+	}
+
 	public void createTables() throws QueryException, SQLException
 	{
 		QueryBuilder qb = new QueryBuilder(new SqliteDialect());

@@ -19,25 +19,20 @@ package de.waldbrand.app.website;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import de.topobyte.luqe.iface.QueryException;
 import de.topobyte.osm4j.core.access.OsmInputException;
+import de.topobyte.system.utils.SystemPaths;
 
-public class RunInitializeChangesetDatabase
+public class TestInitializeChangesetDatabase
 {
 
 	public static void main(String[] args)
 			throws IOException, OsmInputException, QueryException, SQLException
 	{
-		if (args.length != 1) {
-			System.out
-					.println("Usage: init-changeset-database <database file>");
-			System.exit(1);
-		}
-
-		Path file = Paths.get(args[0]);
+		Path dir = SystemPaths.HOME.resolve("webdata");
+		Path file = dir.resolve("waldbrand.sqlite");
 
 		InitializeChangesetDatabase task = new InitializeChangesetDatabase(
 				file);
