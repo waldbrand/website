@@ -1,0 +1,101 @@
+<config xmlns="http://topobyte.de/nomioc/android/v2/config/parser">
+	<map key="place">
+		<classes values="city,town,village,hamlet" name="required" />
+		<classes values="borough,suburb,quarter,neighborhood" name="required" />
+		<classes values="island" name="required" />
+		<classes values="islet" name="required" />
+		<class value="neighbourhood" cat="neighborhood" name="required" />
+	</map>
+	<map key="tourism">
+		<classes values="hotel,hostel,museum,gallery,attraction" />
+		<class value="guest_house" cat="guesthouse" />
+		<class value="information" />
+		<class value="camp_site" cat="campsite" />
+		<class value="viewpoint" name="none" />
+	</map>
+	<map key="aeroway">
+		<class value="aerodrome" cat="airport"/>
+		<class value="helipad" />
+	</map>
+	<map key="office">
+		<class value="diplomatic" cat="embassy" />
+	</map>
+	<map key="amenity">
+		<classes values="gallery,theatre,pub,bar,cinema,restaurant,cafe" />
+		<classes values="nightclub,biergarten,pharmacy" />
+		<classes values="hospital,library,townhall,school,kindergarten" />
+		<classes values="bank,dentist,veterinary,brothel,stripclub" />
+		<classes values="prison,casino,university" />
+		<class value="embassy" />
+		<class value="atm" names="operator,name" forcesingle="true" />
+		<class value="theater" cat="theatre" />
+		<class value="fast_food" cat="fastfood" />
+		<class value="fuel" cat="fuelstation" />
+		<class value="doctors" cat="doctor" />
+		<class value="car_wash" cat="carwash" />
+		<classes values="toilets,recycling" name="none" />
+		<class value="parking" name="none" />
+		<class value="post_box" name="none" />
+		<class value="telephone" name="none" />
+		<class value="bus_station" cat="busstation" />
+		<class value="post_office" cat="postoffice" />
+		<class value="fire_station" cat="firestation" />
+		<class value="shelter" />
+		<class value="bicycle_rental" cat="bikerental" />
+		<classes values="youth_centre,youth_center" cat="other" />
+		<classes values="dancing_school" cat="other" />
+		<classes values="coworking_space" cat="other" />
+	</map>
+	<filter key="amenity" value="place_of_worship">
+		<map key="religion">
+			<classes values="christian,muslim,jewish" />
+		</map>
+	</filter>
+	<map key="building">
+		<classes values="university,school" />
+		<class value="college" cat="university" />
+	</map>
+	<map key="shop">
+		<classes values="clothes,shoes,boutique,jewelry,supermarket,bakery,hairdresser" />
+		<classes values="pharmacy,convenience,florist,optician,chemist,furniture" />
+		<classes values="beverages,electronics,deli,doityourself,massage,travel_agency" />
+		<classes values="beauty" />
+		<class value="kiosk" cat="convenience" />
+		<class value="car" cat="carshop" />
+		<class value="bicycle" cat="bikeshop" />
+		<class value="books" cat="bookshop" />
+		<class value="organic" cat="supermarket" />
+	</map>
+	<map key="railway">
+		<class value="station" cat="railwaystation" />
+		<class value="tram_stop" cat="tramstop" />
+		<class value="halt" cat="railwayhalt" />
+	</map>
+	<map key="highway">
+		<class value="bus_stop" cat="busstop" />
+	</map>
+	<map key="historic">
+		<class value="memorial" />
+	</map>
+	<map key="leisure">
+		<class value="park" name="required" />
+		<class value="playground" />
+	</map>
+	<map key="natural">
+		<class value="water" name="required" />
+		<class value="peak" forcesingle="true" />
+		<class value="volcano" forcesingle="true" />
+	</map>
+	<map key="landuse">
+		<class value="cemetery" name="required" />
+	</map>
+	<ignore key="name" nocase="true" value="City Toilette"/>
+	<ignore key="name" nocase="true" value="City-Toilette"/>
+	<ignore key="name" nocase="true" value="Berliner Mauerweg"/>
+	<ignore key="name" nocase="true" value="Sporthalle"/>
+	<ignore key="name" nocase="true" value="Sportplatz"/>
+	<ignore key="name" nocase="true" value="Städt. Kita"/>
+	<ignore key="name" nocase="true" value="Unterflurhydrant"/>
+	<ignore key="name" nocase="true" value="wlan"/>
+	<ignore key="name" pattern="[0-9]+[a-zA-Z]?"/>
+</config>
