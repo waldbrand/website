@@ -19,14 +19,20 @@ package de.waldbrand.app.website.pages.other;
 
 import static de.waldbrand.app.website.widgets.Cards.card;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.bootstrap4.Bootstrap;
+import de.topobyte.jsoup.bootstrap4.components.Alert;
+import de.topobyte.jsoup.bootstrap4.components.ContextualType;
 import de.topobyte.jsoup.components.Div;
+import de.topobyte.webgun.exceptions.InternalServerErrorException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.SimpleBaseGenerator;
+import de.waldbrand.app.website.util.MarkdownUtil;
 
 public class IndexGenerator extends SimpleBaseGenerator
 {
@@ -48,6 +54,13 @@ public class IndexGenerator extends SimpleBaseGenerator
 		// + " Unterstützung der Einsatzkräfte bei Waldbränden! 🔥🚒🌊🧯");
 
 		// "Finde deine Wasserentnahmestellen"
+
+		Alert alert = content.ac(Bootstrap.alert(ContextualType.WARNING));
+		try {
+			MarkdownUtil.appendMarkdown(alert, "markdown/de/warning.md");
+		} catch (IOException e) {
+			throw new InternalServerErrorException();
+		}
 
 		Div deck = content.ac(HTML.div("row"));
 

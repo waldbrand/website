@@ -20,6 +20,7 @@ package de.waldbrand.app.website.pages.other;
 import static de.waldbrand.app.website.widgets.Cards.card;
 import static de.waldbrand.app.website.widgets.Cards.emptyCard;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,14 +34,19 @@ import com.slimjars.dist.gnu.trove.set.hash.TLongHashSet;
 
 import de.topobyte.cachebusting.CacheBusting;
 import de.topobyte.jsoup.HTML;
+import de.topobyte.jsoup.bootstrap4.Bootstrap;
+import de.topobyte.jsoup.bootstrap4.components.Alert;
+import de.topobyte.jsoup.bootstrap4.components.ContextualType;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.luqe.iface.QueryException;
+import de.topobyte.webgun.exceptions.InternalServerErrorException;
 import de.topobyte.webpaths.WebPath;
 import de.waldbrand.app.website.content.MiscContent;
 import de.waldbrand.app.website.links.LinkDefs;
 import de.waldbrand.app.website.pages.base.DatabaseBaseGenerator;
 import de.waldbrand.app.website.stats.continuous.StatsDao;
 import de.waldbrand.app.website.stats.continuous.model.DbChangeset;
+import de.waldbrand.app.website.util.MarkdownUtil;
 
 public class EditorLandingPage extends DatabaseBaseGenerator
 {
@@ -58,6 +64,13 @@ public class EditorLandingPage extends DatabaseBaseGenerator
 	{
 		content.ac(HTML.h1()
 				.append("Editor für Wasser&shy;ent&shy;nahme&shy;stellen"));
+
+		Alert alert = content.ac(Bootstrap.alert(ContextualType.WARNING));
+		try {
+			MarkdownUtil.appendMarkdown(alert, "markdown/de/warning.md");
+		} catch (IOException e) {
+			throw new InternalServerErrorException();
+		}
 
 		String linkEditor = LinkDefs.EDITOR.getLink();
 
